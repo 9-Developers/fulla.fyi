@@ -1,0 +1,54 @@
+[package]
+name = "fulla_fyi"
+version = "0.1.0"
+edition = "2024"
+authors = ["Ryan Porterfield <ixirsii@9dev.tech>"]
+description = "Share wishlists with your friends"
+license = "BSD-3-Clause"
+repository = "https://codeberg.org/9-Developers/fulla.fyi"
+readme = "README.md"
+keywords = ["axum", "htmx", "social", "web", "wishlist"]
+categories = ["web-programming"]
+
+[dependencies]
+argon2 = "0.5.3"
+askama = "0.16.0"
+axum = "0.8.9"
+axum-htmx = "0.8.1"
+axum-login = "0.18.0"
+dotenvy = "0.15.7"
+include_dir = "0.7.4"
+rand = "0.10.2"
+serde = { version = "1.0.229", features = ["derive"] }
+sqlx = { version = "0.9.0", features = [
+    "chrono",
+    "migrate",
+    "postgres",
+    "runtime-tokio",
+    "time",
+    "tls-native-tls",
+] }
+tokio = { version = "1.53.1", features = [
+    "macros",
+    "rt-multi-thread",
+    "sync",
+    "time",
+] }
+tower-sessions = "0.15.0"
+
+[lints.rust]
+unsafe_code = "deny"
+
+[lints.clippy]
+cargo = { level = "warn", priority = -1 }
+expect_used = "deny"
+missing_errors_doc = "deny"
+missing_panics_doc = "deny"
+multiple_crate_versions = "allow"
+nursery = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+too_many_arguments = "allow"
+unwrap_used = "deny"
+
+[dev-dependencies]
+sha2 = "0.11.0"
