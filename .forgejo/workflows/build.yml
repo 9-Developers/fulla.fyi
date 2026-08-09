@@ -21,15 +21,22 @@ jobs:
 
       - name: Install Rust
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain none
-          . "$HOME/.cargo/env"
-          rustup show active-toolchain
-          echo "$HOME/.cargo/bin" >> "$FORGEJO_PATH"
+          apt update -q
+          apt install -qy rustup
 
       - name: Install Tailwind CSS
         run: |
           npm install --no-save --no-package-lock @tailwindcss/cli@4.3.3 tailwindcss@4.3.3
           echo "$PWD/node_modules/.bin" >> "$FORGEJO_PATH"
+
+      - name: Cargo check
+        run: cargo check
+
+      - name: Clippy
+        run: cargo clippy
+
+      - name: Format check
+        run: cargo fmt --check
 
       - name: Build
         run: cargo build --locked
