@@ -10,6 +10,9 @@ readme = "README.md"
 keywords = ["axum", "htmx", "social", "web", "wishlist"]
 categories = ["web-programming"]
 
+[build-dependencies]
+sha2 = "0.11.0"
+
 [dependencies]
 argon2 = "0.5.3"
 askama = "0.16.0"
@@ -18,6 +21,7 @@ axum-htmx = "0.8.1"
 axum-login = "0.18.0"
 dotenvy = "0.15.7"
 include_dir = "0.7.4"
+mime_guess = "2.0.5"
 rand = "0.10.2"
 serde = { version = "1.0.229", features = ["derive"] }
 sqlx = { version = "0.9.0", features = [
@@ -35,6 +39,8 @@ tokio = { version = "1.53.1", features = [
     "time",
 ] }
 tower-sessions = "0.15.0"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 
 [lints.rust]
 unsafe_code = "deny"

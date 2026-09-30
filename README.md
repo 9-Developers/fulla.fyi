@@ -7,6 +7,11 @@
 
 Share wishlists with your friends.
 
+The current Rust draft serves the home page and bundled assets. A local `.env` is
+loaded when present; `PORT` defaults to `3000` and `RUST_LOG` to `info`.
+Invalid supplied values fail startup. `/health` checks this stateless draft only:
+the database pool and product schema are not yet connected to the server.
+
 ## Links
 
 - [Production][1]

@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+@import "tailwindcss";
+
+@import "./theme.css";
+
+@theme inline {
+  --font-sans:
+    "Sora", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Noto Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --color-ctp-rosewater: var(--rosewater);
+  --color-ctp-flamingo: var(--flamingo);
+  --color-ctp-pink: var(--pink);
+  --color-ctp-mauve: var(--mauve);
+  --color-ctp-red: var(--red);
+  --color-ctp-maroon: var(--maroon);
+  --color-ctp-peach: var(--peach);
+  --color-ctp-yellow: var(--yellow);
+  --color-ctp-green: var(--green);
+  --color-ctp-teal: var(--teal);
+  --color-ctp-sky: var(--sky);
+  --color-ctp-sapphire: var(--sapphire);
+  --color-ctp-blue: var(--blue);
+  --color-ctp-lavender: var(--lavender);
+  --color-ctp-text: var(--text);
+  --color-ctp-subtext1: var(--subtext1);
+  --color-ctp-subtext0: var(--subtext0);
+  --color-ctp-overlay2: var(--overlay2);
+  --color-ctp-overlay1: var(--overlay1);
+  --color-ctp-overlay0: var(--overlay0);
+  --color-ctp-surface2: var(--surface2);
+  --color-ctp-surface1: var(--surface1);
+  --color-ctp-surface0: var(--surface0);
+  --color-ctp-base: var(--base);
+  --color-ctp-mantle: var(--mantle);
+  --color-ctp-crust: var(--crust);
+}
+
+/* ************************************************************************** *
+ *                                 Base layer                                 *
+ * ************************************************************************** */
+
+@layer base {
+  body {
+    @apply bg-ctp-base;
+    @apply min-h-screen;
+    @apply text-ctp-text;
+  }
+
+  blockquote {
+    @apply bg-ctp-surface0;
+    @apply border-ctp-yellow;
+    @apply border-l-2;
+    @apply mb-4;
+    @apply px-6;
+    @apply py-1;
+  }
+
+  blockquote p {
+    @apply mb-0;
+  }
+
+  button {
+    @apply bg-ctp-surface0;
+    @apply hover:bg-ctp-surface2;
+    @apply cursor-pointer;
+    @apply p-2;
+    @apply rounded-md;
+    @apply transition-colors;
+  }
+
+  :not(pre) code {
+    @apply bg-ctp-mantle;
+    @apply font-mono;
+    @apply px-1;
+    @apply py-0.5;
+    @apply rounded;
+  }
+
+  details {
+    @apply flex;
+    @apply flex-col;
+    @apply justify-center;
+    @apply relative;
+  }
+
+  details li {
+    @apply hover:bg-ctp-surface0;
+    @apply transition-colors;
+  }
+
+  details summary {
+    @apply border;
+    @apply border-ctp-yellow;
+    @apply list-none;
+    @apply p-2;
+    @apply rounded-md;
+    @apply whitespace-nowrap;
+  }
+
+  details summary svg {
+    @apply h-4;
+    @apply w-4;
+  }
+
+  details li,
+  details summary {
+    @apply cursor-pointer;
+    @apply flex;
+    @apply flex-row;
+    @apply gap-2;
+    @apply items-center;
+  }
+
+  details ul {
+    @apply absolute;
+    @apply bg-ctp-mantle;
+    @apply min-w-max;
+    @apply mt-1;
+    @apply p-2;
+    @apply right-0;
+    @apply shadow-ctp-yellow;
+    @apply shadow-lg/30;
+    @apply z-10;
+  }
+
+  details .expand-icon {
+    @apply duration-300;
+    @apply rotate-0;
+  }
+
+  details:open .expand-icon {
+    @apply -rotate-90;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-inherit;
+  }
+
+  h1 {
+    @apply font-extrabold;
+    @apply mb-6;
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply font-extrabold;
+    @apply mb-4;
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply font-bold;
+    @apply mb-2;
+    @apply text-xl;
+  }
+
+  h4 {
+    @apply font-bold;
+    @apply mb-2;
+    @apply text-lg;
+  }
+
+  h5 {
+    @apply font-semibold;
+    @apply mb-1;
+    @apply text-base;
+  }
+
+  h6 {
+    @apply mb-1;
+    @apply text-sm;
+  }
+
+  header {
+    @apply bg-ctp-mantle;
+    @apply mb-16;
+    @apply py-2;
+    @apply shadow-ctp-yellow;
+    @apply shadow-lg/30;
+  }
+
+  header a {
+    @apply text-center;
+  }
+
+  header h1 {
+    @apply mb-0;
+  }
+
+  header svg {
+    fill: currentColor;
+  }
+
+  hr {
+    @apply border-ctp-yellow;
+    @apply my-4;
+  }
+
+  main {
+    @apply max-w-5xl;
+    @apply mx-auto;
+    @apply pb-8;
+    @apply w-full;
+  }
+
+  main a {
+    @apply border-b;
+    @apply border-ctp-yellow;
+    @apply border-dashed;
+  }
+
+  main a[target="_blank"]::after {
+    content: " \2197";
+  }
+
+  nav {
+    @apply flex;
+    @apply flex-col;
+    @apply md:flex-row;
+    @apply font-semibold;
+    @apply md:grow;
+    @apply items-center;
+    @apply md:items-stretch;
+    @apply md:self-stretch;
+    @apply w-full;
+  }
+
+  nav a {
+    @apply hover:bg-ctp-surface0;
+    @apply flex;
+    @apply md:flex-1;
+    @apply md:flex-col;
+    @apply justify-center;
+    @apply leading-8;
+    @apply rounded-md;
+  }
+
+  p {
+    @apply mb-4;
+  }
+
+  pre {
+    @apply bg-ctp-mantle;
+    @apply font-mono;
+    @apply overflow-x-auto;
+    @apply p-4;
+    @apply rounded-md;
+  }
+
+  select {
+    @apply cursor-pointer;
+  }
+}
+
+/* ************************************************************************** *
+ *                              Component layer                               *
+ * ************************************************************************** */
+
+@layer components {
+  .quote {
+    @apply mb-6;
+  }
+
+  .quote blockquote {
+    @apply mb-2;
+  }
+
+  .quote blockquote p + p {
+    @apply mt-2;
+  }
+
+  .quote figcaption {
+    @apply pr-6;
+    @apply text-ctp-subtext0;
+    @apply text-right;
+    @apply text-sm;
+  }
+
+  .quote cite {
+    @apply italic;
+  }
+
+  .header-inner {
+    @apply flex;
+    @apply flex-col;
+    @apply md:flex-row;
+    @apply gap-4;
+    @apply items-center;
+    @apply md:justify-between;
+    @apply max-w-5xl;
+    @apply mx-auto;
+    @apply w-full;
+  }
+
+  .settings {
+    @apply flex;
+    @apply flex-row;
+    @apply gap-4;
+  }
+
+  .settings a {
+    @apply flex;
+    @apply flex-col;
+    @apply justify-center;
+  }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Share wishlists with your friends">
+  <title>{{ title }} | Fulla</title>
+  <link rel="stylesheet" href="{{ crate::static_assets::static_url("main.css") }}">
+  <script src="{{ crate::static_assets::static_url("htmx.min.js") }}"></script>
+  <script src="{{ crate::static_assets::static_url("get_theme.js") }}"></script>
+  <script defer src="{{ crate::static_assets::static_url("theme.js") }}"></script>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>
+        <a href="/">Fulla</a>
+      </h1>
+
+      <nav>
+      </nav>
+
+      <div class="settings">
+        <details id="theme-switcher">
+          <summary>
+            <span id="theme-summary-icon">
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="{{ crate::static_assets::static_url("images/icons/system.svg") }}#icon"></use>
+              </svg>
+            </span>
+            <span id="theme-summary-label">System</span>
+            <svg class="expand-icon" width="16" height="16" aria-hidden="true">
+              <use href="{{ crate::static_assets::static_url("images/icons/expand.svg") }}#icon"></use>
+            </svg>
+          </summary>
+          <ul>
+            <li data-theme-value="system">
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="{{ crate::static_assets::static_url("images/icons/system.svg") }}#icon"></use>
+              </svg>
+              System
+            </li>
+            <li data-theme-value="latte">
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="{{ crate::static_assets::static_url("images/icons/latte.svg") }}#icon"></use>
+              </svg>
+              Latte (Light)
+            </li>
+            <li data-theme-value="frappe">
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="{{ crate::static_assets::static_url("images/icons/frappe.svg") }}#icon"></use>
+              </svg>
+              Frapp&eacute;
+            </li>
+            <li data-theme-value="macchiato">
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="{{ crate::static_assets::static_url("images/icons/macchiato.svg") }}#icon"></use>
+              </svg>
+              Macchiato
+            </li>
+            <li data-theme-value="mocha">
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="{{ crate::static_assets::static_url("images/icons/mocha.svg") }}#icon"></use>
+              </svg>
+              Mocha (Dark)
+            </li>
+          </ul>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  <main>{% block content %} {% endblock %}</main>
+
+</body>
+
+</html>
