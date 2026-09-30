@@ -29,14 +29,14 @@ jobs:
           npm install --no-save --no-package-lock @tailwindcss/cli@4.3.3 tailwindcss@4.3.3
           echo "$PWD/node_modules/.bin" >> "$FORGEJO_PATH"
 
-      - name: Cargo check
-        run: cargo check
+      - name: Format check
+        run: cargo fmt --all -- --check
 
       - name: Clippy
-        run: cargo clippy
+        run: cargo clippy --all-targets --locked -- -D warnings
 
-      - name: Format check
-        run: cargo fmt --check
+      - name: Test
+        run: cargo test --locked --all-targets
 
       - name: Build
         run: cargo build --locked
