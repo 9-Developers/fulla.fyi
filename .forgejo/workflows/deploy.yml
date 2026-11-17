@@ -10,13 +10,13 @@ jobs:
     uses: ./.forgejo/workflows/build.yml
 
   security:
-    uses: ./.forgejo/workflows/security-trusted.yml
+    uses: ./.forgejo/workflows/security.yml
     secrets:
       SOCKET_SECURITY_API_KEY: ${{ secrets.SOCKET_SECURITY_API_KEY }}
 
   staging:
     needs: [build, security]
-    uses: ./.forgejo/workflows/railway-deploy.yml
+    uses: ./.forgejo/workflows/railway.yml
     with:
       environment: staging
     secrets:

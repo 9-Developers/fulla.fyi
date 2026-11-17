@@ -46,7 +46,7 @@ jobs:
 
   production:
     needs: [build, security]
-    uses: ./.forgejo/workflows/railway-deploy.yml
+    uses: ./.forgejo/workflows/railway.yml
     with:
       environment: production
     secrets:

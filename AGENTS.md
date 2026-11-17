@@ -33,15 +33,15 @@ Keep this document and README accurate as these capabilities are implemented.
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `cargo run --locked` | Build and start the local server |
-| `cargo build --release --locked` | Build the production executable |
-| `cargo fmt --all` | Format Rust |
-| `cargo fmt --all -- --check` | Check formatting |
-| `cargo clippy --all-targets --locked -- -D warnings` | Run strict lint checks |
-| `cargo test --locked --all-targets` | Run tests |
-| `cargo build --locked` | Run the CI-equivalent debug build |
+| Command                                              | Purpose                           |
+| ---------------------------------------------------- | --------------------------------- |
+| `cargo run --locked`                                 | Build and start the local server  |
+| `cargo build --release --locked`                     | Build the production executable   |
+| `cargo fmt --all`                                    | Format Rust                       |
+| `cargo fmt --all -- --check`                         | Check formatting                  |
+| `cargo clippy --all-targets --locked -- -D warnings` | Run strict lint checks            |
+| `cargo test --locked --all-targets`                  | Run tests                         |
+| `cargo build --locked`                               | Run the CI-equivalent debug build |
 
 Install the pinned Tailwind CLI before building. Commit `Cargo.lock`.
 For code changes, run formatting, Clippy, and relevant tests; CI also runs the
@@ -53,10 +53,10 @@ Builds compile CSS and embed assets, so template and asset changes need a rebuil
 The current server loads a local `.env` when present. Exported variables take
 precedence. Preserve existing `.env` files.
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `PORT` | `3000` | Listen port on `0.0.0.0` |
-| `RUST_LOG` | `info` | Tracing filter |
+| Variable   | Default | Purpose                  |
+| ---------- | ------- | ------------------------ |
+| `PORT`     | `3000`  | Listen port on `0.0.0.0` |
+| `RUST_LOG` | `info`  | Tracing filter           |
 
 Invalid supplied values fail startup. Railway IaC supplies `DATABASE_URL` as a
 reference to Postgres, but the application does not consume it yet. Keep secrets
@@ -133,7 +133,7 @@ Pushes to `main` deploy staging after build and trusted security checks.
 Releases use validated `vMAJOR.MINOR.PATCH` tags whose commits are on `main`
 and have a successful staging deployment recorded in Forgejo run history.
 Production jobs require repository variable `PRODUCTION_DEPLOY_ENABLED=true`.
-The shared `railway-deploy.yml` uses a saved IaC plan/apply, uploads source, and
+The shared `railway.yml` uses a saved IaC plan/apply, uploads source, and
 waits for the specific deployment's health result. Concurrency is per environment.
 Use separate `RAILWAY_STAGING_TOKEN` and `RAILWAY_PRODUCTION_TOKEN` secrets,
 each scoped to its environment. The service name is `fulla.fyi`.
