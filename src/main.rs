@@ -9,6 +9,7 @@ use tracing_subscriber::EnvFilter;
 
 pub use crate::route::*;
 
+mod database;
 mod route;
 pub mod static_assets;
 
@@ -30,6 +31,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .try_init()
         .map_err(|_| "could not initialize tracing")?;
 
+    let arguments: Vec<_> = std::env::args().skip(1).collect();
+    if !arguments.is_empty() && arguments != ["migrate"] {
+        return Err("usage: fulla_fyi [migrate]".into());
+    }
+    let pool = database::connect().await?;
+    if arguments == ["migrate"] {
+        database::MIGRATOR.run(&pool).await?;
+        pool.close().await;
+        info!("database migrations complete");
+        return Ok(());
+    }
+    database::check_schema(&pool).await?;
     let port = configured_port()?;
     let address = format!("0.0.0.0:{port}");
     let listener = TcpListener::bind(&address).await?;
@@ -37,7 +50,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     serve(
         listener,
-        get_routes().into_make_service_with_connect_info::<SocketAddr>(),
+        get_routes(database::AppState { pool }).into_make_service_with_connect_info::<SocketAddr>(),
     )
     .await?;
 

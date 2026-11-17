@@ -3,12 +3,13 @@
 use axum::{
     Router,
     body::Body,
-    extract::Path,
+    extract::{Path, State},
     http::{HeaderValue, StatusCode, header},
     response::{IntoResponse, Response},
     routing::get,
 };
 
+use crate::database::AppState;
 use crate::static_assets;
 
 pub use error::*;
@@ -20,7 +21,7 @@ mod home;
 mod licenses;
 
 /// Get app routes.
-pub fn get_routes() -> Router {
+pub fn get_routes(state: AppState) -> Router {
     Router::new()
         .route("/.well-known/{*path}", get(well_known_asset))
         .route("/static/{*path}", get(static_asset))
@@ -28,11 +29,19 @@ pub fn get_routes() -> Router {
         .route("/licenses", get(licenses))
         .route("/health", get(health))
         .fallback(not_found)
+        .with_state(state)
 }
 
-async fn health() -> StatusCode {
-    // This draft has no active database connection yet; the router is its essential dependency.
-    StatusCode::OK
+async fn health(State(state): State<AppState>) -> StatusCode {
+    match tokio::time::timeout(
+        std::time::Duration::from_secs(2),
+        sqlx::query("SELECT 1").execute(&state.pool),
+    )
+    .await
+    {
+        Ok(Ok(_)) => StatusCode::OK,
+        _ => StatusCode::SERVICE_UNAVAILABLE,
+    }
 }
 
 async fn well_known_asset(Path(path): Path<String>) -> Response {
@@ -99,12 +108,18 @@ mod tests {
         response::IntoResponse,
     };
 
-    use super::{PageError, health, static_asset, well_known_asset};
+    use super::{PageError, static_asset, well_known_asset};
     use crate::static_assets;
 
-    #[tokio::test]
-    async fn current_stateless_draft_is_ready() {
-        assert_eq!(health().await, 200);
+    #[sqlx::test]
+    async fn readiness_tracks_database_availability(pool: sqlx::PgPool) {
+        let state = crate::database::AppState { pool };
+        assert_eq!(
+            super::health(axum::extract::State(state.clone())).await,
+            200
+        );
+        state.pool.close().await;
+        assert_eq!(super::health(axum::extract::State(state)).await, 503);
     }
 
     #[tokio::test]
