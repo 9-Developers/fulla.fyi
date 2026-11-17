@@ -10,6 +10,33 @@ alternative also offer MIT or Apache-2.0; no LGPL option is selected.
 No separate `*NOTICE*` files were found in the downloaded dependency sources.
 The generated report retains distinct copyright-bearing license texts.
 
+### Canonical MIT fallback review
+
+CodeRabbit identified that the initial report assigned 21 package entries to
+canonical MIT text with placeholder copyright holders. Those entries now use
+checksum-verified clarifications in `about.toml`:
+
+- Chrono 0.4.45: packaged `LICENSE.txt`, preserving both its introductory
+  Kang Seonghoon/contributors attribution and the MIT copyright notice.
+- axum-login 0.18.0, include_dir/include_dir_macros 0.7.4, tower-sessions-core
+  0.14.0/0.15.0, tower-sessions-memory-store 0.15.0: repository-root license
+  files at each published package's `.cargo_vcs_info.json` commit.
+- SQLx core, macros, macros-core, and postgres 0.9.0: repository-root
+  `LICENSE-MIT` at the published commit. Packaged files contain only a relative
+  path, not license text.
+- r-efi 5.3.0/6.0.0: identical license/copyright prefix of packaged `AUTHORS`.
+  The complete grants and copyright section are retained; MIT is selected.
+- whoami 2.1.2: packaged `LICENSE_MIT`, plus the separate copyright notice
+  for The WhoAmI Contributors from its packaged `README.md`.
+- windows-core, windows-implement, windows-interface, windows-link,
+  windows-result, windows-strings, windows-sys: packaged lowercase `license-mit`
+  files, preserving Microsoft's copyright notice.
+
+Combined license documents are retained verbatim where needed, even though only
+the MIT alternative is selected. CI rejects the specific canonical MIT copyright
+placeholders; Apache's unfilled example appendix is legitimate license text.
+The guard is a regression check, not a comprehensive legal/completeness audit.
+
 The manually maintained browser inventory is in `THIRD_PARTY_NOTICES.md`.
 HTMX's v4.0.0 license and Tailwind's v4.3.3 license were checked against
 their tagged upstream sources. Catppuccin and Google Fonts' Sora notices

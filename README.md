@@ -28,10 +28,17 @@ cargo install cargo-about --version 0.9.3 --locked --features cli
 cargo install cargo-deny --version 0.21.0 --locked
 cargo deny --locked check licenses
 cargo about generate --locked --fail licenses/rust.hbs -o licenses/rust.txt
+sh .forgejo/scripts/check-license-notices.sh
 ```
 
-Commit the generated file. CI checks the license policy and compares regenerated
-notices. `about.toml` selects permissive alternatives and includes build,
+Commit the generated file. CI checks the license policy, rejects canonical MIT
+copyright placeholders, and compares regenerated notices. `about.toml` includes
+checksum-verified license clarifications where automatic discovery loses upstream
+attribution. Git clarifications use each published crate's recorded commit.
+Review changed upstream texts before updating their checksums; never fix the
+generated report by hand. This targeted check does not replace attribution review.
+`.gitattributes` preserves the report's upstream line endings for exact CI comparison.
+`about.toml` selects permissive alternatives and includes build,
 development, and target-specific dependencies. Keep its accepted licenses
 aligned with `deny.toml`; review new licenses before extending either list.
 Normal application builds use the committed notices and need neither tool.

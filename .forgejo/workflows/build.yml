@@ -30,6 +30,7 @@ jobs:
       - name: Check generated notices
         run: |
           cargo about generate --locked --fail licenses/rust.hbs -o "$RUNNER_TEMP/rust-licenses.txt"
+          sh .forgejo/scripts/check-license-notices.sh "$RUNNER_TEMP/rust-licenses.txt"
           diff -u licenses/rust.txt "$RUNNER_TEMP/rust-licenses.txt"
 
   railway-config:

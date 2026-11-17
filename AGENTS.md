@@ -91,6 +91,11 @@ after dependency changes; see README. CI uses cargo-deny 0.21.0 to enforce
 Emoji High Contrast SVGs with `currentColor`. Provenance for the Discord, expand,
 and system SVGs remains under review in 9DEV-88.
 
+Rust license clarifications in `about.toml` preserve upstream copyright notices.
+Review source license changes before updating checksums. CI runs
+`sh .forgejo/scripts/check-license-notices.sh` to reject canonical MIT placeholders;
+generation success and freshness alone do not verify attribution completeness.
+
 Edit `src/style/` rather than generated `src/public/main.css`. The build script
 currently writes compiled CSS there only when its contents change.
 Add declarations to `STATIC_ASSETS` when adding embedded assets and use
