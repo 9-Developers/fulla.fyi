@@ -8,6 +8,35 @@ on:
   workflow_call:
 
 jobs:
+  railway-config:
+    name: Railway configuration
+    runs-on: node24
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: https://data.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+          ref: ${{ forgejo.sha }}
+
+      - name: Install Go
+        uses: https://github.com/actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: "1.27.4"
+          cache: false
+
+      - name: Check Railway configuration
+        working-directory: .railway
+        run: |
+          test -z "$(gofmt -l .)"
+          go mod download
+          go mod verify
+          go vet -mod=readonly ./...
+          go test -mod=readonly ./...
+
+      - name: Test deployment gates
+        run: node --test .forgejo/scripts/deploy.test.mjs
+
   rust:
     name: Rust build
     runs-on: node24
