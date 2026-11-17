@@ -13,6 +13,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=src/style");
     println!("cargo:rerun-if-changed=templates");
     println!("cargo:rerun-if-changed=src/public");
+    println!("cargo:rerun-if-changed=migrations");
 
     let output = Command::new("tailwindcss")
         .args(["-i", "src/style/main.css", "-o"])

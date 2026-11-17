@@ -21,13 +21,16 @@ https://linear.app/ixirsii/project/fullafyi-8960c5ab9048
 - Rust 2024 with Rust 1.97.1 pinned in `rust-toolchain.toml`.
 - Axum server, Askama templates, vendored HTMX, and embedded public assets.
 - Tailwind CSS and Catppuccin themes already exist. CI and Railpack pin Tailwind
-  4.3.3; `build.rs` requires a `tailwindcss` executable on `PATH`.
+  4.3.5; `build.rs` requires a `tailwindcss` executable on `PATH`.
 - The server currently serves the home page, `/licenses`, error pages, static assets, and
-  `/health`. The health endpoint checks the stateless draft only.
-- SQLx/PostgreSQL, Argon2, axum-login, and tower-sessions dependencies are present,
-  but database integration and authentication are not implemented.
-- Priority, group, and user migrations are started. List, item, and membership
-  migrations are placeholders. Product features described above remain planned.
+  `/health`. The health endpoint checks PostgreSQL connectivity.
+- SQLx/PostgreSQL uses shared application state and a bounded connection pool.
+  Startup validates embedded migration history; `fulla_fyi migrate` applies it.
+  Authentication and persistent sessions are not implemented.
+- The V0 schema models users, owned groups/lists, memberships, sharing grants,
+  items, notes, attributed purchases, media assets, and owned avatar/list-media
+  references. R2 uploads and Cloudflare Images transformations remain planned
+  (9DEV-89/90), as do product handlers.
 
 Keep this document and README accurate as these capabilities are implemented.
 
@@ -36,6 +39,7 @@ Keep this document and README accurate as these capabilities are implemented.
 | Command                                              | Purpose                           |
 | ---------------------------------------------------- | --------------------------------- |
 | `cargo run --locked`                                 | Build and start the local server  |
+| `cargo run --locked -- migrate`                      | Apply database migrations        |
 | `cargo build --release --locked`                     | Build the production executable   |
 | `cargo fmt --all`                                    | Format Rust                       |
 | `cargo fmt --all -- --check`                         | Check formatting                  |
@@ -47,6 +51,8 @@ Install the pinned Tailwind CLI before building. Commit `Cargo.lock`.
 For code changes, run formatting, Clippy, and relevant tests; CI also runs the
 locked build. Documentation-only changes do not require recompiling the app.
 Builds compile CSS and embed assets, so template and asset changes need a rebuild.
+Database tests require `DATABASE_URL` on a disposable PostgreSQL 18 server with
+database creation privileges. SQLx creates isolated databases; CI supplies Postgres.
 
 ## Environment
 
@@ -57,14 +63,16 @@ precedence. Preserve existing `.env` files.
 | ---------- | ------- | ------------------------ |
 | `PORT`     | `3000`  | Listen port on `0.0.0.0` |
 | `RUST_LOG` | `info`  | Tracing filter           |
+| `DATABASE_URL` | required | PostgreSQL URL      |
 
 Invalid supplied values fail startup. Railway IaC supplies `DATABASE_URL` as a
-reference to Postgres, but the application does not consume it yet. Keep secrets
+reference to Postgres. Keep secrets
 out of source control and public assets, which are embedded in the executable.
 
 ## Architecture and conventions
 
 - `src/main.rs`: startup, environment parsing, logging, and HTTP listener.
+- `src/database.rs`: pool, application state, migration checks, and database tests.
 - `src/route/`: routing and page handlers; `error.rs` renders safe error pages.
 - `templates/`: Askama HTML pages; use server-rendered pages and HTMX fragments
   for product interactions.
@@ -129,7 +137,7 @@ tests should exercise PostgreSQL migrations and authorization boundaries.
 
 Forgejo build CI uses `ci-rust` for Rust checks and `ci-go` for Railway
 configuration and Node deployment-gate tests. Rust and Go are supplied by the
-runners; the Rust job installs Tailwind 4.3.3 before checking formatting, strict
+runners; the Rust job installs Tailwind 4.3.5 before checking formatting, strict
 Clippy, tests, and a locked build.
 
 `security.yml` uses `ci-security` runners with preinstalled Gitleaks, Semgrep,
@@ -163,6 +171,6 @@ waits for the specific deployment's health result. Concurrency is per environmen
 Use separate `RAILWAY_STAGING_TOKEN` and `RAILWAY_PRODUCTION_TOKEN` secrets,
 each scoped to its environment. The service name is `fulla.fyi`.
 Build CI includes Go and Node deployment-gate tests. The release executable is
-`fulla_fyi`, and Railway probes `/health`. Runtime database integration and a
-pre-deploy migration command are not implemented. See README for local commands
+`fulla_fyi`, and Railway probes `/health`. Railway runs `./fulla_fyi migrate`
+before deployment; startup validates the schema. See README for local commands
 and legacy Config File cutover guidance.

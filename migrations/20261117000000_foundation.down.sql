@@ -1,0 +1,13 @@
+DROP TABLE purchases;
+DROP TABLE item_notes;
+DROP TABLE items;
+DROP TABLE list_group_grants;
+DROP TABLE list_user_grants;
+DROP TABLE list_media;
+DROP TABLE lists;
+DROP TABLE user_groups;
+DROP TABLE groups;
+DROP TABLE user_avatars;
+DROP TABLE media_assets;
+DROP TABLE users;
+DROP TYPE priorities;

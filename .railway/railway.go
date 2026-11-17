@@ -40,6 +40,7 @@ func Railway(ctx railway.Context) railway.Project {
 		"healthcheck":        "/health",
 		"healthcheckTimeout": 300,
 		"deploy": map[string]any{
+			"preDeployCommand":        []string{"./fulla_fyi migrate"},
 			"restartPolicyType":       "ON_FAILURE",
 			"restartPolicyMaxRetries": 10,
 		},

@@ -60,6 +60,18 @@ jobs:
     name: Rust build
     runs-on: ci-rust
     timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_PASSWORD: fulla_test
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://postgres:fulla_test@postgres:5432/postgres
     steps:
       - name: Check out repository
         uses: https://data.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -69,7 +81,7 @@ jobs:
 
       - name: Install Tailwind CSS
         run: |
-          npm install --no-save --no-package-lock @tailwindcss/cli@4.3.3 tailwindcss@4.3.3
+          npm install --no-save --no-package-lock @tailwindcss/cli@4.3.5 tailwindcss@4.3.5
           echo "$PWD/node_modules/.bin" >> "$FORGEJO_PATH"
 
       - name: Format check

@@ -10,8 +10,8 @@ Share wishlists with your friends.
 
 The current Rust draft serves the home page, `/licenses`, and bundled assets. A local `.env` is
 loaded when present; `PORT` defaults to `3000` and `RUST_LOG` to `info`.
-Invalid supplied values fail startup. `/health` checks this stateless draft only:
-the database pool and product schema are not yet connected to the server.
+Invalid supplied values fail startup. `DATABASE_URL` is required. Startup checks
+embedded migration history; `/health` checks PostgreSQL connectivity.
 
 ## Dependency licenses
 
@@ -63,7 +63,7 @@ dashboard, both targeting port 3000. The pinned CLI cannot register new custom
 domains through IaC, so domains are dashboard-managed. Other environment names
 are rejected by the Go configuration.
 
-The application uses Railpack with Tailwind 4.3.3 from `railpack.json`, builds with
+The application uses Railpack with Tailwind 4.3.5 from `railpack.json`, builds with
 `cargo build --release --locked`, and starts `./fulla_fyi`. Railway probes
 `/health` with a 300-second timeout and retries failed processes up to 10 times.
 Source, template, migration, build configuration, and `.railway/**` changes are
@@ -171,9 +171,88 @@ credentials and mounts are provisioned by Railway's database helper.
 Application variables are managed by IaC: declare new variables in the file,
 using `railway.Preserve()` for existing secret values that should stay in Railway.
 
-The server does not consume `DATABASE_URL` yet. Connecting SQLx, running
-migrations, persistent sessions, and database-aware readiness checks are future
-application work. There is currently no pre-deploy migration command.
+The server uses at most 10 connections with a five-second acquisition timeout.
+`/health` returns 200 when PostgreSQL responds within two seconds, or 503 otherwise.
+Startup rejects missing, failed, unknown, or checksum-mismatched migrations.
+Connection errors do not include credentials.
+
+### Local database workflow
+
+Install the pinned Rust toolchain and Tailwind CLI. Start PostgreSQL 18 and set
+`DATABASE_URL` in your environment or local `.env`. For a disposable database:
+
+```sh
+docker run --name fulla-postgres -e POSTGRES_PASSWORD=fulla_local \
+  -p 127.0.0.1:5432:5432 -d postgres:18
+ready=false
+for attempt in $(seq 1 60); do
+  if docker exec fulla-postgres pg_isready -h 127.0.0.1 -U postgres; then
+    ready=true
+    break
+  fi
+  sleep 1
+done
+if [ "$ready" != true ]; then
+  echo "PostgreSQL did not become ready within 60 attempts" >&2
+  exit 1
+fi
+export DATABASE_URL=postgres://postgres:fulla_local@localhost:5432/postgres
+cargo run --locked -- migrate
+cargo run --locked
+```
+
+`fulla_fyi migrate` applies embedded SQLx migrations and exits. Railway runs
+`./fulla_fyi migrate` before deployment; normal startup only validates history.
+Migration changes rebuild the executable. The baseline replaces unapplied draft
+migrations. Once deployed, add forward migrations instead of editing existing
+ones. Down migrations are destructive and intended for disposable databases.
+
+Run `cargo test --locked --all-targets` with `DATABASE_URL` pointing to a disposable
+PostgreSQL server whose role can create databases. SQLx creates isolated test
+databases. CI supplies PostgreSQL 18. Tests cover migration rollback/reapplication,
+checksums, constraints, attribution, idempotency, and readiness.
+
+### Schema and remaining product work
+
+The V0 schema includes users with password hashes, owned groups/wishlists,
+memberships, direct/group read grants, event dates, ordered/prioritized items,
+owner notes, and purchaser-attributed quantities. Group names are unique per owner
+(case-insensitive); usernames and emails are also case-insensitively unique.
+Group owners are implicit members. Lists without grants are private.
+
+Media metadata is stored in `media_assets`: private R2 bucket/object references,
+processing status, format, byte size, dimensions, and lifecycle timestamps.
+Ready assets require complete image metadata. `user_avatars` and `list_media`
+reference uploads owned by the same account and keep focal points on each usage.
+An absent avatar row means local initials. List media slots remain extensible
+until registry customization is finalized; handlers must validate allowed slots.
+Referenced media cannot be deleted. Removing a usage retains the source row for
+retryable object cleanup; ownership transfers must explicitly handle media usages.
+
+R2 uploads and Cloudflare Images transformations are planned in 9DEV-89/90.
+Delivery URLs are generated, not stored. Handlers must only attach ready assets,
+update `updated_at`, and serialize attachment/replacement and cleanup using an
+asset-row lock. Cleanup must check both usage tables before deleting an object,
+mark the asset `deleting`, and retain its row until object deletion succeeds.
+Source objects stay private; avatar delivery is public by URL and list media
+delivery follows list access. A source reused across usages must not expose private
+media through a public avatar or another public usage; publishing, revocation,
+and cache invalidation require application-level enforcement.
+
+Purchases have purchaser-scoped submission keys to prevent duplicate inserts.
+Canceled records and archived items retain history; reducing desired quantities
+does not erase purchases. Live totals sum uncanceled records. Item/list deletion
+must explicitly handle retained history rather than cascading purchases away.
+Future purchase handlers must use transactions and a consistent item-row lock
+for quantity changes and submissions once the overpurchase policy is settled.
+The schema does not cap aggregate purchases at desired units.
+
+Authentication, persistent sessions, authorization, and product handlers remain
+future work. Handlers must fully validate HTTP(S) URLs; the database check is only
+a baseline constraint. Notes support multiple entries structurally; UI/visibility
+remain undecided. Handlers must preserve purchase `recorded_at` on corrections and
+update `updated_at`. Event cutoff/timezone, rescheduling, and carryover rules
+remain open in 9DEV-72/75. Public tokens and advanced copy/merge are V1 work.
 
 ## Links
 
