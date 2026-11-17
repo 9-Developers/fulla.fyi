@@ -8,10 +8,40 @@
 
 Share wishlists with your friends.
 
-The current Rust draft serves the home page and bundled assets. A local `.env` is
+The current Rust draft serves the home page, `/licenses`, and bundled assets. A local `.env` is
 loaded when present; `PORT` defaults to `3000` and `RUST_LOG` to `info`.
 Invalid supplied values fail startup. `/health` checks this stateless draft only:
 the database pool and product schema are not yet connected to the server.
+
+## Dependency licenses
+
+The footer links to `/licenses`, which embeds `THIRD_PARTY_NOTICES.md` and
+`licenses/rust.txt` in the executable. Include these files and `LICENSE` when
+redistributing the application. The frontend inventory includes externally
+loaded Sora fonts and the four MIT-licensed Fluent Emoji theme icons.
+Provenance for the Discord, expand, and system SVGs is still being confirmed.
+
+Install the pinned tools and regenerate Rust notices after dependency updates:
+
+```sh
+cargo install cargo-about --version 0.9.3 --locked --features cli
+cargo install cargo-deny --version 0.21.0 --locked
+cargo deny --locked check licenses
+cargo about generate --locked --fail licenses/rust.hbs -o licenses/rust.txt
+```
+
+Commit the generated file. CI checks the license policy and compares regenerated
+notices. `about.toml` selects permissive alternatives and includes build,
+development, and target-specific dependencies. Keep its accepted licenses
+aligned with `deny.toml`; review new licenses before extending either list.
+Normal application builds use the committed notices and need neither tool.
+
+For frontend additions or upgrades, record the exact upstream source/version,
+license, copyright notice, and any required NOTICE text in
+`THIRD_PARTY_NOTICES.md`. Preserve license comments during minification.
+Review platform libraries (such as system OpenSSL), container/base-image packages,
+and deployment tooling separately when distributing them; Cargo's inventory
+does not cover those components.
 
 ## Railway deployment
 

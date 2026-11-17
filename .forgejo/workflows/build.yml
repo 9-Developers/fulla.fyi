@@ -8,6 +8,30 @@ on:
   workflow_call:
 
 jobs:
+  licenses:
+    name: Dependency licenses
+    runs-on: ci-rust
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: https://data.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+          ref: ${{ forgejo.sha }}
+
+      - name: Install license tools
+        run: |
+          cargo install cargo-about --version 0.9.3 --locked --features cli
+          cargo install cargo-deny --version 0.21.0 --locked
+
+      - name: Check license policy
+        run: cargo deny --locked check licenses
+
+      - name: Check generated notices
+        run: |
+          cargo about generate --locked --fail licenses/rust.hbs -o "$RUNNER_TEMP/rust-licenses.txt"
+          diff -u licenses/rust.txt "$RUNNER_TEMP/rust-licenses.txt"
+
   railway-config:
     name: Railway configuration
     runs-on: ci-go

@@ -22,7 +22,7 @@ https://linear.app/ixirsii/project/fullafyi-8960c5ab9048
 - Axum server, Askama templates, vendored HTMX, and embedded public assets.
 - Tailwind CSS and Catppuccin themes already exist. CI and Railpack pin Tailwind
   4.3.3; `build.rs` requires a `tailwindcss` executable on `PATH`.
-- The server currently serves the home page, error pages, static assets, and
+- The server currently serves the home page, `/licenses`, error pages, static assets, and
   `/health`. The health endpoint checks the stateless draft only.
 - SQLx/PostgreSQL, Argon2, axum-login, and tower-sessions dependencies are present,
   but database integration and authentication are not implemented.
@@ -81,6 +81,15 @@ logic and validation in Rust. Use Askama's default escaping for user content.
 Preserve accessible labels, keyboard interaction, responsive layouts, and themes.
 
 ### Assets
+
+`/licenses` embeds `THIRD_PARTY_NOTICES.md` and `licenses/rust.txt`.
+Update the frontend inventory and preserve upstream notices when changing assets.
+Regenerate Rust notices with pinned cargo-about 0.9.3 (install with `--features cli`)
+after dependency changes; see README. CI uses cargo-deny 0.21.0 to enforce
+`deny.toml` and checks generated notice freshness. Keep `about.toml` and
+`deny.toml` license choices aligned. The four flavor icons use MIT-licensed Fluent
+Emoji High Contrast SVGs with `currentColor`. Provenance for the Discord, expand,
+and system SVGs remains under review in 9DEV-88.
 
 Edit `src/style/` rather than generated `src/public/main.css`. The build script
 currently writes compiled CSS there only when its contents change.

@@ -1,0 +1,5 @@
+# Order selects MIT when a crate offers MIT OR Apache-2.0.
+accepted = ["MIT", "BSD-3-Clause", "Apache-2.0", "Unicode-3.0", "Zlib"]
+# Include build, development, and target-specific dependencies for portable notices.
+ignore-build-dependencies = false
+ignore-dev-dependencies = false
