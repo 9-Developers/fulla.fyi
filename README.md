@@ -65,12 +65,12 @@ changed by an IaC apply.
 
 | Trigger                  | Target                   | Workflow                            |
 | ------------------------ | ------------------------ | ----------------------------------- |
-| Pull request             | Checks only              | Build and untrusted security checks |
+| Pull request             | Checks only              | Build checks |
 | Push to `main`           | Staging                  | `deploy.yml`                        |
 | Tag `vMAJOR.MINOR.PATCH` | Production, once enabled | `release.yml`                       |
 
 Both deployment workflows run build and trusted security checks before calling
-`railway-deploy.yml`. The shared workflow plans and applies IaC, uploads the
+`railway.yml`. The shared workflow plans and applies IaC, uploads the
 checked-out commit, then waits for that deployment's health check to succeed.
 A successful build alone is not a successful deployment. Deployments are
 serialized per environment; staging and production can run independently.
@@ -92,12 +92,14 @@ Configure these Forgejo repository secrets:
 - `RAILWAY_STAGING_TOKEN`: Railway project token scoped to **staging**.
 - `RAILWAY_PRODUCTION_TOKEN`: separate project token scoped to **production**,
   added when production is created.
-- `SOCKET_SECURITY_API_KEY`: used by trusted security checks.
 
 The former `RAILWAY_TOKEN` repository secret can be renamed to
 `RAILWAY_STAGING_TOKEN`. The service is named `fulla.fyi` in each environment.
 The production history check uses the built-in Forgejo job token, not a Railway
-token. Go and the checksum-verified Railway CLI are pinned in the shared workflow.
+token. Security checks use preinstalled Gitleaks, Semgrep, and Trivy on
+`ci-security`; there is no Socket scan. Go and the checksum-verified Railway CLI
+are pinned in the shared deployment workflow on `node-24`. Build checks use
+`ci-rust` and `ci-go` runners with their preinstalled toolchains.
 CI checks Go formatting, module integrity, vet, environment isolation, and
 deployment-gate behavior without Railway credentials.
 
