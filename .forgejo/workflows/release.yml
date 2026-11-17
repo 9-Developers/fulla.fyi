@@ -9,7 +9,7 @@ jobs:
   validate:
     # Enable only after production infrastructure, DNS, and token are ready.
     if: vars.PRODUCTION_DEPLOY_ENABLED == 'true'
-    runs-on: node24
+    runs-on: node-24
     timeout-minutes: 5
     steps:
       - name: Check out release
