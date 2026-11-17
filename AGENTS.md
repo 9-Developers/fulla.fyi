@@ -22,7 +22,7 @@ https://linear.app/ixirsii/project/fullafyi-8960c5ab9048
 - Axum server, Askama templates, vendored HTMX, and embedded public assets.
 - Tailwind CSS and Catppuccin themes already exist. CI and Railpack pin Tailwind
   4.3.3; `build.rs` requires a `tailwindcss` executable on `PATH`.
-- The server currently serves the home page, error pages, static assets, and
+- The server currently serves the home page, `/licenses`, error pages, static assets, and
   `/health`. The health endpoint checks the stateless draft only.
 - SQLx/PostgreSQL, Argon2, axum-login, and tower-sessions dependencies are present,
   but database integration and authentication are not implemented.
@@ -82,6 +82,20 @@ Preserve accessible labels, keyboard interaction, responsive layouts, and themes
 
 ### Assets
 
+`/licenses` embeds `THIRD_PARTY_NOTICES.md` and `licenses/rust.txt`.
+Update the frontend inventory and preserve upstream notices when changing assets.
+Regenerate Rust notices with pinned cargo-about 0.9.3 (install with `--features cli`)
+after dependency changes; see README. CI uses cargo-deny 0.21.0 to enforce
+`deny.toml` and checks generated notice freshness. Keep `about.toml` and
+`deny.toml` license choices aligned. The four flavor icons use MIT-licensed Fluent
+Emoji High Contrast SVGs with `currentColor`. Provenance for the Discord, expand,
+and system SVGs remains under review in 9DEV-88.
+
+Rust license clarifications in `about.toml` preserve upstream copyright notices.
+Review source license changes before updating checksums. CI runs
+`sh .forgejo/scripts/check-license-notices.sh` to reject canonical MIT placeholders;
+generation success and freshness alone do not verify attribution completeness.
+
 Edit `src/style/` rather than generated `src/public/main.css`. The build script
 currently writes compiled CSS there only when its contents change.
 Add declarations to `STATIC_ASSETS` when adding embedded assets and use
@@ -113,9 +127,18 @@ tests should exercise PostgreSQL migrations and authorization boundaries.
 
 ## CI and deployment
 
-Forgejo build CI currently runs on `node24`, installs Rust and Tailwind, then
-checks formatting, strict Clippy, tests, and a locked build. Preserve the
-trusted/untrusted security workflow separation.
+Forgejo build CI uses `ci-rust` for Rust checks and `ci-go` for Railway
+configuration and Node deployment-gate tests. Rust and Go are supplied by the
+runners; the Rust job installs Tailwind 4.3.3 before checking formatting, strict
+Clippy, tests, and a locked build.
+
+`security.yml` uses `ci-security` runners with preinstalled Gitleaks, Semgrep,
+and Trivy. It runs on pushes to `main` and through `workflow_call`; pull requests
+currently run build checks only. There are no separate trusted/untrusted security
+workflows or Socket scan. Keep repository secrets out of untrusted PR jobs.
+
+Forgejo reusable workflows accept `inputs` and `outputs` under `workflow_call`,
+not `secrets`. Pass secrets through the caller's `jobs.<job_id>.secrets` mapping.
 
 Railway is configured through `.railway/railway.go` and `railpack.json`.
 The `fulla.fyi` partial manages the application and Postgres independently in
@@ -124,12 +147,14 @@ database helper provisions a fresh volume. Register domains `beta.fulla.fyi` and
 `fulla.fyi` respectively in the dashboard at port 3000; the pinned CLI cannot
 register new domains via IaC. Production is not provisioned yet.
 Go module dependencies are pinned in `.railway/`.
-CI uses Go 1.27.4 and Railway CLI 5.74.1. Preview with
+The shared deployment workflow runs on `node-24` and installs Go 1.27.4 and
+checksum-verified Railway CLI 5.74.1. The build workflow uses its `ci-go`
+runner's Go version rather than installing a pinned version. Preview with
 `railway config plan --environment staging` and apply with
 `railway config apply --environment staging`; configuration evaluation is
 separate from source deployment.
 
-Pushes to `main` deploy staging after build and trusted security checks.
+Pushes to `main` deploy staging after build and security checks.
 Releases use validated `vMAJOR.MINOR.PATCH` tags whose commits are on `main`
 and have a successful staging deployment recorded in Forgejo run history.
 Production jobs require repository variable `PRODUCTION_DEPLOY_ENABLED=true`.

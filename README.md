@@ -8,10 +8,47 @@
 
 Share wishlists with your friends.
 
-The current Rust draft serves the home page and bundled assets. A local `.env` is
+The current Rust draft serves the home page, `/licenses`, and bundled assets. A local `.env` is
 loaded when present; `PORT` defaults to `3000` and `RUST_LOG` to `info`.
 Invalid supplied values fail startup. `/health` checks this stateless draft only:
 the database pool and product schema are not yet connected to the server.
+
+## Dependency licenses
+
+The footer links to `/licenses`, which embeds `THIRD_PARTY_NOTICES.md` and
+`licenses/rust.txt` in the executable. Include these files and `LICENSE` when
+redistributing the application. The frontend inventory includes externally
+loaded Sora fonts and the four MIT-licensed Fluent Emoji theme icons.
+Provenance for the Discord, expand, and system SVGs is still being confirmed.
+
+Install the pinned tools and regenerate Rust notices after dependency updates:
+
+```sh
+cargo install cargo-about --version 0.9.3 --locked --features cli
+cargo install cargo-deny --version 0.21.0 --locked
+cargo deny --locked check licenses
+cargo about generate --locked --fail licenses/rust.hbs -o licenses/rust.txt
+sh .forgejo/scripts/check-license-notices.sh
+```
+
+Commit the generated file. CI checks the license policy, rejects canonical MIT
+copyright placeholders, and compares regenerated notices. `about.toml` includes
+checksum-verified license clarifications where automatic discovery loses upstream
+attribution. Git clarifications use each published crate's recorded commit.
+Review changed upstream texts before updating their checksums; never fix the
+generated report by hand. This targeted check does not replace attribution review.
+`.gitattributes` preserves the report's upstream line endings for exact CI comparison.
+`about.toml` selects permissive alternatives and includes build,
+development, and target-specific dependencies. Keep its accepted licenses
+aligned with `deny.toml`; review new licenses before extending either list.
+Normal application builds use the committed notices and need neither tool.
+
+For frontend additions or upgrades, record the exact upstream source/version,
+license, copyright notice, and any required NOTICE text in
+`THIRD_PARTY_NOTICES.md`. Preserve license comments during minification.
+Review platform libraries (such as system OpenSSL), container/base-image packages,
+and deployment tooling separately when distributing them; Cargo's inventory
+does not cover those components.
 
 ## Railway deployment
 
@@ -65,12 +102,12 @@ changed by an IaC apply.
 
 | Trigger                  | Target                   | Workflow                            |
 | ------------------------ | ------------------------ | ----------------------------------- |
-| Pull request             | Checks only              | Build and untrusted security checks |
+| Pull request             | Checks only              | Build checks |
 | Push to `main`           | Staging                  | `deploy.yml`                        |
 | Tag `vMAJOR.MINOR.PATCH` | Production, once enabled | `release.yml`                       |
 
 Both deployment workflows run build and trusted security checks before calling
-`railway-deploy.yml`. The shared workflow plans and applies IaC, uploads the
+`railway.yml`. The shared workflow plans and applies IaC, uploads the
 checked-out commit, then waits for that deployment's health check to succeed.
 A successful build alone is not a successful deployment. Deployments are
 serialized per environment; staging and production can run independently.
@@ -92,12 +129,14 @@ Configure these Forgejo repository secrets:
 - `RAILWAY_STAGING_TOKEN`: Railway project token scoped to **staging**.
 - `RAILWAY_PRODUCTION_TOKEN`: separate project token scoped to **production**,
   added when production is created.
-- `SOCKET_SECURITY_API_KEY`: used by trusted security checks.
 
 The former `RAILWAY_TOKEN` repository secret can be renamed to
 `RAILWAY_STAGING_TOKEN`. The service is named `fulla.fyi` in each environment.
 The production history check uses the built-in Forgejo job token, not a Railway
-token. Go and the checksum-verified Railway CLI are pinned in the shared workflow.
+token. Security checks use preinstalled Gitleaks, Semgrep, and Trivy on
+`ci-security`; there is no Socket scan. Go and the checksum-verified Railway CLI
+are pinned in the shared deployment workflow on `node-24`. Build checks use
+`ci-rust` and `ci-go` runners with their preinstalled toolchains.
 CI checks Go formatting, module integrity, vet, environment isolation, and
 deployment-gate behavior without Railway credentials.
 

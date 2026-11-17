@@ -13,9 +13,11 @@ use crate::static_assets;
 
 pub use error::*;
 pub use home::*;
+pub use licenses::*;
 
 mod error;
 mod home;
+mod licenses;
 
 /// Get app routes.
 pub fn get_routes() -> Router {
@@ -23,6 +25,7 @@ pub fn get_routes() -> Router {
         .route("/.well-known/{*path}", get(well_known_asset))
         .route("/static/{*path}", get(static_asset))
         .route("/", get(home))
+        .route("/licenses", get(licenses))
         .route("/health", get(health))
         .fallback(not_found)
 }

@@ -40,9 +40,7 @@ jobs:
 
   security:
     needs: validate
-    uses: ./.forgejo/workflows/security-trusted.yml
-    secrets:
-      SOCKET_SECURITY_API_KEY: ${{ secrets.SOCKET_SECURITY_API_KEY }}
+    uses: ./.forgejo/workflows/security.yml
 
   production:
     needs: [build, security]

@@ -1,0 +1,149 @@
+# Order selects MIT when a crate offers MIT OR Apache-2.0.
+accepted = ["MIT", "BSD-3-Clause", "Apache-2.0", "Unicode-3.0", "Zlib"]
+# Include build, development, and target-specific dependencies for portable notices.
+ignore-build-dependencies = false
+ignore-dev-dependencies = false
+
+# Explicit, checksum-verified sources prevent canonical MIT text from replacing
+# upstream attribution. Git sources use each package's .cargo_vcs_info.json
+# revision, not a moving branch. Keep full combined notices where applicable.
+[chrono.clarify]
+license = "MIT OR Apache-2.0"
+[[chrono.clarify.files]]
+path = "LICENSE.txt"
+license = "MIT"
+checksum = "946c9835d8034d24404f8cfec5f4654cee5dad17e944afc3d06d742cf2882831"
+
+# These workspace packages omit the repository-level license from their archives.
+[axum-login.clarify]
+license = "MIT"
+[[axum-login.clarify.git]]
+path = "LICENSE"
+checksum = "f15bf5474582f725b331ee8a5e19121ac3f6cd5c4fe508b5c7172017241e5129"
+
+[include_dir.clarify]
+license = "MIT"
+[[include_dir.clarify.git]]
+path = "LICENSE"
+checksum = "9369f62987b3a116111f2edfdc4cc72633e44ddc94d5d0c68659cf537b76a31f"
+
+[include_dir_macros.clarify]
+license = "MIT"
+[[include_dir_macros.clarify.git]]
+path = "LICENSE"
+checksum = "9369f62987b3a116111f2edfdc4cc72633e44ddc94d5d0c68659cf537b76a31f"
+
+[tower-sessions-core.clarify]
+license = "MIT"
+[[tower-sessions-core.clarify.git]]
+path = "LICENSE"
+checksum = "81e729db46699dc38143ab423791259022f35ef8b331702d4540a0f3dbe3d7bf"
+
+[tower-sessions-memory-store.clarify]
+license = "MIT"
+[[tower-sessions-memory-store.clarify.git]]
+path = "LICENSE"
+checksum = "81e729db46699dc38143ab423791259022f35ef8b331702d4540a0f3dbe3d7bf"
+
+# r-efi puts its license grants and copyright notices in AUTHORS. The reviewed
+# prefix is identical in 5.3.0 and 6.0.0; their contributor lists differ.
+[r-efi.clarify]
+license = "MIT OR Apache-2.0 OR LGPL-2.1-or-later"
+[[r-efi.clarify.files]]
+path = "AUTHORS"
+license = "MIT"
+end = "Copyright (C) 2022-2023 David Rheinsberg"
+checksum = "c28af14b3ce4c329bce72f39b666d703ecb6b6081ccda612bba5e7135131c3e7"
+
+# Packaged SQLx license files contain only "../LICENSE-MIT".
+[sqlx-core.clarify]
+license = "MIT OR Apache-2.0"
+[[sqlx-core.clarify.git]]
+path = "LICENSE-MIT"
+license = "MIT"
+checksum = "5abbdd842310c8f1650fcde3a5a51a3e09412b9e5a6eea87519e0db9e32b339d"
+
+[sqlx-macros.clarify]
+license = "MIT OR Apache-2.0"
+[[sqlx-macros.clarify.git]]
+path = "LICENSE-MIT"
+license = "MIT"
+checksum = "5abbdd842310c8f1650fcde3a5a51a3e09412b9e5a6eea87519e0db9e32b339d"
+
+[sqlx-macros-core.clarify]
+license = "MIT OR Apache-2.0"
+[[sqlx-macros-core.clarify.git]]
+path = "LICENSE-MIT"
+license = "MIT"
+checksum = "5abbdd842310c8f1650fcde3a5a51a3e09412b9e5a6eea87519e0db9e32b339d"
+
+[sqlx-postgres.clarify]
+license = "MIT OR Apache-2.0"
+[[sqlx-postgres.clarify.git]]
+path = "LICENSE-MIT"
+license = "MIT"
+checksum = "5abbdd842310c8f1650fcde3a5a51a3e09412b9e5a6eea87519e0db9e32b339d"
+
+# whoami keeps its copyright in README.md, separate from the MIT license text.
+[whoami.clarify]
+license = "Apache-2.0 OR BSL-1.0 OR MIT"
+[[whoami.clarify.files]]
+path = "LICENSE_MIT"
+license = "MIT"
+checksum = "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+[[whoami.clarify.files]]
+path = "README.md"
+license = "MIT"
+start = "Copyright © 2017-2026 The WhoAmI Contributors."
+end = "Copyright © 2017-2026 The WhoAmI Contributors."
+checksum = "c152033f90133d61624090aa8b786cc621e6592a334be136f0d2401bef99df1a"
+
+# These crates ship lowercase license filenames.
+[windows-core.clarify]
+license = "MIT OR Apache-2.0"
+[[windows-core.clarify.files]]
+path = "license-mit"
+license = "MIT"
+checksum = "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+
+[windows-implement.clarify]
+license = "MIT OR Apache-2.0"
+[[windows-implement.clarify.files]]
+path = "license-mit"
+license = "MIT"
+checksum = "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+
+[windows-interface.clarify]
+license = "MIT OR Apache-2.0"
+[[windows-interface.clarify.files]]
+path = "license-mit"
+license = "MIT"
+checksum = "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+
+[windows-link.clarify]
+license = "MIT OR Apache-2.0"
+[[windows-link.clarify.files]]
+path = "license-mit"
+license = "MIT"
+checksum = "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+
+[windows-result.clarify]
+license = "MIT OR Apache-2.0"
+[[windows-result.clarify.files]]
+path = "license-mit"
+license = "MIT"
+checksum = "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+
+[windows-strings.clarify]
+license = "MIT OR Apache-2.0"
+[[windows-strings.clarify.files]]
+path = "license-mit"
+license = "MIT"
+checksum = "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+
+[windows-sys.clarify]
+license = "MIT OR Apache-2.0"
+[[windows-sys.clarify.files]]
+path = "license-mit"
+license = "MIT"
+checksum = "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"

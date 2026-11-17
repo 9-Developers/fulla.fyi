@@ -11,8 +11,6 @@ jobs:
 
   security:
     uses: ./.forgejo/workflows/security.yml
-    secrets:
-      SOCKET_SECURITY_API_KEY: ${{ secrets.SOCKET_SECURITY_API_KEY }}
 
   staging:
     needs: [build, security]
