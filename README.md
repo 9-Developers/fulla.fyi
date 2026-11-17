@@ -63,7 +63,7 @@ dashboard, both targeting port 3000. The pinned CLI cannot register new custom
 domains through IaC, so domains are dashboard-managed. Other environment names
 are rejected by the Go configuration.
 
-The application uses Railpack with Tailwind 4.3.3 from `railpack.json`, builds with
+The application uses Railpack with Tailwind 4.3.5 from `railpack.json`, builds with
 `cargo build --release --locked`, and starts `./fulla_fyi`. Railway probes
 `/health` with a 300-second timeout and retries failed processes up to 10 times.
 Source, template, migration, build configuration, and `.railway/**` changes are
@@ -184,6 +184,18 @@ Install the pinned Rust toolchain and Tailwind CLI. Start PostgreSQL 18 and set
 ```sh
 docker run --name fulla-postgres -e POSTGRES_PASSWORD=fulla_local \
   -p 127.0.0.1:5432:5432 -d postgres:18
+ready=false
+for attempt in $(seq 1 60); do
+  if docker exec fulla-postgres pg_isready -h 127.0.0.1 -U postgres; then
+    ready=true
+    break
+  fi
+  sleep 1
+done
+if [ "$ready" != true ]; then
+  echo "PostgreSQL did not become ready within 60 attempts" >&2
+  exit 1
+fi
 export DATABASE_URL=postgres://postgres:fulla_local@localhost:5432/postgres
 cargo run --locked -- migrate
 cargo run --locked

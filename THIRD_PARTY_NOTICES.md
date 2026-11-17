@@ -10,8 +10,8 @@ Both this file and those Rust notices are embedded in the /licenses page.
 - HTMX 4.0.0 — src/public/htmx.min.js
   Source: https://github.com/bigskysoftware/htmx/tree/v4.0.0
   License: 0BSD (included voluntarily below).
-- Tailwind CSS 4.3.3 — generated src/public/main.css
-  Source: https://github.com/tailwindlabs/tailwindcss/tree/v4.3.3
+- Tailwind CSS 4.3.5 — generated src/public/main.css
+  Source: https://github.com/tailwindlabs/tailwindcss/tree/v4.3.5
   License: MIT.
 - Catppuccin palette — src/style/theme.css, compiled into main.css
   Source: https://github.com/catppuccin/catppuccin

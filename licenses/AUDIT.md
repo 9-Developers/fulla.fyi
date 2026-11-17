@@ -38,7 +38,7 @@ placeholders; Apache's unfilled example appendix is legitimate license text.
 The guard is a regression check, not a comprehensive legal/completeness audit.
 
 The manually maintained browser inventory is in `THIRD_PARTY_NOTICES.md`.
-HTMX's v4.0.0 license and Tailwind's v4.3.3 license were checked against
+HTMX's v4.0.0 license and Tailwind's v4.3.5 license were checked against
 their tagged upstream sources. Catppuccin and Google Fonts' Sora notices
 were checked against their upstream license files. The original Catppuccin
 palette import does not record a revision. Sora is fetched remotely.

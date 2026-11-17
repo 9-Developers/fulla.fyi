@@ -21,7 +21,7 @@ https://linear.app/ixirsii/project/fullafyi-8960c5ab9048
 - Rust 2024 with Rust 1.97.1 pinned in `rust-toolchain.toml`.
 - Axum server, Askama templates, vendored HTMX, and embedded public assets.
 - Tailwind CSS and Catppuccin themes already exist. CI and Railpack pin Tailwind
-  4.3.3; `build.rs` requires a `tailwindcss` executable on `PATH`.
+  4.3.5; `build.rs` requires a `tailwindcss` executable on `PATH`.
 - The server currently serves the home page, `/licenses`, error pages, static assets, and
   `/health`. The health endpoint checks PostgreSQL connectivity.
 - SQLx/PostgreSQL uses shared application state and a bounded connection pool.
@@ -137,7 +137,7 @@ tests should exercise PostgreSQL migrations and authorization boundaries.
 
 Forgejo build CI uses `ci-rust` for Rust checks and `ci-go` for Railway
 configuration and Node deployment-gate tests. Rust and Go are supplied by the
-runners; the Rust job installs Tailwind 4.3.3 before checking formatting, strict
+runners; the Rust job installs Tailwind 4.3.5 before checking formatting, strict
 Clippy, tests, and a locked build.
 
 `security.yml` uses `ci-security` runners with preinstalled Gitleaks, Semgrep,

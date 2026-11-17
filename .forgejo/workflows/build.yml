@@ -81,7 +81,7 @@ jobs:
 
       - name: Install Tailwind CSS
         run: |
-          npm install --no-save --no-package-lock @tailwindcss/cli@4.3.3 tailwindcss@4.3.3
+          npm install --no-save --no-package-lock @tailwindcss/cli@4.3.5 tailwindcss@4.3.5
           echo "$PWD/node_modules/.bin" >> "$FORGEJO_PATH"
 
       - name: Format check
