@@ -14,5 +14,6 @@ Used by:
 - {{crate.name}} {{crate.version}} (https://crates.io/crates/{{crate.name}}/{{crate.version}})
 {{/each}}
 
-{{{text}}}
+{{! Plain-text output preserves license text verbatim; Askama escapes it in templates/licenses.html. }}
+{{{text}}}{{! nosemgrep: javascript.express.security.audit.xss.mustache.explicit-unescape.template-explicit-unescape }}
 {{/each}}
