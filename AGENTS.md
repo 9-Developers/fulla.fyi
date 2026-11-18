@@ -26,7 +26,8 @@ https://linear.app/ixirsii/project/fullafyi-8960c5ab9048
   `/health`. The health endpoint checks PostgreSQL connectivity.
 - SQLx/PostgreSQL uses shared application state and a bounded connection pool.
   Startup validates embedded migration history; `fulla_fyi migrate` applies it.
-  Authentication and persistent sessions are not implemented.
+  Registration/login/logout and PostgreSQL-backed sessions are implemented.
+  `/account` is protected; wishlist and group authorization remains planned.
 - The V0 schema models users, owned groups/lists, memberships, sharing grants,
   items, notes, attributed purchases, media assets, and owned avatar/list-media
   references. R2 uploads and Cloudflare Images transformations remain planned
@@ -64,6 +65,7 @@ precedence. Preserve existing `.env` files.
 | `PORT`     | `3000`  | Listen port on `0.0.0.0` |
 | `RUST_LOG` | `info`  | Tracing filter           |
 | `DATABASE_URL` | required | PostgreSQL URL      |
+| `SESSION_SECURE` | `true` | Secure auth cookies; set `false` only for local HTTP |
 
 Invalid supplied values fail startup. Railway IaC supplies `DATABASE_URL` as a
 reference to Postgres. Keep secrets
@@ -73,6 +75,8 @@ out of source control and public assets, which are embedded in the executable.
 
 - `src/main.rs`: startup, environment parsing, logging, and HTTP listener.
 - `src/database.rs`: pool, application state, migration checks, and database tests.
+- `src/auth/`: axum-login backend, PostgreSQL session store, password policy,
+  shared database rate limits, and authentication integration tests.
 - `src/route/`: routing and page handlers; `error.rs` renders safe error pages.
 - `templates/`: Askama HTML pages; use server-rendered pages and HTMX fragments
   for product interactions.
@@ -128,6 +132,15 @@ HTMX requests. Revoked sharing grants and group membership changes must affect
 access consistently. Keep purchase-record permissions separate from list editing.
 Validate item URLs and quantities on the server. Store password hashes, use
 persistent sessions, and protect state-changing forms when implementing accounts.
+
+Account forms use synchronizer CSRF tokens and Argon2id password hashes. Reuse
+`auth::password_policy` when implementing password changes/resets (12–128 UTF-8
+bytes, zxcvbn score >= 3); never apply strength policy at login. Sessions rotate on
+login and are deleted on logout. Session-store updates must not recreate deleted
+sessions. Keep auth responses uncached and cookies Secure in deployed environments.
+Use axum-login's tower-sessions re-export and `auth.session` in handlers rather
+than a direct dependency or separate Session extractor. The custom store uses the
+application's SQLx 0.9 pool and forward migrations.
 
 Test meaningful domain behavior: quantity changes, partial purchases, concurrent
 purchase updates, sorting, ownership, sharing grants, and revocation. Integration

@@ -9,6 +9,7 @@ use tracing_subscriber::EnvFilter;
 
 pub use crate::route::*;
 
+mod auth;
 mod database;
 mod route;
 pub mod static_assets;
@@ -43,6 +44,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Ok(());
     }
     database::check_schema(&pool).await?;
+    let secure_cookies = match std::env::var("SESSION_SECURE") {
+        Ok(value) if value == "true" => true,
+        Ok(value) if value == "false" => false,
+        Err(VarError::NotPresent) => true,
+        _ => return Err("SESSION_SECURE must be true or false".into()),
+    };
+    let routes = get_routes(database::AppState { pool: pool.clone() }, secure_cookies).await?;
+    tokio::spawn(auth::cleanup(pool));
     let port = configured_port()?;
     let address = format!("0.0.0.0:{port}");
     let listener = TcpListener::bind(&address).await?;
@@ -50,7 +59,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     serve(
         listener,
-        get_routes(database::AppState { pool }).into_make_service_with_connect_info::<SocketAddr>(),
+        routes.into_make_service_with_connect_info::<SocketAddr>(),
     )
     .await?;
 

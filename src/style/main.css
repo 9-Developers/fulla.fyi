@@ -42,6 +42,10 @@
  * ************************************************************************** */
 
 @layer base {
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ctp-blue;
+  }
+
   body {
     @apply bg-ctp-base;
     @apply min-h-screen;
@@ -264,6 +268,30 @@
  * ************************************************************************** */
 
 @layer components {
+  .account-panel {
+    @apply mx-auto w-full max-w-lg px-4;
+  }
+
+  .account-form {
+    @apply flex flex-col gap-3 mb-6;
+  }
+
+  .account-form input:not([type="hidden"]) {
+    @apply w-full min-w-0 rounded-md border border-ctp-overlay0 bg-ctp-mantle p-3 text-ctp-text;
+  }
+
+  .account-form label {
+    @apply font-semibold;
+  }
+
+  .account-form p {
+    @apply text-sm text-ctp-subtext1;
+  }
+
+  .form-error {
+    @apply rounded-md border border-ctp-red p-3;
+  }
+
   footer {
     @apply mx-auto max-w-5xl px-4 py-8 text-sm text-ctp-subtext0;
   }

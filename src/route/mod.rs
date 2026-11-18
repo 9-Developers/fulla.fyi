@@ -11,25 +11,71 @@ use axum::{
 
 use crate::database::AppState;
 use crate::static_assets;
+use axum_login::tower_sessions;
 
 pub use error::*;
 pub use home::*;
 pub use licenses::*;
 
+mod auth;
 mod error;
 mod home;
 mod licenses;
 
 /// Get app routes.
-pub fn get_routes(state: AppState) -> Router {
-    Router::new()
+///
+/// # Errors
+/// Returns an error if the authentication backend cannot initialize.
+pub async fn get_routes(
+    state: AppState,
+    secure_cookies: bool,
+) -> Result<Router, crate::auth::AuthError> {
+    let backend = crate::auth::Backend::new(state.pool.clone()).await?;
+    let sessions =
+        tower_sessions::SessionManagerLayer::new(crate::auth::store::Store(state.pool.clone()))
+            .with_name(if secure_cookies {
+                "__Host-fulla_session"
+            } else {
+                "fulla_session"
+            })
+            .with_secure(secure_cookies)
+            .with_http_only(true)
+            .with_same_site(tower_sessions::cookie::SameSite::Lax)
+            .with_expiry(tower_sessions::Expiry::OnInactivity(
+                time::Duration::minutes(30),
+            ));
+    let accounts = Router::new()
+        .route("/register", get(auth::register_page).post(auth::register))
+        .route("/login", get(auth::login_page).post(auth::login))
+        .route("/logout", get(auth::logout_page).post(auth::logout))
+        .route("/account", get(auth::account))
+        .layer(axum::extract::DefaultBodyLimit::max(16 * 1024))
+        .layer(axum_login::AuthManagerLayerBuilder::new(backend, sessions).build())
+        .layer(axum::middleware::from_fn(no_store));
+    Ok(Router::new()
+        .merge(accounts)
         .route("/.well-known/{*path}", get(well_known_asset))
         .route("/static/{*path}", get(static_asset))
         .route("/", get(home))
         .route("/licenses", get(licenses))
         .route("/health", get(health))
         .fallback(not_found)
-        .with_state(state)
+        .with_state(state))
+}
+
+async fn no_store(request: axum::extract::Request, next: axum::middleware::Next) -> Response {
+    let mut response = next.run(request).await;
+    response
+        .headers_mut()
+        .insert(header::CACHE_CONTROL, HeaderValue::from_static("no-store"));
+    response.headers_mut().insert(
+        header::REFERRER_POLICY,
+        HeaderValue::from_static("same-origin"),
+    );
+    response
+        .headers_mut()
+        .insert(header::X_FRAME_OPTIONS, HeaderValue::from_static("DENY"));
+    response
 }
 
 async fn health(State(state): State<AppState>) -> StatusCode {

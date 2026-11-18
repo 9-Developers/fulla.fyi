@@ -775,6 +775,7 @@ Used by:
 - wasm-bindgen-macro 0.2.126 (https://crates.io/crates/wasm-bindgen-macro/0.2.126)
 - wasm-bindgen-shared 0.2.126 (https://crates.io/crates/wasm-bindgen-shared/0.2.126)
 - wasm-bindgen 0.2.126 (https://crates.io/crates/wasm-bindgen/0.2.126)
+- web-sys 0.3.103 (https://crates.io/crates/web-sys/0.3.103)
 
 Copyright (c) 2014 Alex Crichton
 
@@ -935,6 +936,7 @@ Used by:
 - num-traits 0.2.19 (https://crates.io/crates/num-traits/0.2.19)
 - regex-automata 0.4.18 (https://crates.io/crates/regex-automata/0.4.18)
 - regex-syntax 0.8.11 (https://crates.io/crates/regex-syntax/0.8.11)
+- regex 1.13.1 (https://crates.io/crates/regex/1.13.1)
 
 Copyright (c) 2014 The Rust Project Developers
 
@@ -1023,6 +1025,7 @@ MIT License
 
 Used by:
 - either 1.17.0 (https://crates.io/crates/either/1.17.0)
+- itertools 0.14.0 (https://crates.io/crates/itertools/0.14.0)
 
 Copyright (c) 2015
 
@@ -1603,6 +1606,39 @@ DEALINGS IN THE SOFTWARE.
 MIT License
 
 Used by:
+- fnv 1.0.7 (https://crates.io/crates/fnv/1.0.7)
+
+Copyright (c) 2017 Contributors
+
+Permission is hereby granted, free of charge, to any
+person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the
+Software without restriction, including without
+limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice
+shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+MIT License
+
+Used by:
 - vcpkg 0.2.15 (https://crates.io/crates/vcpkg/0.2.15)
 
 Copyright (c) 2017 Jim McGrath
@@ -2060,40 +2096,6 @@ Used by:
 - block-buffer 0.12.1 (https://crates.io/crates/block-buffer/0.12.1)
 
 Copyright (c) 2018-2025 The RustCrypto Project Developers
-
-Permission is hereby granted, free of charge, to any
-person obtaining a copy of this software and associated
-documentation files (the "Software"), to deal in the
-Software without restriction, including without
-limitation the rights to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software
-is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice
-shall be included in all copies or substantial portions
-of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
-ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
-SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
-IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-
-
---------------------------------------------------------------------------------
-MIT License
-
-Used by:
-- getrandom 0.3.4 (https://crates.io/crates/getrandom/0.3.4)
-
-Copyright (c) 2018-2025 The rust-random Project Developers
-Copyright (c) 2014 The Rust Project Developers
 
 Permission is hereby granted, free of charge, to any
 person obtaining a copy of this software and associated
@@ -2870,6 +2872,40 @@ SOFTWARE.
 MIT License
 
 Used by:
+- bit-set 0.8.0 (https://crates.io/crates/bit-set/0.8.0)
+- bit-vec 0.8.0 (https://crates.io/crates/bit-vec/0.8.0)
+
+Copyright (c) 2023 The Rust Project Developers
+
+Permission is hereby granted, free of charge, to any
+person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the
+Software without restriction, including without
+limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice
+shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+MIT License
+
+Used by:
 - hyper-util 0.1.20 (https://crates.io/crates/hyper-util/0.1.20)
 
 Copyright (c) 2023-2025 Sean McArthur
@@ -3096,11 +3132,8 @@ MIT License
 Used by:
 - rand 0.10.2 (https://crates.io/crates/rand/0.10.2)
 - rand 0.8.7 (https://crates.io/crates/rand/0.8.7)
-- rand 0.9.5 (https://crates.io/crates/rand/0.9.5)
 - rand_chacha 0.3.1 (https://crates.io/crates/rand_chacha/0.3.1)
-- rand_chacha 0.9.0 (https://crates.io/crates/rand_chacha/0.9.0)
 - rand_core 0.6.4 (https://crates.io/crates/rand_core/0.6.4)
-- rand_core 0.9.5 (https://crates.io/crates/rand_core/0.9.5)
 
 Copyright 2018 Developers of the Rand project
 Copyright (c) 2014 The Rust Project Developers
@@ -3224,7 +3257,6 @@ Copyright © 2017-2026 The WhoAmI Contributors.
 MIT License
 
 Used by:
-- r-efi 5.3.0 (https://crates.io/crates/r-efi/5.3.0)
 - r-efi 6.0.0 (https://crates.io/crates/r-efi/6.0.0)
 
 LICENSE:
@@ -3323,6 +3355,37 @@ Used by:
 MIT License
 
 Copyright (c) 2017 Michael Bryan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+MIT License
+
+Used by:
+- darling 0.20.11 (https://crates.io/crates/darling/0.20.11)
+- darling_core 0.20.11 (https://crates.io/crates/darling_core/0.20.11)
+- darling_macro 0.20.11 (https://crates.io/crates/darling_macro/0.20.11)
+
+MIT License
+
+Copyright (c) 2017 Ted Driggs
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -3557,10 +3620,7 @@ MIT License
 
 Used by:
 - tower-sessions-core 0.14.0 (https://crates.io/crates/tower-sessions-core/0.14.0)
-- tower-sessions-core 0.15.0 (https://crates.io/crates/tower-sessions-core/0.15.0)
-- tower-sessions-memory-store 0.15.0 (https://crates.io/crates/tower-sessions-memory-store/0.15.0)
 - tower-sessions 0.14.0 (https://crates.io/crates/tower-sessions/0.14.0)
-- tower-sessions 0.15.0 (https://crates.io/crates/tower-sessions/0.15.0)
 
 MIT License
 
@@ -3648,6 +3708,7 @@ SOFTWARE.
 MIT License
 
 Used by:
+- ident_case 1.0.1 (https://crates.io/crates/ident_case/1.0.1)
 - whoami 2.1.2 (https://crates.io/crates/whoami/2.1.2)
 
 MIT License
@@ -3732,8 +3793,6 @@ Used by:
 - thiserror 2.0.20 (https://crates.io/crates/thiserror/2.0.20)
 - unicode-ident 1.0.24 (https://crates.io/crates/unicode-ident/1.0.24)
 - wasi 0.11.1+wasi-snapshot-preview1 (https://crates.io/crates/wasi/0.11.1+wasi-snapshot-preview1)
-- wasip2 1.0.4+wasi-0.2.12 (https://crates.io/crates/wasip2/1.0.4+wasi-0.2.12)
-- wit-bindgen 0.57.1 (https://crates.io/crates/wit-bindgen/0.57.1)
 - zmij 1.0.23 (https://crates.io/crates/zmij/1.0.23)
 
 Permission is hereby granted, free of charge, to any
@@ -4083,6 +4142,35 @@ limitations under the License.
 MIT License
 
 Used by:
+- fancy-regex 0.18.0 (https://crates.io/crates/fancy-regex/0.18.0)
+
+The MIT License
+
+Copyright 2015 The Fancy Regex Authors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+MIT License
+
+Used by:
 - android_system_properties 0.1.5 (https://crates.io/crates/android_system_properties/0.1.5)
 
 The MIT License (MIT)
@@ -4198,6 +4286,7 @@ THE SOFTWARE.
 MIT License
 
 Used by:
+- aho-corasick 1.1.5 (https://crates.io/crates/aho-corasick/1.1.5)
 - byteorder 1.5.0 (https://crates.io/crates/byteorder/1.5.0)
 - memchr 2.8.3 (https://crates.io/crates/memchr/2.8.3)
 
@@ -4222,6 +4311,37 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+MIT License
+
+Used by:
+- strsim 0.11.1 (https://crates.io/crates/strsim/0.11.1)
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Danny Guo
+Copyright (c) 2016 Titus Wormer <tituswormer@gmail.com>
+Copyright (c) 2018 Akash Kurdekar
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 
 --------------------------------------------------------------------------------
@@ -4286,6 +4406,37 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 MIT License
 
 Used by:
+- derive_builder 0.20.2 (https://crates.io/crates/derive_builder/0.20.2)
+- derive_builder_core 0.20.2 (https://crates.io/crates/derive_builder_core/0.20.2)
+- derive_builder_macro 0.20.2 (https://crates.io/crates/derive_builder_macro/0.20.2)
+
+The MIT License (MIT)
+
+Copyright (c) 2016 rust-derive-builder contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+MIT License
+
+Used by:
 - crossbeam-queue 0.3.13 (https://crates.io/crates/crossbeam-queue/0.3.13)
 - crossbeam-utils 0.8.22 (https://crates.io/crates/crossbeam-utils/0.8.22)
 
@@ -4316,6 +4467,34 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
 IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+MIT License
+
+Used by:
+- zxcvbn 3.1.1 (https://crates.io/crates/zxcvbn/3.1.1)
+
+The MIT License (MIT)
+Copyright (c) 2016 Joshua Holmer
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 
 --------------------------------------------------------------------------------

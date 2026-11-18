@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="account-panel" aria-labelledby="account-heading">
+  <h2 id="account-heading">{{ title }}</h2>
+  {% if !error.is_empty() %}
+  <p class="form-error" role="alert" id="form-error">{{ error }}</p>
+  {% endif %}
+  {% if mode == "account" %}
+  <p>Welcome, {{ username }}. You are signed in.</p>
+  <p>Wishlist management is coming next.</p>
+  <form method="post" action="/logout" class="account-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <button type="submit">Sign out</button>
+  </form>
+  {% else %}
+  <form method="post" action="/{{ mode }}" class="account-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    {% if mode == "register" %}
+    <label for="username">Username</label>
+    <input id="username" name="username" value="{{ username }}" autocomplete="username" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_-]+" aria-describedby="username-help">
+    <p id="username-help">3–32 letters, numbers, underscores, or hyphens.</p>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" value="{{ email }}" autocomplete="email" required maxlength="254">
+    {% else if mode == "login" %}
+    <label for="identifier">Username or email</label>
+    <input id="identifier" name="identifier" value="{{ identifier }}" autocomplete="username" required maxlength="254">
+    {% endif %}
+    {% if mode == "register" || mode == "login" %}
+    <label for="password">Password</label>
+    {% if mode == "register" %}
+    <input id="password" name="password" type="password" autocomplete="new-password" required aria-describedby="password-help">
+    <p id="password-help">Use several unrelated words: 12–128 UTF-8 bytes and strength of at least 3 out of 4. Avoid your username and email. Spaces, paste, and password managers are welcome.</p>
+    {% else %}
+    <input id="password" name="password" type="password" autocomplete="current-password" required>
+    {% endif %}
+    {% else %}
+    <p>Sign out of this browser?</p>
+    {% endif %}
+    <button type="submit">{{ title }}</button>
+  </form>
+  {% if mode == "register" %}
+  <p>Already registered? <a href="/login">Sign in</a>.</p>
+  {% else if mode == "login" %}
+  <p>New to Fulla? <a href="/register">Create an account</a>.</p>
+  {% else %}
+  <a href="/account">Back to your account</a>
+  {% endif %}
+  {% endif %}
+</section>
+{% endblock %}

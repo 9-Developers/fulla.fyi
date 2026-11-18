@@ -39,12 +39,6 @@ license = "MIT"
 path = "LICENSE"
 checksum = "81e729db46699dc38143ab423791259022f35ef8b331702d4540a0f3dbe3d7bf"
 
-[tower-sessions-memory-store.clarify]
-license = "MIT"
-[[tower-sessions-memory-store.clarify.git]]
-path = "LICENSE"
-checksum = "81e729db46699dc38143ab423791259022f35ef8b331702d4540a0f3dbe3d7bf"
-
 # r-efi puts its license grants and copyright notices in AUTHORS. The reviewed
 # prefix is identical in 5.3.0 and 6.0.0; their contributor lists differ.
 [r-efi.clarify]

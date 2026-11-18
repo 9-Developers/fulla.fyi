@@ -8,7 +8,8 @@
 
 Share wishlists with your friends.
 
-The current Rust draft serves the home page, `/licenses`, and bundled assets. A local `.env` is
+The current Rust application serves the home page, account registration/login/logout,
+a protected `/account` page, `/licenses`, and bundled assets. A local `.env` is
 loaded when present; `PORT` defaults to `3000` and `RUST_LOG` to `info`.
 Invalid supplied values fail startup. `DATABASE_URL` is required. Startup checks
 embedded migration history; `/health` checks PostgreSQL connectivity.
@@ -247,12 +248,60 @@ Future purchase handlers must use transactions and a consistent item-row lock
 for quantity changes and submissions once the overpurchase policy is settled.
 The schema does not cap aggregate purchases at desired units.
 
-Authentication, persistent sessions, authorization, and product handlers remain
-future work. Handlers must fully validate HTTP(S) URLs; the database check is only
+Wishlist/group authorization and product handlers remain future work.
+Handlers must fully validate HTTP(S) URLs; the database check is only
 a baseline constraint. Notes support multiple entries structurally; UI/visibility
 remain undecided. Handlers must preserve purchase `recorded_at` on corrections and
 update `updated_at`. Event cutoff/timezone, rescheduling, and carryover rules
 remain open in 9DEV-72/75. Public tokens and advanced copy/merge are V1 work.
+
+### Accounts and sessions
+
+`/register`, `/login`, and `/logout` provide server-rendered forms that work without
+JavaScript. `/account` requires a signed-in user. Logout is a CSRF-protected POST;
+GET `/logout` only shows confirmation. Login accepts a username or email,
+case-insensitively. Usernames use 3–32 ASCII letters, numbers, underscores, or
+hyphens. Email addresses are trimmed and lowercased; ownership verification and
+password recovery remain V1 work.
+
+Passwords are never trimmed or truncated. Registration requires 12–128 UTF-8
+bytes and zxcvbn score **3 of 4**, penalizing the username, email, and email local
+part. Passphrases, paste, and password managers are supported. Login verifies the
+stored Argon2id hash without applying the strength policy to existing passwords.
+Future password change/reset handlers must reuse `auth::password_policy`.
+Password hashing/verification runs off the async executor, with at most four
+concurrent jobs per process. Unknown accounts also perform Argon2 verification.
+
+Sessions live in PostgreSQL and survive application restarts. Login rotates the
+session ID and CSRF token; logout deletes the session. Password hash changes
+invalidate existing logins. Signed-in sessions expire after seven days;
+anonymous form sessions expire after 30 minutes. Expired sessions and rate-limit
+records are removed hourly. Auth pages/responses use `Cache-Control: no-store`.
+
+Cookies default to Secure, HttpOnly, SameSite=Lax, path `/`, and the
+`__Host-fulla_session` name. **For local HTTP only**, run:
+
+```sh
+SESSION_SECURE=false cargo run --locked
+```
+
+`SESSION_SECURE` accepts only `true` or `false` and defaults to `true`; keep the
+default behind Railway's HTTPS termination. No forwarded header controls this
+setting. Local insecure cookies use the separate `fulla_session` name.
+
+PostgreSQL atomically enforces fixed 15-minute authentication windows across
+replicas: 10 login attempts per normalized identifier, 100 login attempts globally,
+and 30 registrations globally. Successful attempts count too; limits return 429
+with `Retry-After: 900`. These deliberately small family-beta global limits avoid
+trusting client-supplied proxy/IP headers, but one caller can exhaust the shared
+budget. Revisit them with trusted edge/IP limits before public launch. Limiter
+keys hash identifiers, never passwords. Database failures fail authentication
+closed. Auth form bodies are limited to 16 KiB.
+
+Auth integration tests exercise PostgreSQL sessions across router restarts,
+rotation/logout/expiry, CSRF, duplicate identities, validation, rate limits,
+secure cookies, normal and HTMX access, and stale writes after logout. Staging's
+HTTPS smoke test remains required once the runner is restored.
 
 ## Links
 
