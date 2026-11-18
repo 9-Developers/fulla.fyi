@@ -8,6 +8,8 @@
   {% if mode == "account" %}
   <p>Welcome, {{ username }}. You are signed in.</p>
   <p>Wishlist management is coming next.</p>
+  <!-- Askama form: src/route/auth.rs validates the session CSRF token before logout. -->
+  <!-- nosemgrep: python.django.security.django-no-csrf-token.django-no-csrf-token -->
   <form method="post" action="/logout" class="account-form">
     <input type="hidden" name="csrf" value="{{ csrf }}">
     <button type="submit">Sign out</button>
