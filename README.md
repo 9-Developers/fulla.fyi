@@ -138,6 +138,9 @@ token. Security checks use preinstalled Gitleaks, Semgrep, and Trivy on
 `ci-security`; there is no Socket scan. Go and the checksum-verified Railway CLI
 are pinned in the shared deployment workflow on `node-24`. Build checks use
 `ci-rust` and `ci-go` runners with their preinstalled toolchains.
+The FreeBSD `ci-rust` runner installs `postgresql18-server` and runs database
+tests through `.forgejo/scripts/test-postgres.sh`, which creates a disposable
+cluster using a private Unix socket and removes it when the tests finish.
 CI checks Go formatting, module integrity, vet, environment isolation, and
 deployment-gate behavior without Railway credentials.
 
