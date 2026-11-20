@@ -112,7 +112,9 @@ Review source license changes before updating checksums. CI runs
 generation success and freshness alone do not verify attribution completeness.
 
 Edit `src/style/` rather than generated `src/public/main.css`. The build script
-currently writes compiled CSS there only when its contents change.
+currently writes compiled CSS there only when its contents change. It passes
+each final file to the pinned `nine_dev_site_build` build dependency and emits
+the complete fingerprinted URL as `ASSET_URL_<source path>` for the asset table.
 Add declarations to `STATIC_ASSETS` when adding embedded assets and use
 `static_url` from templates. Tests require declarations to cover embedded files
 exactly once. Fingerprinted URLs must match their bytes and reject stale hashes.

@@ -4,7 +4,7 @@ use axum::{
     Router,
     body::Body,
     extract::{Path, State},
-    http::{HeaderValue, StatusCode, header},
+    http::{HeaderValue, StatusCode, Uri, header},
     response::{IntoResponse, Response},
     routing::get,
 };
@@ -110,8 +110,8 @@ async fn well_known_asset(Path(path): Path<String>) -> Response {
     )
 }
 
-async fn static_asset(Path(path): Path<String>) -> Response {
-    let Some(source_path) = static_assets::source_path_for_request(&path) else {
+async fn static_asset(uri: Uri) -> Response {
+    let Some(source_path) = static_assets::source_path_for_request(uri.path()) else {
         return StatusCode::NOT_FOUND.into_response();
     };
     let Some(file) = static_assets::get_file(source_path) else {
@@ -150,7 +150,7 @@ mod tests {
     use axum::{
         body::to_bytes,
         extract::Path,
-        http::{HeaderValue, header},
+        http::{HeaderValue, Uri, header},
         response::IntoResponse,
     };
 
@@ -191,10 +191,7 @@ mod tests {
 
     #[tokio::test]
     async fn fingerprinted_static_asset_is_cached_immutably() {
-        let path = static_assets::static_url("theme.js")
-            .trim_start_matches("/static/")
-            .to_string();
-        let response = static_asset(Path(path)).await;
+        let response = static_asset(Uri::from_static(static_assets::static_url("theme.js"))).await;
 
         assert_eq!(response.status(), 200);
         assert_eq!(
@@ -208,7 +205,7 @@ mod tests {
 
     #[tokio::test]
     async fn unknown_static_asset_is_not_cached() {
-        let response = static_asset(Path("theme.invalid.js".to_string())).await;
+        let response = static_asset(Uri::from_static("/static/theme.invalid.js")).await;
 
         assert_eq!(response.status(), 404);
         assert!(!response.headers().contains_key(header::CACHE_CONTROL));

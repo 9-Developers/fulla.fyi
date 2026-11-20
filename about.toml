@@ -7,6 +7,14 @@ ignore-dev-dependencies = false
 # Explicit, checksum-verified sources prevent canonical MIT text from replacing
 # upstream attribution. Git sources use each package's .cargo_vcs_info.json
 # revision, not a moving branch. Keep full combined notices where applicable.
+[nine_dev_site_build.clarify]
+license = "BSD-3-Clause"
+[[nine_dev_site_build.clarify.files]]
+# Git checkout: the license is at the workspace root, above crates/nine_dev_site_build.
+path = "../../LICENSE"
+license = "BSD-3-Clause"
+checksum = "c40576f6cf22188597b6f507457300c69a210ce0a6f2369b5e2d141bb4fe8831"
+
 [chrono.clarify]
 license = "MIT OR Apache-2.0"
 [[chrono.clarify.files]]

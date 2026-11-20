@@ -692,6 +692,7 @@ dependencies = [
  "dotenvy",
  "include_dir",
  "mime_guess",
+ "nine_dev_site_build",
  "rand 0.10.2",
  "serde",
  "serde_json",
@@ -1299,6 +1300,15 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "tempfile",
+]
+
+[[package]]
+name = "nine_dev_site_build"
+version = "0.1.0"
+source = "git+https://git.9dev.tech/9-Developers/9dev-site-lib.git?rev=2a7881394180d8352ca2fbd21122058d62c21ea9#2a7881394180d8352ca2fbd21122058d62c21ea9"
+dependencies = [
+ "percent-encoding",
+ "sha2 0.11.0",
 ]
 
 [[package]]

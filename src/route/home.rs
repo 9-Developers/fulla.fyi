@@ -31,7 +31,10 @@ pub async fn home() -> Result<Html<String>, PageError> {
 
 #[cfg(test)]
 mod tests {
-    use axum::{body::to_bytes, extract::Path, http::header};
+    use axum::{
+        body::to_bytes,
+        http::{Uri, header},
+    };
 
     use super::home;
     use crate::route::static_asset;
@@ -65,8 +68,7 @@ mod tests {
                 "rendered page should reference {source_path} as {url}"
             );
 
-            let path = url.trim_start_matches("/static/").to_owned();
-            let response = static_asset(Path(path)).await;
+            let response = static_asset(Uri::from_static(url)).await;
             assert_eq!(
                 response.status(),
                 200,
@@ -78,6 +80,10 @@ mod tests {
             );
             let bytes = to_bytes(response.into_body(), 2 * 1024 * 1024).await?;
             assert!(!bytes.is_empty(), "asset {source_path} should not be empty");
+            if source_path.starts_with("images/icons/") {
+                assert!(page.0.contains(&format!(r#"href="{url}#icon""#)));
+                assert!(std::str::from_utf8(&bytes)?.contains(r#"id="icon""#));
+            }
         }
         Ok(())
     }

@@ -11,7 +11,7 @@ keywords = ["axum", "htmx", "social", "web", "wishlist"]
 categories = ["web-programming"]
 
 [build-dependencies]
-sha2 = "0.11.0"
+nine_dev_site_build = { git = "https://git.9dev.tech/9-Developers/9dev-site-lib.git", rev = "2a7881394180d8352ca2fbd21122058d62c21ea9" }
 
 [dependencies]
 argon2 = "0.5.3"

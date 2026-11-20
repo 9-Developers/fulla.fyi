@@ -11,7 +11,9 @@ is reproduced below.
 
 Used by:
 {{#each used_by}}
-- {{crate.name}} {{crate.version}} (https://crates.io/crates/{{crate.name}}/{{crate.version}})
+{{! Keep non-registry Cargo source IDs verbatim in the plain-text notice. }}
+{{! nosemgrep: javascript.express.security.audit.xss.mustache.explicit-unescape.template-explicit-unescape }}
+- {{crate.name}} {{crate.version}} ({{#if (and crate.source (ne crate.source "registry+https://github.com/rust-lang/crates.io-index"))}}{{{crate.source}}}{{else}}https://crates.io/crates/{{crate.name}}/{{crate.version}}{{/if}})
 {{/each}}
 
 {{! Plain-text output preserves license text verbatim; Askama escapes it in templates/licenses.html. }}

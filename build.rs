@@ -1,9 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-use sha2::{Digest, Sha256};
-
-const HEX_DIGITS: &[u8; 16] = b"0123456789abcdef";
+use nine_dev_site_build::assets::fingerprint;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let manifest_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR")?);
@@ -34,7 +32,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         std::fs::write(public_css, css)?;
     }
 
-    emit_hashes(
+    emit_asset_urls(
         &manifest_dir.join("src/public"),
         &manifest_dir.join("src/public"),
     )?;
@@ -42,11 +40,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn emit_hashes(root: &Path, dir: &Path) -> Result<(), Box<dyn std::error::Error>> {
+fn emit_asset_urls(root: &Path, dir: &Path) -> Result<(), Box<dyn std::error::Error>> {
     for entry in std::fs::read_dir(dir)? {
         let path = entry?.path();
         if path.is_dir() {
-            emit_hashes(root, &path)?;
+            emit_asset_urls(root, &path)?;
             continue;
         }
         let source = path
@@ -54,13 +52,8 @@ fn emit_hashes(root: &Path, dir: &Path) -> Result<(), Box<dyn std::error::Error>
             .to_str()
             .ok_or("asset path must be UTF-8")?
             .replace('\\', "/");
-        let digest = Sha256::digest(std::fs::read(&path)?);
-        let mut hash = String::with_capacity(16);
-        for byte in &digest[..8] {
-            hash.push(char::from(HEX_DIGITS[usize::from(byte >> 4)]));
-            hash.push(char::from(HEX_DIGITS[usize::from(byte & 0x0f)]));
-        }
-        println!("cargo:rustc-env=ASSET_HASH_{source}={hash}");
+        let asset = fingerprint(&source, &std::fs::read(&path)?);
+        println!("cargo:rustc-env=ASSET_URL_{source}={}", asset.url);
     }
     Ok(())
 }

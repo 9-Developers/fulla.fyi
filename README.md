@@ -14,6 +14,10 @@ loaded when present; `PORT` defaults to `3000` and `RUST_LOG` to `info`.
 Invalid supplied values fail startup. `DATABASE_URL` is required. Startup checks
 embedded migration history; `/health` checks PostgreSQL connectivity.
 
+`build.rs` uses the pinned `nine_dev_site_build` crate from
+[9dev-site-lib](https://git.9dev.tech/9-Developers/9dev-site-lib) to fingerprint
+the final browser assets, including the compiled CSS and theme icon SVGs.
+
 ## Dependency licenses
 
 The footer links to `/licenses`, which embeds `THIRD_PARTY_NOTICES.md` and

@@ -1,91 +1,29 @@
-//! Explicit public assets with hashes supplied by the build script after CSS compilation.
+//! Explicit public assets with fingerprinted URLs supplied after CSS compilation.
 
 use include_dir::{Dir, File, include_dir};
 
 static PUBLIC_DIR: Dir<'static> = include_dir!("$CARGO_MANIFEST_DIR/src/public");
 
+macro_rules! asset {
+    ($path:literal) => {
+        ($path, env!(concat!("ASSET_URL_", $path)))
+    };
+}
+
 // Add an entry when adding an asset. Tests check full coverage.
 const STATIC_ASSETS: &[(&str, &str)] = &[
-    (
-        "get_theme.js",
-        concat!("/static/get_theme.", env!("ASSET_HASH_get_theme.js"), ".js"),
-    ),
-    (
-        "htmx.min.js",
-        concat!("/static/htmx.min.", env!("ASSET_HASH_htmx.min.js"), ".js"),
-    ),
-    (
-        "images/icons/codeberg.svg",
-        concat!(
-            "/static/images/icons/codeberg.",
-            env!("ASSET_HASH_images/icons/codeberg.svg"),
-            ".svg"
-        ),
-    ),
-    (
-        "images/icons/discord.svg",
-        concat!(
-            "/static/images/icons/discord.",
-            env!("ASSET_HASH_images/icons/discord.svg"),
-            ".svg"
-        ),
-    ),
-    (
-        "images/icons/expand.svg",
-        concat!(
-            "/static/images/icons/expand.",
-            env!("ASSET_HASH_images/icons/expand.svg"),
-            ".svg"
-        ),
-    ),
-    (
-        "images/icons/frappe.svg",
-        concat!(
-            "/static/images/icons/frappe.",
-            env!("ASSET_HASH_images/icons/frappe.svg"),
-            ".svg"
-        ),
-    ),
-    (
-        "images/icons/latte.svg",
-        concat!(
-            "/static/images/icons/latte.",
-            env!("ASSET_HASH_images/icons/latte.svg"),
-            ".svg"
-        ),
-    ),
-    (
-        "images/icons/macchiato.svg",
-        concat!(
-            "/static/images/icons/macchiato.",
-            env!("ASSET_HASH_images/icons/macchiato.svg"),
-            ".svg"
-        ),
-    ),
-    (
-        "images/icons/mocha.svg",
-        concat!(
-            "/static/images/icons/mocha.",
-            env!("ASSET_HASH_images/icons/mocha.svg"),
-            ".svg"
-        ),
-    ),
-    (
-        "images/icons/system.svg",
-        concat!(
-            "/static/images/icons/system.",
-            env!("ASSET_HASH_images/icons/system.svg"),
-            ".svg"
-        ),
-    ),
-    (
-        "main.css",
-        concat!("/static/main.", env!("ASSET_HASH_main.css"), ".css"),
-    ),
-    (
-        "theme.js",
-        concat!("/static/theme.", env!("ASSET_HASH_theme.js"), ".js"),
-    ),
+    asset!("get_theme.js"),
+    asset!("htmx.min.js"),
+    asset!("images/icons/codeberg.svg"),
+    asset!("images/icons/discord.svg"),
+    asset!("images/icons/expand.svg"),
+    asset!("images/icons/frappe.svg"),
+    asset!("images/icons/latte.svg"),
+    asset!("images/icons/macchiato.svg"),
+    asset!("images/icons/mocha.svg"),
+    asset!("images/icons/system.svg"),
+    asset!("main.css"),
+    asset!("theme.js"),
 ];
 
 /// Return the content-addressed URL of a declared asset.
@@ -100,9 +38,9 @@ pub fn static_url(source_path: &str) -> &'static str {
 /// Resolve only current, exact content-addressed request paths.
 #[must_use]
 pub fn source_path_for_request(request_path: &str) -> Option<&'static str> {
-    STATIC_ASSETS.iter().find_map(|(source, url)| {
-        (url.strip_prefix("/static/") == Some(request_path)).then_some(*source)
-    })
+    STATIC_ASSETS
+        .iter()
+        .find_map(|(source, url)| (*url == request_path).then_some(*source))
 }
 
 pub(crate) fn get_file(source_path: &str) -> Option<&'static File<'static>> {
@@ -151,12 +89,8 @@ mod tests {
             }
             assert!(url.contains(&format!(".{hash}.")));
             assert_eq!(static_url(source), url);
-            let request = url.strip_prefix("/static/").ok_or("bad URL")?;
-            assert_eq!(source_path_for_request(request), Some(source));
-            assert_eq!(
-                source_path_for_request(&request.replace(&hash, "stale")),
-                None
-            );
+            assert_eq!(source_path_for_request(url), Some(source));
+            assert_eq!(source_path_for_request(&url.replace(&hash, "stale")), None);
             assert_eq!(source_path_for_request(source), None);
         }
         assert_eq!(static_url("missing.css"), "/static/missing");
