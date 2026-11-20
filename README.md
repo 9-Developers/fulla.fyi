@@ -1,10 +1,8 @@
 # Fulla
 
-[![Discord][badge-discord]][link-discord]
-[![License][badge-bsd-3]][link-bsd-3]
-[![Build][badge-workflow-build]][link-workflow-build]
-[![Security][badge-workflow-security]][link-workflow-security]
-[![Release][badge-releases]][link-releases]
+[![Discord](https://img.shields.io/discord/452233740408717313?color=b4befe&label=discord&labelColor=1e1e2e&logo=discord&style=flat)](https://discord.gg/KTgshSbEUU)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-89b4fa?labelColor=1e1e2e&logo=bsd&logoColor=white&style=flat)](https://opensource.org/license/bsd-3-clause)
+[![Deployment](https://git.9dev.tech/9-Developers/fulla.fyi/badges/workflows/deploy.yml/badge.svg?branch=main&event=push&label=Deployment&labelColor=1e1e2e&style=flat&logo=forgejo&logoColor=white)](https://git.9dev.tech/9-Developers/fulla.fyi/actions/workflows/deploy.yml)
 
 Fulla is a wishlist organizer in development for families and friends who want
 to share gift ideas from any retailer. You can create an account, sign in, and
