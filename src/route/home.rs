@@ -39,7 +39,7 @@ mod tests {
     use super::home;
     use crate::route::static_asset;
     use crate::static_assets;
-    use nine_dev_site_lib::{assets::icons, switcher};
+    use nine_dev_site_lib::{assets, switcher};
 
     #[tokio::test]
     async fn bundled_template_assets_use_served_fingerprinted_urls()
@@ -54,11 +54,12 @@ mod tests {
             .ok_or("missing theme script")?;
         assert!(script_pos < page.0.find("rel=\"stylesheet\"").ok_or("missing CSS")?);
         for asset in [
-            &nine_dev_site_lib::assets::theme::PALETTE,
+            &assets::htmx::JS,
+            &assets::theme::PALETTE,
             &switcher::JS,
             &switcher::CSS,
-            &icons::DISPLAY,
-            &icons::ANGLE_DOWN,
+            &assets::icons::DISPLAY,
+            &assets::icons::ANGLE_DOWN,
         ] {
             assert!(page.0.contains(asset.url));
             let response = static_asset(Uri::from_static(asset.url)).await;
@@ -76,7 +77,6 @@ mod tests {
 
         for source_path in [
             "main.css",
-            "htmx.min.js",
             "images/icons/codeberg.svg",
             "images/icons/discord.svg",
         ] {

@@ -96,7 +96,7 @@ Preserve accessible labels, keyboard interaction, responsive layouts, and themes
 
 ### Assets
 
-`/licenses` embeds `THIRD_PARTY_NOTICES.md`, the icon and palette notices from
+`/licenses` embeds `THIRD_PARTY_NOTICES.md`, the shared asset notices from
 `nine_dev_site_lib`, and `licenses/rust.txt`.
 Update the frontend inventory and preserve upstream notices when changing assets.
 After dependency changes, follow the [notice update procedure](licenses/AUDIT.md#updating-notices).
@@ -118,7 +118,8 @@ Declare site-owned files in `STATIC_ASSETS` and use `static_url` from templates.
 In the base template, load the shared `nine_dev_site_lib::switcher` script
 before CSS and the `assets::theme::PALETTE` stylesheet before `main.css`.
 Fulla defaults to Latte without JavaScript. Tailwind colors map to the shared
-`--ctp-*` properties. The static handler serves the library assets.
+`--ctp-*` properties. The static handler serves the library assets, including
+HTMX (`assets::htmx::JS` from the runtime crate's `htmx` feature).
 Tests require declarations to cover local files exactly once. Fingerprinted
 URLs must match their bytes and reject stale hashes.
 Keep immutable caching for fingerprinted assets and the separate `.well-known`

@@ -1,5 +1,5 @@
 # Order selects MIT when a crate offers MIT OR Apache-2.0.
-accepted = ["MIT", "BSD-3-Clause", "Apache-2.0", "Unicode-3.0", "Zlib"]
+accepted = ["MIT", "BSD-3-Clause", "0BSD", "Apache-2.0", "Unicode-3.0", "Zlib"]
 # Include build, development, and target-specific dependencies for portable notices.
 ignore-build-dependencies = false
 ignore-dev-dependencies = false
@@ -15,7 +15,7 @@ license = "BSD-3-Clause"
 checksum = "c40576f6cf22188597b6f507457300c69a210ce0a6f2369b5e2d141bb4fe8831"
 
 [nine_dev_site_lib.clarify]
-license = "BSD-3-Clause AND MIT"
+license = "BSD-3-Clause AND MIT AND 0BSD"
 [[nine_dev_site_lib.clarify.files]]
 path = "LICENSE"
 license = "BSD-3-Clause"
@@ -23,7 +23,13 @@ checksum = "c40576f6cf22188597b6f507457300c69a210ce0a6f2369b5e2d141bb4fe8831"
 [[nine_dev_site_lib.clarify.files]]
 path = "THIRD_PARTY_NOTICES.md"
 license = "MIT"
-checksum = "c820551182030e6a65dcea074f8f5d3f34980121601d3d2bb5361a20207b5bba"
+checksum = "48316e86fdd0fa76d4bc7f7f92aa913b13a23f3e5b67ce42550dceb2ecd15efe"
+[[nine_dev_site_lib.clarify.files]]
+path = "THIRD_PARTY_NOTICES.md"
+license = "0BSD"
+start = "## HTMX 4.0.0"
+end = "OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE."
+checksum = "87241c2002745565a62ae76fc6fb97e887bf2939b58280468b7a48098df2a254"
 
 [chrono.clarify]
 license = "MIT OR Apache-2.0"

@@ -12,7 +12,6 @@ macro_rules! asset {
 
 // Add an entry when adding an asset. Tests check full coverage.
 const STATIC_ASSETS: &[(&str, &str)] = &[
-    asset!("htmx.min.js"),
     asset!("images/icons/codeberg.svg"),
     asset!("images/icons/discord.svg"),
     asset!("main.css"),

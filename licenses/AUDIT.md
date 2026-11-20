@@ -14,9 +14,9 @@ sh .forgejo/scripts/check-license-notices.sh
 
 Review the diff before committing the generated file; do not hand-edit the
 report. Starting with `nine_dev_site_build` 0.1.1, the published crate includes
-the upstream BSD notice. For `nine_dev_site_lib` 0.3.0, `about.toml` verifies
-both the packaged BSD `LICENSE` and the bundled MIT icon and palette notices in
-`THIRD_PARTY_NOTICES.md`.
+the upstream BSD notice. For `nine_dev_site_lib` 0.4.0, `about.toml` verifies
+both the packaged BSD `LICENSE` and `THIRD_PARTY_NOTICES.md`, which includes
+the MIT icon and palette notices and the 0BSD license for HTMX.
 
 For frontend changes, record the exact source, version, license, copyright
 notice, and any required NOTICE text in `THIRD_PARTY_NOTICES.md`.
@@ -24,7 +24,7 @@ notice, and any required NOTICE text in `THIRD_PARTY_NOTICES.md`.
 ## Application dependencies
 
 The locked Cargo graph contains 267 packages including Fulla itself.
-`cargo deny --locked check licenses` passes with MIT, BSD-3-Clause,
+`cargo deny --locked check licenses` passes with MIT, BSD-3-Clause, 0BSD,
 Apache-2.0, Unicode-3.0, and Zlib allowed. Crates offering LGPL as an
 alternative also offer MIT or Apache-2.0; no LGPL option is selected.
 `cargo-about` includes build, dev, and platform-specific dependencies.

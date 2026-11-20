@@ -7,13 +7,13 @@ Both this file and those Rust notices are embedded in the /licenses page.
 
 ## Browser asset inventory
 
-- HTMX 4.0.0 — src/public/htmx.min.js
+- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.4.0
   Source: https://github.com/bigskysoftware/htmx/tree/v4.0.0
-  License: 0BSD (included voluntarily below).
+  License: 0BSD. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Tailwind CSS 4.3.5 — generated src/public/main.css
   Source: https://github.com/tailwindlabs/tailwindcss/tree/v4.3.5
   License: MIT.
-- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.3.0
+- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.4.0
   Source: https://github.com/catppuccin/catppuccin
   License: MIT. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Sora — loaded externally from Google Fonts by src/style/main.css;
@@ -26,9 +26,9 @@ Both this file and those Rust notices are embedded in the /licenses page.
   License: MIT. The path data matches v12.0.0; Fulla wraps it in an SVG symbol.
   This is a Git branch icon used for a Codeberg link, not the Codeberg logo.
 - The four Fluent Emoji flavor icons and Bootstrap display and chevron icons
-  are bundled by nine_dev_site_lib 0.3.0. Its artwork inventory and MIT notices
+  are bundled by nine_dev_site_lib 0.4.0. Its artwork inventory and MIT notices
   are included on /licenses and in the Rust dependency notices.
-  Source: https://docs.rs/crate/nine_dev_site_lib/0.3.0/source/THIRD_PARTY_NOTICES.md
+  Source: https://docs.rs/crate/nine_dev_site_lib/0.4.0/source/THIRD_PARTY_NOTICES.md
 
 ### Icon provenance awaiting confirmation
 
@@ -60,20 +60,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-## HTMX — Zero-Clause BSD
-
-Permission to use, copy, modify, and/or distribute this software for
-any purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
-WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
-AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
-DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA
-OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
 
 ## Tailwind CSS — MIT License
 
