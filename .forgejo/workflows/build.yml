@@ -87,8 +87,10 @@ jobs:
       - name: Clippy
         run: cargo clippy --all-targets --locked -- -D warnings
 
-      - name: Test with isolated PostgreSQL
-        run: sh .forgejo/scripts/test-postgres.sh
+      - name: Test
+        env:
+          SQLX_OFFLINE: "true"
+        run: cargo test --locked --all-targets
 
       - name: Build
         run: cargo build --locked

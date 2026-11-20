@@ -54,9 +54,8 @@ locked build. Documentation-only changes do not require recompiling the app.
 Builds compile CSS and embed assets, so template and asset changes need a rebuild.
 Database tests require `DATABASE_URL` on a disposable PostgreSQL 18 server with
 database creation privileges. SQLx creates isolated databases; CI supplies Postgres.
-On the FreeBSD `ci-rust` runner, CI installs `postgresql18-server` and uses
-`.forgejo/scripts/test-postgres.sh` to start and clean up a disposable cluster
-with a private Unix socket.
+The FreeBSD `ci-rust` job uses the `ci-postgres:18` service. It installs the
+PostgreSQL client and waits for `SELECT 1` over the job network before testing.
 
 ## Environment
 
