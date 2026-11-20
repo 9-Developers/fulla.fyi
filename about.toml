@@ -10,7 +10,8 @@ ignore-dev-dependencies = false
 [nine_dev_site_build.clarify]
 license = "BSD-3-Clause"
 [[nine_dev_site_build.clarify.files]]
-# Git checkout: the license is at the workspace root, above crates/nine_dev_site_build.
+# Legacy Git checkout path. The 0.1.0 archive lacks both LICENSE and repository
+# metadata, so cargo-about cannot recover the upstream notice from that release.
 path = "../../LICENSE"
 license = "BSD-3-Clause"
 checksum = "c40576f6cf22188597b6f507457300c69a210ce0a6f2369b5e2d141bb4fe8831"

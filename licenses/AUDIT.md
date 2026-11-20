@@ -1,5 +1,26 @@
 # License audit — 9DEV-88
 
+## Updating notices
+
+After changing Cargo dependencies, run from the repository root:
+
+```sh
+cargo install cargo-about --version 0.9.3 --locked --features cli
+cargo install cargo-deny --version 0.21.0 --locked
+cargo deny --locked check licenses
+cargo about generate --locked --fail licenses/rust.hbs -o licenses/rust.txt
+sh .forgejo/scripts/check-license-notices.sh
+```
+
+Review the diff before committing the generated file. `nine_dev_site_build`
+0.1.0 on crates.io omits the repository URL and license file; regeneration
+can replace its upstream BSD attribution with placeholder text. The MIT
+placeholder check below does not catch this. Preserve the attributed notice
+until generation can reproduce it; do not hand-edit the report.
+
+For frontend changes, record the exact source, version, license, copyright
+notice, and any required NOTICE text in `THIRD_PARTY_NOTICES.md`.
+
 ## Application dependencies
 
 The locked Cargo graph contains 259 packages including Fulla itself.

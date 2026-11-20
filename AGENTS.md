@@ -18,7 +18,7 @@ https://linear.app/ixirsii/project/fullafyi-8960c5ab9048
 
 ## Current implementation
 
-- Rust 2024 with Rust 1.97.1 pinned in `rust-toolchain.toml`.
+- Rust 2024; `rust-toolchain.toml` pins the compiler version.
 - Axum server, Askama templates, vendored HTMX, and embedded public assets.
 - Tailwind CSS and Catppuccin themes already exist. CI and Railpack pin Tailwind
   4.3.5; `build.rs` requires a `tailwindcss` executable on `PATH`.
@@ -99,8 +99,8 @@ Preserve accessible labels, keyboard interaction, responsive layouts, and themes
 
 `/licenses` embeds `THIRD_PARTY_NOTICES.md` and `licenses/rust.txt`.
 Update the frontend inventory and preserve upstream notices when changing assets.
-Regenerate Rust notices with pinned cargo-about 0.9.3 (install with `--features cli`)
-after dependency changes; see README. CI uses cargo-deny 0.21.0 to enforce
+After dependency changes, follow the [notice update procedure](licenses/AUDIT.md#updating-notices).
+CI uses cargo-deny 0.21.0 to enforce
 `deny.toml` and checks generated notice freshness. Keep `about.toml` and
 `deny.toml` license choices aligned. The four flavor icons use MIT-licensed Fluent
 Emoji High Contrast SVGs with `currentColor`. Provenance for the Discord, expand,
@@ -113,7 +113,7 @@ generation success and freshness alone do not verify attribution completeness.
 
 Edit `src/style/` rather than generated `src/public/main.css`. The build script
 currently writes compiled CSS there only when its contents change. It passes
-each final file to the pinned `nine_dev_site_build` build dependency and emits
+each final file to the `nine_dev_site_build` build dependency from crates.io and emits
 the complete fingerprinted URL as `ASSET_URL_<source path>` for the asset table.
 Add declarations to `STATIC_ASSETS` when adding embedded assets and use
 `static_url` from templates. Tests require declarations to cover embedded files
@@ -150,6 +150,22 @@ application's SQLx 0.9 pool and forward migrations.
 Test meaningful domain behavior: quantity changes, partial purchases, concurrent
 purchase updates, sorting, ownership, sharing grants, and revocation. Integration
 tests should exercise PostgreSQL migrations and authorization boundaries.
+
+Purchase submission keys are purchaser-scoped. Sum uncanceled purchases;
+preserve `recorded_at` on corrections and retain history when items are archived
+or desired quantities decrease. Serialize changes and submissions on the item
+row once the overpurchase policy is settled. The schema does not cap totals.
+
+Only attach ready media assets owned by the account. Lock the asset row for
+attachment, replacement, and cleanup. Check both avatar and list-media usages
+before marking an asset `deleting`; retain the row until object deletion
+succeeds. Public avatar delivery must not expose private list media when an
+asset is reused.
+
+Auth rate limits use shared PostgreSQL counters in 15-minute windows (10 logins
+per identifier, 100 logins globally, 30 registrations globally). Successful
+attempts count. Review the shared limits before public launch. Signed-in
+sessions expire after seven days; anonymous form sessions expire after 30 minutes.
 
 ## CI and deployment
 
@@ -190,5 +206,28 @@ Use separate `RAILWAY_STAGING_TOKEN` and `RAILWAY_PRODUCTION_TOKEN` secrets,
 each scoped to its environment. The service name is `fulla.fyi`.
 Build CI includes Go and Node deployment-gate tests. The release executable is
 `fulla_fyi`, and Railway probes `/health`. Railway runs `./fulla_fyi migrate`
-before deployment; startup validates the schema. See README for local commands
-and legacy Config File cutover guidance.
+before deployment; startup validates the schema. See the [local setup](README.md#run-locally).
+
+### Railway operator commands
+
+Use the workflow's pinned CLI and Go versions. For a manual staging deployment:
+
+```sh
+railway login
+railway link --project 24db0769-cf07-4290-bae1-dd1bceaea653 --environment staging
+railway status
+railway config plan --environment staging
+railway config apply --environment staging
+railway up --ci --environment staging --service fulla.fyi
+```
+
+If an environment still has a legacy Config File path, run
+`railway config migrate cutover` there first. `railway config migrate undo`
+restores paths from `.railway/.cac-migration.json`, not settings changed by an
+IaC apply.
+
+To enable production, create an empty `production` environment. Link, plan,
+and apply as above using `production`, then configure the domain, DNS, and
+production-scoped secrets. Enable `PRODUCTION_DEPLOY_ENABLED` only when ready.
+Tag a commit after its staging deployment succeeds; retain its Forgejo run
+history for the release gate. Set the variable to `false` to pause releases.
