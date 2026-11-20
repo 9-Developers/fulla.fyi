@@ -103,8 +103,7 @@ After dependency changes, follow the [notice update procedure](licenses/AUDIT.md
 CI uses cargo-deny 0.21.0 to enforce
 `deny.toml` and checks generated notice freshness. Keep `about.toml` and
 `deny.toml` license choices aligned. The four flavor icons use MIT-licensed Fluent
-Emoji High Contrast SVGs with `currentColor`. Provenance for the Discord, expand,
-and system SVGs remains under review in 9DEV-88.
+Emoji High Contrast SVGs with `currentColor`. Provenance for the local Discord SVG remains under review in 9DEV-88.
 
 Rust license clarifications in `about.toml` preserve upstream copyright notices.
 Review source license changes before updating checksums. CI runs
@@ -116,8 +115,8 @@ currently writes compiled CSS there only when its contents change. It passes
 each final file to the `nine_dev_site_build` build dependency from crates.io and emits
 the complete fingerprinted URL as `ASSET_URL_<source path>` for the asset table.
 Declare site-owned files in `STATIC_ASSETS` and use `static_url` from templates.
-The four flavor icons come from `nine_dev_site_lib::assets::theme`; reference
-their URLs with `#icon` and let the static handler serve the library's bytes.
+Use the shared `nine_dev_site_lib::switcher` in the base template. Load its
+script before CSS; the static handler serves its script, CSS and SVG symbols.
 Tests require declarations to cover local files exactly once. Fingerprinted
 URLs must match their bytes and reject stale hashes.
 Keep immutable caching for fingerprinted assets and the separate `.well-known`

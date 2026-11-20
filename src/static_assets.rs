@@ -12,14 +12,10 @@ macro_rules! asset {
 
 // Add an entry when adding an asset. Tests check full coverage.
 const STATIC_ASSETS: &[(&str, &str)] = &[
-    asset!("get_theme.js"),
     asset!("htmx.min.js"),
     asset!("images/icons/codeberg.svg"),
     asset!("images/icons/discord.svg"),
-    asset!("images/icons/expand.svg"),
-    asset!("images/icons/system.svg"),
     asset!("main.css"),
-    asset!("theme.js"),
 ];
 
 /// Return the content-addressed URL of a declared asset.

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block auth_links %}{% if mode != "account" && mode != "logout" %}{{ super() }}{% endif %}{% endblock %}
 {% block content %}
 <section class="account-panel" aria-labelledby="account-heading">
   <h2 id="account-heading">{{ title }}</h2>

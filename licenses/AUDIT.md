@@ -14,8 +14,8 @@ sh .forgejo/scripts/check-license-notices.sh
 
 Review the diff before committing the generated file; do not hand-edit the
 report. Starting with `nine_dev_site_build` 0.1.1, the published crate includes
-the upstream BSD notice. For `nine_dev_site_lib` 0.1.0, `about.toml` verifies
-both the packaged BSD `LICENSE` and the Microsoft MIT artwork notice in
+the upstream BSD notice. For `nine_dev_site_lib` 0.2.1, `about.toml` verifies
+both the packaged BSD `LICENSE` and the bundled MIT artwork notices in
 `THIRD_PARTY_NOTICES.md`.
 
 For frontend changes, record the exact source, version, license, copyright
@@ -79,7 +79,8 @@ aggregator with multiple licenses, not a blanket license grant.
   This removes the previous Macchiato artwork from ICOOON MONO, whose
   redistribution restrictions conflicted with the aggregator's PD label.
   Old revisions still contain that artwork.
-- `discord.svg`, `expand.svg`, `system.svg`: exact upstream sources and
+- `expand.svg` and `system.svg` were retired with the local theme switcher.
+- `discord.svg`: exact upstream source and
   licenses remain unverified.
   Obtain original item URLs or replace them with verified assets.
 

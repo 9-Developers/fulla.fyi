@@ -20,23 +20,22 @@ Both this file and those Rust notices are embedded in the /licenses page.
   font files are not bundled in this repository.
   Source: https://github.com/google/fonts/tree/main/ofl/sora
   License: SIL Open Font License 1.1.
-- src/public/get_theme.js and src/public/theme.js — maintained as Fulla
-  project code under the repository license.
+- Theme switcher markup, stylesheet and script: nine_dev_site_lib (BSD-3-Clause).
 - Octicons git-branch-24 — src/public/images/icons/codeberg.svg
   Source: https://github.com/primer/octicons/blob/v12.0.0/icons/git-branch-24.svg
   License: MIT. The path data matches v12.0.0; Fulla wraps it in an SVG symbol.
   This is a Git branch icon used for a Codeberg link, not the Codeberg logo.
-- Microsoft Fluent Emoji (High Contrast) — the four flavor icons are bundled
-  by nine_dev_site_lib 0.1.0. Its artwork inventory and Microsoft MIT notice
+- The four Fluent Emoji flavor icons and Bootstrap display and chevron icons
+  are bundled by nine_dev_site_lib 0.2.1. Its artwork inventory and MIT notices
   are included on /licenses and in the Rust dependency notices.
-  Source: https://docs.rs/crate/nine_dev_site_lib/0.1.0/source/THIRD_PARTY_NOTICES.md
+  Source: https://docs.rs/crate/nine_dev_site_lib/0.2.1/source/THIRD_PARTY_NOTICES.md
 
 ### Icon provenance awaiting confirmation
 
-The original import did not record sources or licenses for these SVGs:
-src/public/images/icons/{discord,expand,system}.svg.
+The original import did not record a source or license for
+src/public/images/icons/discord.svg.
 The maintainer recalls obtaining most icons through https://www.svgviewer.dev/.
-Their upstream licensing has not yet been verified. The repository license
+Its upstream licensing has not yet been verified. The repository license
 must not be assumed to grant rights to third-party artwork. Brand names and
 logos remain subject to their respective owners' trademark rights.
 

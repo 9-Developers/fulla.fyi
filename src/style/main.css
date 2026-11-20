@@ -82,62 +82,6 @@
     @apply rounded;
   }
 
-  details {
-    @apply flex;
-    @apply flex-col;
-    @apply justify-center;
-    @apply relative;
-  }
-
-  details li {
-    @apply hover:bg-ctp-surface0;
-    @apply transition-colors;
-  }
-
-  details summary {
-    @apply border;
-    @apply border-ctp-yellow;
-    @apply list-none;
-    @apply p-2;
-    @apply rounded-md;
-    @apply whitespace-nowrap;
-  }
-
-  details summary svg {
-    @apply h-4;
-    @apply w-4;
-  }
-
-  details li,
-  details summary {
-    @apply cursor-pointer;
-    @apply flex;
-    @apply flex-row;
-    @apply gap-2;
-    @apply items-center;
-  }
-
-  details ul {
-    @apply absolute;
-    @apply bg-ctp-mantle;
-    @apply min-w-max;
-    @apply mt-1;
-    @apply p-2;
-    @apply right-0;
-    @apply shadow-ctp-yellow;
-    @apply shadow-lg/30;
-    @apply z-10;
-  }
-
-  details .expand-icon {
-    @apply duration-300;
-    @apply rotate-0;
-  }
-
-  details:open .expand-icon {
-    @apply -rotate-90;
-  }
-
   h1,
   h2,
   h3,
@@ -350,14 +294,26 @@
   }
 
   .settings {
+    --nd-theme-surface: var(--mantle);
+    --nd-theme-text: var(--text);
+    @apply items-center whitespace-nowrap;
     @apply flex;
     @apply flex-row;
     @apply gap-4;
   }
 
+  .settings .signup {
+    @apply bg-ctp-blue text-ctp-base rounded-md px-3;
+  }
+
   .settings a {
+    @apply min-h-11;
     @apply flex;
     @apply flex-col;
     @apply justify-center;
   }
+}
+
+@media (width < 48rem) {
+  .settings .nd-theme-panel { inset-inline: 0 auto; }
 }

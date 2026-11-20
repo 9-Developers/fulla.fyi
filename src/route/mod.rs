@@ -199,7 +199,7 @@ mod tests {
 
     #[tokio::test]
     async fn fingerprinted_static_asset_is_cached_immutably() {
-        let response = static_asset(Uri::from_static(static_assets::static_url("theme.js"))).await;
+        let response = static_asset(Uri::from_static(static_assets::static_url("main.css"))).await;
 
         assert_eq!(response.status(), 200);
         assert_eq!(

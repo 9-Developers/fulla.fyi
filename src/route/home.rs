@@ -39,6 +39,7 @@ mod tests {
     use super::home;
     use crate::route::static_asset;
     use crate::static_assets;
+    use nine_dev_site_lib::{assets::icons, switcher};
 
     #[tokio::test]
     async fn bundled_template_assets_use_served_fingerprinted_urls()
@@ -47,13 +48,34 @@ mod tests {
             panic!("home page should render");
         };
 
+        let script_pos = page
+            .0
+            .find(switcher::JS.url)
+            .ok_or("missing theme script")?;
+        assert!(script_pos < page.0.find("rel=\"stylesheet\"").ok_or("missing CSS")?);
+        for asset in [
+            &switcher::JS,
+            &switcher::CSS,
+            &icons::DISPLAY,
+            &icons::ANGLE_DOWN,
+        ] {
+            assert!(page.0.contains(asset.url));
+            let response = static_asset(Uri::from_static(asset.url)).await;
+            assert_eq!(response.status(), 200);
+            assert_eq!(response.headers()[header::CONTENT_TYPE], asset.content_type);
+            assert_eq!(
+                response.headers()[header::CACHE_CONTROL],
+                "public, max-age=31536000, immutable"
+            );
+            assert_eq!(
+                to_bytes(response.into_body(), 64 * 1024).await?.as_ref(),
+                asset.bytes
+            );
+        }
+
         for source_path in [
             "main.css",
             "htmx.min.js",
-            "get_theme.js",
-            "theme.js",
-            "images/icons/system.svg",
-            "images/icons/expand.svg",
             "images/icons/codeberg.svg",
             "images/icons/discord.svg",
         ] {
