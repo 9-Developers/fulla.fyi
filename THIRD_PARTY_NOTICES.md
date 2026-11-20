@@ -16,6 +16,7 @@ Both this file and those Rust notices are embedded in the /licenses page.
 - Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.5.0
   Source: https://github.com/catppuccin/catppuccin
   License: MIT. The crate's notice is included on /licenses and in licenses/rust.txt.
+- Tailwind utility bindings for the palette — nine_dev_site_build 0.2.1 (BSD-3-Clause).
 - Sora — loaded externally from Google Fonts by src/style/main.css;
   font files are not bundled in this repository.
   Source: https://github.com/google/fonts/tree/main/ofl/sora

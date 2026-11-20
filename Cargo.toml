@@ -11,7 +11,7 @@ keywords = ["axum", "htmx", "social", "web", "wishlist"]
 categories = ["web-programming"]
 
 [build-dependencies]
-nine_dev_site_build = "0.2"
+nine_dev_site_build = "0.2.1"
 
 [dependencies]
 argon2 = "0.5.3"

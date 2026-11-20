@@ -242,6 +242,14 @@ mod tests {
         }
     }
 
+    #[test]
+    fn compiled_css_resolves_palette_utilities_from_templates_and_apply() {
+        // This utility is used in error.html; @apply alone does not emit its class.
+        let css = include_str!("../../public/main.css");
+        assert!(css.contains(".text-ctp-subtext1{color:var(--ctp-subtext1)"));
+        assert!(css.contains("background-color:var(--ctp-base)"));
+    }
+
     #[tokio::test]
     async fn fingerprinted_static_asset_is_cached_immutably() {
         let response = static_asset(Uri::from_static(static_assets::static_url("main.css"))).await;

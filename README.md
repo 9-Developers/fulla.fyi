@@ -18,7 +18,8 @@ From a checkout of this repository, you'll need:
 - [Rust via rustup](https://rustup.rs/). The checkout selects the version in
   [`rust-toolchain.toml`](rust-toolchain.toml).
 - [Tailwind CLI 4.3.5](https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.3.5).
-  Put the executable for your platform on `PATH` as `tailwindcss`.
+  Put the executable for your platform on `PATH` as `tailwindcss`. Verify that
+  `tailwindcss --help` prints `v4.3.5` before building; CI and Railpack use the same version.
 - A PostgreSQL 18 database. If you have Docker, you can start one locally:
 
   ```sh

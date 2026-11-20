@@ -1,0 +1,21 @@
+<article class="wishlist-card">
+  <h2>{{ title }}</h2>
+  {% if items.is_empty() %}
+  <p>No items yet.</p>
+  {% else %}
+  <ul>
+    {% for item in items %}
+    <li class="wishlist-item">
+      <div>
+        <h3>{{ item.name }}</h3>
+        <a href="{{ item.retailer_url }}">View at retailer<span class="sr-only">: {{ item.name }}</span></a>
+      </div>
+      <dl>
+        <div><dt>Priority</dt><dd>{{ item.priority }}</dd></div>
+        <div><dt>Desired quantity</dt><dd>{{ item.desired_quantity }}</dd></div>
+      </dl>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</article>

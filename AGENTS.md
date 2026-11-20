@@ -119,8 +119,10 @@ stable browser files in `STABLE` in `src/static_assets.rs`. Templates call
 `site.webmanifest` also registers its root URL with ETag revalidation.
 In the base template, load the shared `nine_dev_site_lib::switcher` script
 before CSS and the `assets::theme::PALETTE` stylesheet before `main.css`.
-Fulla defaults to Latte without JavaScript. Tailwind colors map to the shared
-`--ctp-*` properties. The static handler serves the library assets, including
+Fulla defaults to Latte without JavaScript. `build.rs` generates the ignored
+`src/style/catppuccin.aliases.css` from the build crate before invoking Tailwind.
+`src/style/main.css` explicitly scans `templates/` for utility classes; keep
+class names literal in Askama. The static handler serves the library assets, including
 HTMX (`assets::htmx::JS` from the runtime crate's `htmx` feature).
 Tests require declarations to cover local files exactly once. Fingerprinted
 URLs must match their bytes and reject stale hashes.
@@ -128,7 +130,10 @@ Keep immutable caching for fingerprinted assets and the separate `.well-known`
 handling.
 
 Files under `public/.well-known/` are served at `/.well-known/` with a one-hour
-cache lifetime. Tailwind foundation work is **9DEV-73**.
+cache lifetime. To inspect the reusable wishlist card and item layout, run
+`cargo run --locked --example wishlist_preview > target/wishlist-preview.html`
+and open that file in a browser. The example renders populated and empty cards
+without connecting to PostgreSQL.
 
 ### Database and product behavior
 

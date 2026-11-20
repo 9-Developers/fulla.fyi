@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@import "./catppuccin.aliases.css";
+@source "../../templates";
 
 /*! Third-party license texts and copyright notices: /licenses */
 
@@ -7,32 +9,6 @@
   --font-sans:
     "Sora", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Noto Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --color-ctp-rosewater: var(--ctp-rosewater);
-  --color-ctp-flamingo: var(--ctp-flamingo);
-  --color-ctp-pink: var(--ctp-pink);
-  --color-ctp-mauve: var(--ctp-mauve);
-  --color-ctp-red: var(--ctp-red);
-  --color-ctp-maroon: var(--ctp-maroon);
-  --color-ctp-peach: var(--ctp-peach);
-  --color-ctp-yellow: var(--ctp-yellow);
-  --color-ctp-green: var(--ctp-green);
-  --color-ctp-teal: var(--ctp-teal);
-  --color-ctp-sky: var(--ctp-sky);
-  --color-ctp-sapphire: var(--ctp-sapphire);
-  --color-ctp-blue: var(--ctp-blue);
-  --color-ctp-lavender: var(--ctp-lavender);
-  --color-ctp-text: var(--ctp-text);
-  --color-ctp-subtext1: var(--ctp-subtext1);
-  --color-ctp-subtext0: var(--ctp-subtext0);
-  --color-ctp-overlay2: var(--ctp-overlay2);
-  --color-ctp-overlay1: var(--ctp-overlay1);
-  --color-ctp-overlay0: var(--ctp-overlay0);
-  --color-ctp-surface2: var(--ctp-surface2);
-  --color-ctp-surface1: var(--ctp-surface1);
-  --color-ctp-surface0: var(--ctp-surface0);
-  --color-ctp-base: var(--ctp-base);
-  --color-ctp-mantle: var(--ctp-mantle);
-  --color-ctp-crust: var(--ctp-crust);
 }
 
 /* ************************************************************************** *
@@ -126,7 +102,7 @@
 
   header {
     @apply bg-ctp-mantle;
-    @apply mb-16;
+    @apply mb-8 md:mb-12;
     @apply py-2;
     @apply shadow-ctp-yellow;
     @apply shadow-lg/30;
@@ -152,7 +128,7 @@
   main {
     @apply max-w-5xl;
     @apply mx-auto;
-    @apply pb-8;
+    @apply px-4 pb-8 wrap-anywhere;
     @apply w-full;
   }
 
@@ -179,6 +155,7 @@
   }
 
   nav a {
+    @apply min-h-11 items-center px-3;
     @apply hover:bg-ctp-surface0;
     @apply flex;
     @apply md:flex-1;
@@ -210,8 +187,16 @@
  * ************************************************************************** */
 
 @layer components {
+  .skip-link {
+    @apply sr-only;
+  }
+
+  .skip-link:focus {
+    @apply not-sr-only fixed top-2 left-2 z-20 rounded-md bg-ctp-base p-3;
+  }
+
   .account-panel {
-    @apply mx-auto w-full max-w-lg px-4;
+    @apply mx-auto w-full max-w-lg rounded-xl border border-ctp-surface1 bg-ctp-mantle p-4 sm:p-6;
   }
 
   .account-form {
@@ -219,7 +204,7 @@
   }
 
   .account-form input:not([type="hidden"]) {
-    @apply w-full min-w-0 rounded-md border border-ctp-overlay0 bg-ctp-mantle p-3 text-ctp-text;
+    @apply min-h-11 w-full min-w-0 rounded-md border border-ctp-overlay1 bg-ctp-base px-3 text-ctp-text;
   }
 
   .account-form label {
@@ -227,11 +212,35 @@
   }
 
   .account-form p {
-    @apply text-sm text-ctp-subtext1;
+    @apply mb-0 text-sm text-ctp-subtext1;
+  }
+
+  .account-form button, .settings .signup {
+    @apply min-h-11 rounded-md bg-ctp-text px-4 font-semibold text-ctp-base hover:bg-ctp-subtext1;
   }
 
   .form-error {
-    @apply rounded-md border border-ctp-red p-3;
+    @apply rounded-md border-l-4 border-ctp-red bg-ctp-base p-3;
+  }
+
+  .wishlist-card {
+    @apply min-w-0 rounded-xl border border-ctp-surface1 bg-ctp-mantle p-4 wrap-anywhere sm:p-6;
+  }
+
+  .wishlist-item {
+    @apply grid min-w-0 gap-3 border-t border-ctp-surface1 py-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start;
+  }
+
+  .wishlist-item dl {
+    @apply flex flex-wrap gap-x-5 gap-y-2;
+  }
+
+  .wishlist-item dt {
+    @apply text-sm text-ctp-subtext1;
+  }
+
+  .wishlist-item dd {
+    @apply font-semibold;
   }
 
   footer {
@@ -288,7 +297,7 @@
     @apply md:justify-between;
     @apply max-w-5xl;
     @apply mx-auto;
-    @apply w-full;
+    @apply w-full px-4;
   }
 
   .settings {
@@ -296,12 +305,8 @@
     --nd-theme-text: var(--ctp-text);
     @apply items-center whitespace-nowrap;
     @apply flex;
-    @apply flex-row;
-    @apply gap-4;
-  }
-
-  .settings .signup {
-    @apply bg-ctp-blue text-ctp-base rounded-md px-3;
+    @apply flex-wrap justify-center;
+    @apply gap-2 md:gap-4;
   }
 
   .settings a {
