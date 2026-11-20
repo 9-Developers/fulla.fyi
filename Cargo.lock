@@ -1304,9 +1304,9 @@ dependencies = [
 
 [[package]]
 name = "nine_dev_site_build"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "52a2929272a8d05cdfa21afd8f3afa7ea02235a5bf391f08b4bf11e21be2d211"
+checksum = "f31f44c2eedead2287b7a5f826bd309d80c8d1e5bb7afa48ead0d0e8a2ccd10b"
 dependencies = [
  "percent-encoding",
  "sha2 0.11.0",

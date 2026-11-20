@@ -338,8 +338,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 BSD 3-Clause &quot;New&quot; or &quot;Revised&quot; License
 
 Used by:
-- nine_dev_site_build 0.1.0 (git+https://git.9dev.tech/9-Developers/9dev-site-lib.git?rev=2a7881394180d8352ca2fbd21122058d62c21ea9#2a7881394180d8352ca2fbd21122058d62c21ea9)
 - fulla_fyi 0.1.0 (https://crates.io/crates/fulla_fyi/0.1.0)
+- nine_dev_site_build 0.1.1 (https://crates.io/crates/nine_dev_site_build/0.1.1)
 
 BSD 3-Clause License
 

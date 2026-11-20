@@ -12,11 +12,9 @@ cargo about generate --locked --fail licenses/rust.hbs -o licenses/rust.txt
 sh .forgejo/scripts/check-license-notices.sh
 ```
 
-Review the diff before committing the generated file. `nine_dev_site_build`
-0.1.0 on crates.io omits the repository URL and license file; regeneration
-can replace its upstream BSD attribution with placeholder text. The MIT
-placeholder check below does not catch this. Preserve the attributed notice
-until generation can reproduce it; do not hand-edit the report.
+Review the diff before committing the generated file; do not hand-edit the
+report. Starting with `nine_dev_site_build` 0.1.1, the published crate includes
+the upstream BSD notice. `about.toml` verifies the packaged `LICENSE` by checksum.
 
 For frontend changes, record the exact source, version, license, copyright
 notice, and any required NOTICE text in `THIRD_PARTY_NOTICES.md`.
