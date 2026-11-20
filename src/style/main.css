@@ -1,40 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
 @import "tailwindcss";
 
-@import "./theme.css";
-
 /*! Third-party license texts and copyright notices: /licenses */
 
 @theme inline {
   --font-sans:
     "Sora", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Noto Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --color-ctp-rosewater: var(--rosewater);
-  --color-ctp-flamingo: var(--flamingo);
-  --color-ctp-pink: var(--pink);
-  --color-ctp-mauve: var(--mauve);
-  --color-ctp-red: var(--red);
-  --color-ctp-maroon: var(--maroon);
-  --color-ctp-peach: var(--peach);
-  --color-ctp-yellow: var(--yellow);
-  --color-ctp-green: var(--green);
-  --color-ctp-teal: var(--teal);
-  --color-ctp-sky: var(--sky);
-  --color-ctp-sapphire: var(--sapphire);
-  --color-ctp-blue: var(--blue);
-  --color-ctp-lavender: var(--lavender);
-  --color-ctp-text: var(--text);
-  --color-ctp-subtext1: var(--subtext1);
-  --color-ctp-subtext0: var(--subtext0);
-  --color-ctp-overlay2: var(--overlay2);
-  --color-ctp-overlay1: var(--overlay1);
-  --color-ctp-overlay0: var(--overlay0);
-  --color-ctp-surface2: var(--surface2);
-  --color-ctp-surface1: var(--surface1);
-  --color-ctp-surface0: var(--surface0);
-  --color-ctp-base: var(--base);
-  --color-ctp-mantle: var(--mantle);
-  --color-ctp-crust: var(--crust);
+  --color-ctp-rosewater: var(--ctp-rosewater);
+  --color-ctp-flamingo: var(--ctp-flamingo);
+  --color-ctp-pink: var(--ctp-pink);
+  --color-ctp-mauve: var(--ctp-mauve);
+  --color-ctp-red: var(--ctp-red);
+  --color-ctp-maroon: var(--ctp-maroon);
+  --color-ctp-peach: var(--ctp-peach);
+  --color-ctp-yellow: var(--ctp-yellow);
+  --color-ctp-green: var(--ctp-green);
+  --color-ctp-teal: var(--ctp-teal);
+  --color-ctp-sky: var(--ctp-sky);
+  --color-ctp-sapphire: var(--ctp-sapphire);
+  --color-ctp-blue: var(--ctp-blue);
+  --color-ctp-lavender: var(--ctp-lavender);
+  --color-ctp-text: var(--ctp-text);
+  --color-ctp-subtext1: var(--ctp-subtext1);
+  --color-ctp-subtext0: var(--ctp-subtext0);
+  --color-ctp-overlay2: var(--ctp-overlay2);
+  --color-ctp-overlay1: var(--ctp-overlay1);
+  --color-ctp-overlay0: var(--ctp-overlay0);
+  --color-ctp-surface2: var(--ctp-surface2);
+  --color-ctp-surface1: var(--ctp-surface1);
+  --color-ctp-surface0: var(--ctp-surface0);
+  --color-ctp-base: var(--ctp-base);
+  --color-ctp-mantle: var(--ctp-mantle);
+  --color-ctp-crust: var(--ctp-crust);
 }
 
 /* ************************************************************************** *
@@ -294,8 +292,8 @@
   }
 
   .settings {
-    --nd-theme-surface: var(--mantle);
-    --nd-theme-text: var(--text);
+    --nd-theme-surface: var(--ctp-mantle);
+    --nd-theme-text: var(--ctp-text);
     @apply items-center whitespace-nowrap;
     @apply flex;
     @apply flex-row;

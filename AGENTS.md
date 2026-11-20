@@ -82,7 +82,7 @@ out of source control and public assets, which are embedded in the executable.
 - `src/route/`: routing and page handlers; `error.rs` renders safe error pages.
 - `templates/`: Askama HTML pages; use server-rendered pages and HTMX fragments
   for product interactions.
-- `src/style/`: editable Tailwind and theme sources.
+- `src/style/`: editable Tailwind styles and mappings to the shared palette.
 - `src/public/`: current embedded browser assets, including generated `main.css`.
 - `build.rs`: CSS compilation and asset hashing.
 - `src/static_assets.rs`: explicit asset declarations and fingerprinted URLs.
@@ -96,7 +96,7 @@ Preserve accessible labels, keyboard interaction, responsive layouts, and themes
 
 ### Assets
 
-`/licenses` embeds `THIRD_PARTY_NOTICES.md`, the artwork notices from
+`/licenses` embeds `THIRD_PARTY_NOTICES.md`, the icon and palette notices from
 `nine_dev_site_lib`, and `licenses/rust.txt`.
 Update the frontend inventory and preserve upstream notices when changing assets.
 After dependency changes, follow the [notice update procedure](licenses/AUDIT.md#updating-notices).
@@ -115,8 +115,10 @@ currently writes compiled CSS there only when its contents change. It passes
 each final file to the `nine_dev_site_build` build dependency from crates.io and emits
 the complete fingerprinted URL as `ASSET_URL_<source path>` for the asset table.
 Declare site-owned files in `STATIC_ASSETS` and use `static_url` from templates.
-Use the shared `nine_dev_site_lib::switcher` in the base template. Load its
-script before CSS; the static handler serves its script, CSS and SVG symbols.
+In the base template, load the shared `nine_dev_site_lib::switcher` script
+before CSS and the `assets::theme::PALETTE` stylesheet before `main.css`.
+Fulla defaults to Latte without JavaScript. Tailwind colors map to the shared
+`--ctp-*` properties. The static handler serves the library assets.
 Tests require declarations to cover local files exactly once. Fingerprinted
 URLs must match their bytes and reject stale hashes.
 Keep immutable caching for fingerprinted assets and the separate `.well-known`

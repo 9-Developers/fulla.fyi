@@ -54,6 +54,7 @@ mod tests {
             .ok_or("missing theme script")?;
         assert!(script_pos < page.0.find("rel=\"stylesheet\"").ok_or("missing CSS")?);
         for asset in [
+            &nine_dev_site_lib::assets::theme::PALETTE,
             &switcher::JS,
             &switcher::CSS,
             &icons::DISPLAY,

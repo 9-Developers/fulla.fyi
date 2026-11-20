@@ -23,7 +23,7 @@ checksum = "c40576f6cf22188597b6f507457300c69a210ce0a6f2369b5e2d141bb4fe8831"
 [[nine_dev_site_lib.clarify.files]]
 path = "THIRD_PARTY_NOTICES.md"
 license = "MIT"
-checksum = "84d71078b51b0127734c3ba0ac230aef1c773650a52f272bb056f80b8a8f0d64"
+checksum = "c820551182030e6a65dcea074f8f5d3f34980121601d3d2bb5361a20207b5bba"
 
 [chrono.clarify]
 license = "MIT OR Apache-2.0"

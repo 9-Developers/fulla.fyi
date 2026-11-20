@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="latte">
 
 <head>
   <meta charset="utf-8">
@@ -7,6 +7,7 @@
   <meta name="description" content="Share wishlists with your friends">
   <title>{{ title }} | Fulla</title>
   <script src="{{ nine_dev_site_lib::switcher::JS.url }}"></script>
+  <link rel="stylesheet" href="{{ nine_dev_site_lib::assets::theme::PALETTE.url }}">
   <link rel="stylesheet" href="{{ crate::static_assets::static_url("main.css") }}">
   <link rel="stylesheet" href="{{ nine_dev_site_lib::switcher::CSS.url }}">
   <script src="{{ crate::static_assets::static_url("htmx.min.js") }}"></script>

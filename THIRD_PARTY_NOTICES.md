@@ -13,9 +13,9 @@ Both this file and those Rust notices are embedded in the /licenses page.
 - Tailwind CSS 4.3.5 — generated src/public/main.css
   Source: https://github.com/tailwindlabs/tailwindcss/tree/v4.3.5
   License: MIT.
-- Catppuccin palette — src/style/theme.css, compiled into main.css
+- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.3.0
   Source: https://github.com/catppuccin/catppuccin
-  License: MIT. Colors are represented as OKLCH values in Fulla.
+  License: MIT. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Sora — loaded externally from Google Fonts by src/style/main.css;
   font files are not bundled in this repository.
   Source: https://github.com/google/fonts/tree/main/ofl/sora
@@ -26,9 +26,9 @@ Both this file and those Rust notices are embedded in the /licenses page.
   License: MIT. The path data matches v12.0.0; Fulla wraps it in an SVG symbol.
   This is a Git branch icon used for a Codeberg link, not the Codeberg logo.
 - The four Fluent Emoji flavor icons and Bootstrap display and chevron icons
-  are bundled by nine_dev_site_lib 0.2.1. Its artwork inventory and MIT notices
+  are bundled by nine_dev_site_lib 0.3.0. Its artwork inventory and MIT notices
   are included on /licenses and in the Rust dependency notices.
-  Source: https://docs.rs/crate/nine_dev_site_lib/0.2.1/source/THIRD_PARTY_NOTICES.md
+  Source: https://docs.rs/crate/nine_dev_site_lib/0.3.0/source/THIRD_PARTY_NOTICES.md
 
 ### Icon provenance awaiting confirmation
 
@@ -78,28 +78,6 @@ PERFORMANCE OF THIS SOFTWARE.
 ## Tailwind CSS — MIT License
 
 Copyright (c) Tailwind Labs, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-## Catppuccin — MIT License
-
-Copyright (c) 2021 Catppuccin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
