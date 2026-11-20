@@ -105,12 +105,20 @@ async fn well_known_asset(Path(path): Path<String>) -> Response {
 
     asset_response(
         file.contents(),
-        &source_path,
-        HeaderValue::from_static("public, max-age=3600"),
+        content_type(&source_path),
+        "public, max-age=3600",
     )
 }
 
 async fn static_asset(uri: Uri) -> Response {
+    const IMMUTABLE: &str = "public, max-age=31536000, immutable";
+    if let Some(asset) = nine_dev_site_lib::assets::lookup(uri.path()) {
+        return asset_response(
+            asset.bytes,
+            HeaderValue::from_static(asset.content_type),
+            IMMUTABLE,
+        );
+    }
     let Some(source_path) = static_assets::source_path_for_request(uri.path()) else {
         return StatusCode::NOT_FOUND.into_response();
     };
@@ -118,31 +126,31 @@ async fn static_asset(uri: Uri) -> Response {
         return StatusCode::NOT_FOUND.into_response();
     };
 
-    asset_response(
-        file.contents(),
-        source_path,
-        HeaderValue::from_static("public, max-age=31536000, immutable"),
-    )
+    asset_response(file.contents(), content_type(source_path), IMMUTABLE)
+}
+
+fn content_type(source_path: &str) -> HeaderValue {
+    let mime = mime_guess::from_path(source_path).first_or_octet_stream();
+    HeaderValue::from_str(mime.as_ref())
+        .unwrap_or_else(|_| HeaderValue::from_static("application/octet-stream"))
 }
 
 fn asset_response(
     contents: &'static [u8],
-    source_path: &str,
-    cache_control: HeaderValue,
+    content_type: HeaderValue,
+    cache_control: &'static str,
 ) -> Response {
-    let mut response = Body::from(contents).into_response();
-    let mime = mime_guess::from_path(source_path).first_or_octet_stream();
-    let content_type = HeaderValue::from_str(mime.as_ref())
-        .unwrap_or_else(|_| HeaderValue::from_static("application/octet-stream"));
-
-    response
-        .headers_mut()
-        .insert(header::CONTENT_TYPE, content_type);
-    response
-        .headers_mut()
-        .insert(header::CACHE_CONTROL, cache_control);
-
-    response
+    (
+        [
+            (header::CONTENT_TYPE, content_type),
+            (
+                header::CACHE_CONTROL,
+                HeaderValue::from_static(cache_control),
+            ),
+        ],
+        Body::from(contents),
+    )
+        .into_response()
 }
 
 #[cfg(test)]

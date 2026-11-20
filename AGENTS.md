@@ -96,7 +96,8 @@ Preserve accessible labels, keyboard interaction, responsive layouts, and themes
 
 ### Assets
 
-`/licenses` embeds `THIRD_PARTY_NOTICES.md` and `licenses/rust.txt`.
+`/licenses` embeds `THIRD_PARTY_NOTICES.md`, the artwork notices from
+`nine_dev_site_lib`, and `licenses/rust.txt`.
 Update the frontend inventory and preserve upstream notices when changing assets.
 After dependency changes, follow the [notice update procedure](licenses/AUDIT.md#updating-notices).
 CI uses cargo-deny 0.21.0 to enforce
@@ -114,9 +115,11 @@ Edit `src/style/` rather than generated `src/public/main.css`. The build script
 currently writes compiled CSS there only when its contents change. It passes
 each final file to the `nine_dev_site_build` build dependency from crates.io and emits
 the complete fingerprinted URL as `ASSET_URL_<source path>` for the asset table.
-Add declarations to `STATIC_ASSETS` when adding embedded assets and use
-`static_url` from templates. Tests require declarations to cover embedded files
-exactly once. Fingerprinted URLs must match their bytes and reject stale hashes.
+Declare site-owned files in `STATIC_ASSETS` and use `static_url` from templates.
+The four flavor icons come from `nine_dev_site_lib::assets::theme`; reference
+their URLs with `#icon` and let the static handler serve the library's bytes.
+Tests require declarations to cover local files exactly once. Fingerprinted
+URLs must match their bytes and reject stale hashes.
 Keep immutable caching for fingerprinted assets and the separate `.well-known`
 handling.
 

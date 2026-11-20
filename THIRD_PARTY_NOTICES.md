@@ -26,13 +26,10 @@ Both this file and those Rust notices are embedded in the /licenses page.
   Source: https://github.com/primer/octicons/blob/v12.0.0/icons/git-branch-24.svg
   License: MIT. The path data matches v12.0.0; Fulla wraps it in an SVG symbol.
   This is a Git branch icon used for a Codeberg link, not the Codeberg logo.
-- Microsoft Fluent Emoji (High Contrast) — theme icons:
-  Sunflower (latte.svg), Potted plant (frappe.svg), Hibiscus (macchiato.svg),
-  and Herb (mocha.svg), under src/public/images/icons/.
-  Source: https://github.com/microsoft/fluentui-emoji/tree/1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets
-  Each icon comes from its named asset's High Contrast directory.
-  License: MIT. Fulla wraps the paths in SVG symbols and replaces the fixed
-  fill color with currentColor to follow the selected theme.
+- Microsoft Fluent Emoji (High Contrast) — the four flavor icons are bundled
+  by nine_dev_site_lib 0.1.0. Its artwork inventory and Microsoft MIT notice
+  are included on /licenses and in the Rust dependency notices.
+  Source: https://docs.rs/crate/nine_dev_site_lib/0.1.0/source/THIRD_PARTY_NOTICES.md
 
 ### Icon provenance awaiting confirmation
 
@@ -42,28 +39,6 @@ The maintainer recalls obtaining most icons through https://www.svgviewer.dev/.
 Their upstream licensing has not yet been verified. The repository license
 must not be assumed to grant rights to third-party artwork. Brand names and
 logos remain subject to their respective owners' trademark rights.
-
-## Microsoft Fluent Emoji — MIT License
-
-Copyright (c) Microsoft Corporation.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE
 
 ## Octicons — MIT License
 

@@ -54,10 +54,6 @@ mod tests {
             "theme.js",
             "images/icons/system.svg",
             "images/icons/expand.svg",
-            "images/icons/latte.svg",
-            "images/icons/frappe.svg",
-            "images/icons/macchiato.svg",
-            "images/icons/mocha.svg",
             "images/icons/codeberg.svg",
             "images/icons/discord.svg",
         ] {
@@ -84,6 +80,56 @@ mod tests {
                 assert!(page.0.contains(&format!(r#"href="{url}#icon""#)));
                 assert!(std::str::from_utf8(&bytes)?.contains(r#"id="icon""#));
             }
+        }
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn shared_flavor_icons_keep_their_public_urls() -> Result<(), Box<dyn std::error::Error>>
+    {
+        use nine_dev_site_lib::assets::theme;
+
+        let Ok(page) = home().await else {
+            panic!("home page should render");
+        };
+        for (url, icon) in [
+            (
+                "/static/images/icons/latte.86af2ea9588a23fd.svg",
+                &theme::LATTE,
+            ),
+            (
+                "/static/images/icons/frappe.0014b909d18c2099.svg",
+                &theme::FRAPPE,
+            ),
+            (
+                "/static/images/icons/macchiato.fa94051b39df5e2c.svg",
+                &theme::MACCHIATO,
+            ),
+            (
+                "/static/images/icons/mocha.58d995f68329eec0.svg",
+                &theme::MOCHA,
+            ),
+        ] {
+            assert!(page.0.contains(&format!(r#"href="{url}#icon""#)));
+            let response = static_asset(Uri::from_static(url)).await;
+            assert_eq!(response.status(), 200, "{url}");
+            assert_eq!(response.headers()[header::CONTENT_TYPE], "image/svg+xml");
+            assert_eq!(
+                response.headers()[header::CACHE_CONTROL],
+                "public, max-age=31536000, immutable"
+            );
+            assert_eq!(
+                to_bytes(response.into_body(), 64 * 1024).await?.as_ref(),
+                icon.bytes
+            );
+        }
+        for url in [
+            "/static/images/icons/latte.svg",
+            "/static/images/icons/latte.0000000000000000.svg",
+        ] {
+            let response = static_asset(Uri::from_static(url)).await;
+            assert_eq!(response.status(), 404);
+            assert!(!response.headers().contains_key(header::CACHE_CONTROL));
         }
         Ok(())
     }

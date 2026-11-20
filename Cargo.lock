@@ -693,6 +693,7 @@ dependencies = [
  "include_dir",
  "mime_guess",
  "nine_dev_site_build",
+ "nine_dev_site_lib",
  "rand 0.10.2",
  "serde",
  "serde_json",
@@ -1310,6 +1311,15 @@ checksum = "f31f44c2eedead2287b7a5f826bd309d80c8d1e5bb7afa48ead0d0e8a2ccd10b"
 dependencies = [
  "percent-encoding",
  "sha2 0.11.0",
+]
+
+[[package]]
+name = "nine_dev_site_lib"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "88ca52464dcbe3e833bb667d68e06a025c02f5e6f27716339991c6d450335205"
+dependencies = [
+ "nine_dev_site_build",
 ]
 
 [[package]]

@@ -14,19 +14,20 @@ sh .forgejo/scripts/check-license-notices.sh
 
 Review the diff before committing the generated file; do not hand-edit the
 report. Starting with `nine_dev_site_build` 0.1.1, the published crate includes
-the upstream BSD notice. `about.toml` verifies the packaged `LICENSE` by checksum.
+the upstream BSD notice. For `nine_dev_site_lib` 0.1.0, `about.toml` verifies
+both the packaged BSD `LICENSE` and the Microsoft MIT artwork notice in
+`THIRD_PARTY_NOTICES.md`.
 
 For frontend changes, record the exact source, version, license, copyright
 notice, and any required NOTICE text in `THIRD_PARTY_NOTICES.md`.
 
 ## Application dependencies
 
-The locked Cargo graph contains 259 packages including Fulla itself.
+The locked Cargo graph contains 267 packages including Fulla itself.
 `cargo deny --locked check licenses` passes with MIT, BSD-3-Clause,
 Apache-2.0, Unicode-3.0, and Zlib allowed. Crates offering LGPL as an
 alternative also offer MIT or Apache-2.0; no LGPL option is selected.
 `cargo-about` includes build, dev, and platform-specific dependencies.
-No separate `*NOTICE*` files were found in the downloaded dependency sources.
 The generated report retains distinct copyright-bearing license texts.
 
 ### Canonical MIT fallback review
@@ -72,7 +73,8 @@ aggregator with multiple licenses, not a blanket license grant.
 - `latte.svg`, `frappe.svg`, `macchiato.svg`, `mocha.svg`: replaced with
   Microsoft Fluent Emoji High Contrast Sunflower, Potted plant, Hibiscus,
   and Herb at revision `1ffb34c752ecf5d402f04cfb4b392c77f57c54bc`.
-  MIT notice included. Path geometry and fill rules are preserved; SVG
+  Supplied by `nine_dev_site_lib` since 0.1.0; the bytes and fingerprinted
+  URLs match Fulla's original files. MIT notice included. Path geometry and fill rules are preserved; SVG
   wrappers use symbols and fills inherit `currentColor`.
   This removes the previous Macchiato artwork from ICOOON MONO, whose
   redistribution restrictions conflicted with the aggregator's PD label.

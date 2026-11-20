@@ -340,6 +340,7 @@ BSD 3-Clause &quot;New&quot; or &quot;Revised&quot; License
 Used by:
 - fulla_fyi 0.1.0 (https://crates.io/crates/fulla_fyi/0.1.0)
 - nine_dev_site_build 0.1.1 (https://crates.io/crates/nine_dev_site_build/0.1.1)
+- nine_dev_site_lib 0.1.0 (https://crates.io/crates/nine_dev_site_lib/0.1.0)
 
 BSD 3-Clause License
 
@@ -470,6 +471,44 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+MIT License
+
+Used by:
+- nine_dev_site_lib 0.1.0 (https://crates.io/crates/nine_dev_site_lib/0.1.0)
+
+# Third-party notices
+
+The four flavor icons under `assets/images/icons/` are adapted from Microsoft
+Fluent Emoji's High Contrast artwork: Sunflower (`latte.svg`), Potted Plant
+(`frappe.svg`), Hibiscus (`macchiato.svg`), and Herb (`mocha.svg`).
+[Upstream artwork at the source revision](https://github.com/microsoft/fluentui-emoji/tree/1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets).
+Fulla.fyi wrapped the paths in SVG symbols and replaced the fixed fill color
+with `currentColor`. The SVGs are distributed here with those adaptations.
+
+## Microsoft Fluent Emoji — MIT License
+
+Copyright (c) Microsoft Corporation.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE
+
 
 --------------------------------------------------------------------------------
 MIT License
