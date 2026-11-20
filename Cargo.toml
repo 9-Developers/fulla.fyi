@@ -11,7 +11,7 @@ keywords = ["axum", "htmx", "social", "web", "wishlist"]
 categories = ["web-programming"]
 
 [build-dependencies]
-nine_dev_site_build = { git = "https://git.9dev.tech/9-Developers/9dev-site-lib.git", rev = "2a7881394180d8352ca2fbd21122058d62c21ea9" }
+nine_dev_site_build = "0.1.0"
 
 [dependencies]
 argon2 = "0.5.3"
@@ -30,18 +30,18 @@ sha2 = "0.11.0"
 subtle = "2.6.1"
 time = "0.3.55"
 sqlx = { version = "0.9.0", features = [
-    "chrono",
-    "migrate",
-    "postgres",
-    "runtime-tokio",
-    "time",
-    "tls-native-tls",
+  "chrono",
+  "migrate",
+  "postgres",
+  "runtime-tokio",
+  "time",
+  "tls-native-tls",
 ] }
 tokio = { version = "1.53.1", features = [
-    "macros",
-    "rt-multi-thread",
-    "sync",
-    "time",
+  "macros",
+  "rt-multi-thread",
+  "sync",
+  "time",
 ] }
 zxcvbn = "3.1.1"
 tracing = "0.1.44"
