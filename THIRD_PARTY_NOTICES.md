@@ -7,13 +7,13 @@ Both this file and those Rust notices are embedded in the /licenses page.
 
 ## Browser asset inventory
 
-- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.4.0
+- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.5.0
   Source: https://github.com/bigskysoftware/htmx/tree/v4.0.0
   License: 0BSD. The crate's notice is included on /licenses and in licenses/rust.txt.
-- Tailwind CSS 4.3.5 — generated src/public/main.css
+- Tailwind CSS 4.3.5 — generated public/main.css
   Source: https://github.com/tailwindlabs/tailwindcss/tree/v4.3.5
   License: MIT.
-- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.4.0
+- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.5.0
   Source: https://github.com/catppuccin/catppuccin
   License: MIT. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Sora — loaded externally from Google Fonts by src/style/main.css;
@@ -21,19 +21,19 @@ Both this file and those Rust notices are embedded in the /licenses page.
   Source: https://github.com/google/fonts/tree/main/ofl/sora
   License: SIL Open Font License 1.1.
 - Theme switcher markup, stylesheet and script: nine_dev_site_lib (BSD-3-Clause).
-- Octicons git-branch-24 — src/public/images/icons/codeberg.svg
+- Octicons git-branch-24 — public/images/icons/codeberg.svg
   Source: https://github.com/primer/octicons/blob/v12.0.0/icons/git-branch-24.svg
   License: MIT. The path data matches v12.0.0; Fulla wraps it in an SVG symbol.
   This is a Git branch icon used for a Codeberg link, not the Codeberg logo.
 - The four Fluent Emoji flavor icons and Bootstrap display and chevron icons
-  are bundled by nine_dev_site_lib 0.4.0. Its artwork inventory and MIT notices
+  are bundled by nine_dev_site_lib 0.5.0. Its artwork inventory and MIT notices
   are included on /licenses and in the Rust dependency notices.
-  Source: https://docs.rs/crate/nine_dev_site_lib/0.4.0/source/THIRD_PARTY_NOTICES.md
+  Source: https://docs.rs/crate/nine_dev_site_lib/0.5.0/source/THIRD_PARTY_NOTICES.md
 
 ### Icon provenance awaiting confirmation
 
 The original import did not record a source or license for
-src/public/images/icons/discord.svg.
+public/images/icons/discord.svg.
 The maintainer recalls obtaining most icons through https://www.svgviewer.dev/.
 Its upstream licensing has not yet been verified. The repository license
 must not be assumed to grant rights to third-party artwork. Brand names and

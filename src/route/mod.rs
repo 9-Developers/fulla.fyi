@@ -2,9 +2,8 @@
 
 use axum::{
     Router,
-    body::Body,
     extract::{Path, State},
-    http::{HeaderValue, StatusCode, Uri, header},
+    http::{HeaderMap, HeaderValue, StatusCode, Uri, header},
     response::{IntoResponse, Response},
     routing::get,
 };
@@ -12,6 +11,7 @@ use axum::{
 use crate::database::AppState;
 use crate::static_assets;
 use axum_login::tower_sessions;
+use nine_dev_site_lib::serving::{self, IMMUTABLE, content_type};
 
 pub use error::*;
 pub use home::*;
@@ -52,15 +52,36 @@ pub async fn get_routes(
         .layer(axum::extract::DefaultBodyLimit::max(16 * 1024))
         .layer(axum_login::AuthManagerLayerBuilder::new(backend, sessions).build())
         .layer(axum::middleware::from_fn(no_store));
-    Ok(Router::new()
-        .merge(accounts)
-        .route("/.well-known/{*path}", get(well_known_asset))
-        .route("/static/{*path}", get(static_asset))
+    Ok(accounts
         .route("/", get(home))
         .route("/licenses", get(licenses))
         .route("/health", get(health))
         .fallback(not_found)
-        .with_state(state))
+        .with_state(state)
+        .merge(asset_routes()))
+}
+
+fn asset_routes() -> Router {
+    let mut assets = Router::new()
+        .route("/.well-known/{*path}", get(well_known_asset))
+        .route("/static/{*path}", get(static_asset));
+    for entry in static_assets::STABLE.0 {
+        assets = assets.route(
+            entry.url,
+            get(move |headers: HeaderMap| async move {
+                let Some(file) = static_assets::get_file(entry.source) else {
+                    return StatusCode::NOT_FOUND.into_response();
+                };
+                serving::revalidate(
+                    file.contents(),
+                    content_type(entry.source),
+                    entry.hash,
+                    &headers,
+                )
+            }),
+        );
+    }
+    assets
 }
 
 async fn no_store(request: axum::extract::Request, next: axum::middleware::Next) -> Response {
@@ -103,7 +124,7 @@ async fn well_known_asset(Path(path): Path<String>) -> Response {
         return StatusCode::NOT_FOUND.into_response();
     };
 
-    asset_response(
+    serving::response(
         file.contents(),
         content_type(&source_path),
         "public, max-age=3600",
@@ -111,13 +132,8 @@ async fn well_known_asset(Path(path): Path<String>) -> Response {
 }
 
 async fn static_asset(uri: Uri) -> Response {
-    const IMMUTABLE: &str = "public, max-age=31536000, immutable";
     if let Some(asset) = nine_dev_site_lib::assets::lookup(uri.path()) {
-        return asset_response(
-            asset.bytes,
-            HeaderValue::from_static(asset.content_type),
-            IMMUTABLE,
-        );
+        return serving::response(asset.bytes, asset.content_type, IMMUTABLE);
     }
     let Some(source_path) = static_assets::source_path_for_request(uri.path()) else {
         return StatusCode::NOT_FOUND.into_response();
@@ -126,44 +142,73 @@ async fn static_asset(uri: Uri) -> Response {
         return StatusCode::NOT_FOUND.into_response();
     };
 
-    asset_response(file.contents(), content_type(source_path), IMMUTABLE)
-}
-
-fn content_type(source_path: &str) -> HeaderValue {
-    let mime = mime_guess::from_path(source_path).first_or_octet_stream();
-    HeaderValue::from_str(mime.as_ref())
-        .unwrap_or_else(|_| HeaderValue::from_static("application/octet-stream"))
-}
-
-fn asset_response(
-    contents: &'static [u8],
-    content_type: HeaderValue,
-    cache_control: &'static str,
-) -> Response {
-    (
-        [
-            (header::CONTENT_TYPE, content_type),
-            (
-                header::CACHE_CONTROL,
-                HeaderValue::from_static(cache_control),
-            ),
-        ],
-        Body::from(contents),
-    )
-        .into_response()
+    serving::response(file.contents(), content_type(source_path), IMMUTABLE)
 }
 
 #[cfg(test)]
 mod tests {
     use axum::{
-        body::to_bytes,
+        body::{Body, to_bytes},
         extract::Path,
-        http::{HeaderValue, Uri, header},
+        http::{HeaderValue, Request, Uri, header},
         response::IntoResponse,
     };
 
     use super::{PageError, static_asset, well_known_asset};
     use crate::static_assets;
+    use tower::ServiceExt;
+
+    #[tokio::test]
+    async fn manifest_revalidates_at_the_url_in_the_page() -> Result<(), Box<dyn std::error::Error>>
+    {
+        let app = super::asset_routes();
+        let path = "/site.webmanifest";
+        let page = super::home()
+            .await
+            .map_err(|_| "home page did not render")?;
+        assert!(
+            page.0
+                .contains(r#"<link rel="manifest" href="/site.webmanifest">"#)
+        );
+        let response = app
+            .clone()
+            .oneshot(Request::get(path).body(Body::empty())?)
+            .await?;
+        assert_eq!(response.status(), 200);
+        assert_eq!(
+            response.headers()[header::CONTENT_TYPE],
+            "application/manifest+json"
+        );
+        let cache = "public, max-age=0, must-revalidate";
+        assert_eq!(response.headers()[header::CACHE_CONTROL], cache);
+        let etag = response.headers()[header::ETAG].to_str()?.to_owned();
+        let file = include_bytes!("../../public/site.webmanifest");
+        assert_eq!(to_bytes(response.into_body(), 4096).await?.as_ref(), file);
+        for (condition, expected) in [
+            (etag.clone(), 304),
+            (format!("\"old,tag\", W/{etag}"), 304),
+            ("*".into(), 304),
+            ("\"stale\"".into(), 200),
+        ] {
+            let request = Request::get(path)
+                .header(header::IF_NONE_MATCH, condition)
+                .body(Body::empty())?;
+            let response = app.clone().oneshot(request).await?;
+            assert_eq!(response.status(), expected);
+            assert_eq!(response.headers()[header::ETAG], etag);
+            assert_eq!(response.headers()[header::CACHE_CONTROL], cache);
+            let body = to_bytes(response.into_body(), 4096).await?;
+            assert_eq!(
+                body.as_ref(),
+                if expected == 304 {
+                    &[]
+                } else {
+                    file.as_slice()
+                }
+            );
+        }
+        Ok(())
+    }
 
     #[sqlx::test]
     async fn readiness_tracks_database_availability(pool: sqlx::PgPool) {

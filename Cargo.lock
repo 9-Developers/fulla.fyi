@@ -691,7 +691,6 @@ dependencies = [
  "axum-login",
  "dotenvy",
  "include_dir",
- "mime_guess",
  "nine_dev_site_build",
  "nine_dev_site_lib",
  "rand 0.10.2",
@@ -1305,9 +1304,7 @@ dependencies = [
 
 [[package]]
 name = "nine_dev_site_build"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f31f44c2eedead2287b7a5f826bd309d80c8d1e5bb7afa48ead0d0e8a2ccd10b"
+version = "0.2.0"
 dependencies = [
  "percent-encoding",
  "sha2 0.11.0",
@@ -1315,11 +1312,11 @@ dependencies = [
 
 [[package]]
 name = "nine_dev_site_lib"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f347bed2b34480a2af8de6b6d4be4e7e1d25934952bcca353f6f826c87227346"
+version = "0.5.0"
 dependencies = [
  "askama",
+ "axum",
+ "mime_guess",
  "nine_dev_site_build",
 ]
 

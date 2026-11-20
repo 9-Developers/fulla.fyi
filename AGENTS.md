@@ -83,9 +83,9 @@ out of source control and public assets, which are embedded in the executable.
 - `templates/`: Askama HTML pages; use server-rendered pages and HTMX fragments
   for product interactions.
 - `src/style/`: editable Tailwind styles and mappings to the shared palette.
-- `src/public/`: current embedded browser assets, including generated `main.css`.
+- `public/`: embedded browser assets, including generated `main.css`.
 - `build.rs`: CSS compilation and asset hashing.
-- `src/static_assets.rs`: explicit asset declarations and fingerprinted URLs.
+- `src/static_assets.rs`: named assets, the generated image index, and stable URLs.
 - `migrations/`: SQLx PostgreSQL up/down migrations.
 - `.forgejo/workflows/`: build, security, and release deployment.
 
@@ -110,11 +110,13 @@ Review source license changes before updating checksums. CI runs
 `sh .forgejo/scripts/check-license-notices.sh` to reject canonical MIT placeholders;
 generation success and freshness alone do not verify attribution completeness.
 
-Edit `src/style/` rather than generated `src/public/main.css`. The build script
-currently writes compiled CSS there only when its contents change. It passes
-each final file to the `nine_dev_site_build` build dependency from crates.io and emits
-the complete fingerprinted URL as `ASSET_URL_<source path>` for the asset table.
-Declare site-owned files in `STATIC_ASSETS` and use `static_url` from templates.
+Edit `src/style/` rather than generated `public/main.css`. The build script uses
+`nine_dev_site_build` to compile CSS, write it only if changed, and fingerprint
+the final files. Place site images under `public/images/`; they are indexed at
+build time without declarations. Declare other immutable files in `NAMED` and
+stable browser files in `STABLE` in `src/static_assets.rs`. Templates call
+`static_url` with a path relative to `public/`. A stable entry such as
+`site.webmanifest` also registers its root URL with ETag revalidation.
 In the base template, load the shared `nine_dev_site_lib::switcher` script
 before CSS and the `assets::theme::PALETTE` stylesheet before `main.css`.
 Fulla defaults to Latte without JavaScript. Tailwind colors map to the shared
@@ -125,10 +127,8 @@ URLs must match their bytes and reject stale hashes.
 Keep immutable caching for fingerprinted assets and the separate `.well-known`
 handling.
 
-The planned asset update is **9DEV-69**. Reference `../limpdick.io/build.rs` and
-`../limpdick.io/src/static_assets.rs` for its root `public/` layout, generated
-image index, and stable assets with ETag revalidation. Preserve Fulla-specific
-behavior when adapting it. Tailwind foundation work is **9DEV-73**.
+Files under `public/.well-known/` are served at `/.well-known/` with a one-hour
+cache lifetime. Tailwind foundation work is **9DEV-73**.
 
 ### Database and product behavior
 
