@@ -65,6 +65,21 @@ Startup checks migration history. To check whether the running app can reach
 PostgreSQL, request `http://localhost:3000/health`: it returns HTTP 200 when
 ready or 503 when the database is unavailable.
 
+## Grafana Cloud
+
+The server writes JSON logs to stdout. To also send application logs and HTTP
+request counts and durations to Grafana Cloud, set `OTEL_EXPORTER_OTLP_ENDPOINT`
+and `OTEL_EXPORTER_OTLP_HEADERS` to the base endpoint and authorization header
+provided by your Grafana stack. Use a token with `logs:write` and `metrics:write`.
+Leave the endpoint unset to run locally without export.
+
+Import the [shared **9 Developers · Site HTTP** dashboard](https://git.9dev.tech/9-Developers/9dev-site-lib/src/branch/main/observability/grafana-dashboard.json)
+and select `fulla.fyi` (or
+your `OTEL_SERVICE_NAME` override). Railway sets `DEPLOYMENT_ENVIRONMENT` to
+`staging` or `production`; local runs default to `development`. Request `/` or
+`/licenses` to generate traffic; `/health` is excluded. The `migrate` command
+logs locally and needs no Grafana configuration.
+
 ## License
 
 Fulla uses the [BSD 3-Clause License](LICENSE). When redistributing it, include

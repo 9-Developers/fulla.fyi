@@ -66,6 +66,9 @@ precedence. Preserve existing `.env` files.
 | ---------- | ------- | ------------------------ |
 | `PORT`     | `3000`  | Listen port on `0.0.0.0` |
 | `RUST_LOG` | `info`  | Tracing filter           |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | unset | Enables server-side OTLP logs and metrics |
+| `OTEL_EXPORTER_OTLP_HEADERS` | unset | Grafana authorization header, stored as a service secret |
+| `DEPLOYMENT_ENVIRONMENT` | `development` | Telemetry environment; set by Railway IaC |
 | `DATABASE_URL` | required | PostgreSQL URL      |
 | `SESSION_SECURE` | `true` | Secure auth cookies; set `false` only for local HTTP |
 

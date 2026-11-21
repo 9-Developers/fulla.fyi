@@ -7,13 +7,13 @@ Both this file and those Rust notices are embedded in the /licenses page.
 
 ## Browser asset inventory
 
-- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.5.0
+- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.7.0
   Source: https://github.com/bigskysoftware/htmx/tree/v4.0.0
   License: 0BSD. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Tailwind CSS 4.3.5 — generated public/main.css
   Source: https://github.com/tailwindlabs/tailwindcss/tree/v4.3.5
   License: MIT.
-- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.5.0
+- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.7.0
   Source: https://github.com/catppuccin/catppuccin
   License: MIT. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Tailwind utility bindings for the palette — nine_dev_site_build 0.2.1 (BSD-3-Clause).
@@ -27,9 +27,9 @@ Both this file and those Rust notices are embedded in the /licenses page.
   License: MIT. The path data matches v12.0.0; Fulla wraps it in an SVG symbol.
   This is a Git branch icon used for a Codeberg link, not the Codeberg logo.
 - The four Fluent Emoji flavor icons and Bootstrap display and chevron icons
-  are bundled by nine_dev_site_lib 0.5.0. Its artwork inventory and MIT notices
+  are bundled by nine_dev_site_lib 0.7.0. Its artwork inventory and MIT notices
   are included on /licenses and in the Rust dependency notices.
-  Source: https://docs.rs/crate/nine_dev_site_lib/0.5.0/source/THIRD_PARTY_NOTICES.md
+  Source: https://docs.rs/crate/nine_dev_site_lib/0.7.0/source/THIRD_PARTY_NOTICES.md
 
 ### Icon provenance awaiting confirmation
 
