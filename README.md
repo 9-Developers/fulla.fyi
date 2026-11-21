@@ -50,14 +50,14 @@ SESSION_SECURE=false cargo run --locked
 
 ## Configuration
 
-Set these variables in your shell or a local `.env` file. Exported values take
-precedence.
+Set these variables in your shell or in `./.env` in the directory where you
+start Fulla. Exported values take precedence; parent directories are not searched.
 
 | Variable         | Default  | Use                                                        |
 | ---------------- | -------- | ---------------------------------------------------------- |
 | `DATABASE_URL`   | Required | PostgreSQL connection URL for migrations and the server.   |
 | `SESSION_SECURE` | `true`   | Set to `false` for local HTTP only. Keep `true` for HTTPS. |
-| `PORT`           | `3000`   | HTTP listen port.                                          |
+| `PORT`           | `3000`   | HTTP listen port (1–65535). Not used by `migrate`.         |
 | `RUST_LOG`       | `info`   | Logging filter.                                            |
 
 After updating Fulla, rerun the migration command before starting the server.

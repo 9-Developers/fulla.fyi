@@ -9,7 +9,7 @@ is reproduced below.
 BSD Zero Clause License
 
 Used by:
-- nine_dev_site_lib 0.5.1 (https://crates.io/crates/nine_dev_site_lib/0.5.1)
+- nine_dev_site_lib 0.6.0 (https://crates.io/crates/nine_dev_site_lib/0.6.0)
 
 ## HTMX 4.0.0 — Zero-Clause BSD
 
@@ -362,7 +362,7 @@ BSD 3-Clause &quot;New&quot; or &quot;Revised&quot; License
 
 Used by:
 - nine_dev_site_build 0.2.1 (https://crates.io/crates/nine_dev_site_build/0.2.1)
-- nine_dev_site_lib 0.5.1 (https://crates.io/crates/nine_dev_site_lib/0.5.1)
+- nine_dev_site_lib 0.6.0 (https://crates.io/crates/nine_dev_site_lib/0.6.0)
 - fulla_fyi 0.1.0 (https://crates.io/crates/fulla_fyi/0.1.0)
 
 BSD 3-Clause License
@@ -499,7 +499,7 @@ THE SOFTWARE.
 MIT License
 
 Used by:
-- nine_dev_site_lib 0.5.1 (https://crates.io/crates/nine_dev_site_lib/0.5.1)
+- nine_dev_site_lib 0.6.0 (https://crates.io/crates/nine_dev_site_lib/0.6.0)
 
 # Third-party notices
 

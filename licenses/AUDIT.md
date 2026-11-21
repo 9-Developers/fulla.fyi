@@ -14,7 +14,7 @@ sh .forgejo/scripts/check-license-notices.sh
 
 Review the diff before committing the generated file; do not hand-edit the
 report. Starting with `nine_dev_site_build` 0.1.1, the published crate includes
-the upstream BSD notice. For `nine_dev_site_lib` 0.5.1, `about.toml` verifies
+the upstream BSD notice. For `nine_dev_site_lib` 0.6.0, `about.toml` verifies
 both the packaged BSD `LICENSE` and `THIRD_PARTY_NOTICES.md`, which includes
 the MIT icon and palette notices and the 0BSD license for HTMX.
 
@@ -84,6 +84,7 @@ aggregator with multiple licenses, not a blanket license grant.
   former local `discord.svg` had unverified provenance and remains in old revisions.
 
 Sources:
+
 - https://github.com/microsoft/fluentui-emoji/tree/1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets
 - https://github.com/microsoft/fluentui-emoji/blob/1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/LICENSE
 - https://www.svgviewer.dev/s/382843/hibiscus-illustration
