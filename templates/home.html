@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <h2>Your wishes, shared with your people</h2>
-<p><a href="/register">Create an account</a> or <a href="/login">sign in</a>.</p>
+
 <figure class="quote">
   <blockquote>
     <p>
@@ -29,11 +29,20 @@
   Please consider donating to support the project.
 </p>
 
+<h2>Get support</h2>
+
+<div>
+  {{ IconLink::new("https://discord.gg/KTgshSbEUU", &icons::DISCORD, "Get support on Discord")?|safe }}
+</div>
+
+<div>
+  {{ IconLink::new("https://github.com/9-Developers/fulla.fyi/issues", &icons::GITHUB, "File a bug report on GitHub")?|safe }}
+</div>
+
 <h2>Contribute</h2>
 
-{{ IconLink::new("https://codeberg.org/9-Developers/fulla.fyi", &icons::GIT_BRANCH, "View Fulla on Codeberg")?|safe }}
+<p>
+  {{ IconLink::new("https://github.com/9-Developers/fulla.fyi", &icons::GITHUB, "Source code")?|safe }}
+</p>
 
-<h2>Contact</h2>
-
-{{ IconLink::new("https://discord.gg/KTgshSbEUU", &icons::DISCORD, "Join the Discord community")?|safe }}
 {% endblock %}
