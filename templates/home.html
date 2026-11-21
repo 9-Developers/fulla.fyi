@@ -28,25 +28,9 @@
 
 <h2>Contribute</h2>
 
-<a target="_blank" rel="noopener noreferrer" href="https://codeberg.org/9-Developers/fulla.fyi">
-  <svg width="24" height="24" aria-hidden="true">
-    <use href="{{ crate::static_assets::static_url("images/icons/codeberg.svg") }}#icon"></use>
-  </svg>
-
-  <div>
-    Codeberg
-  </div>
-</a>
+{{ IconLink::new("https://codeberg.org/9-Developers/fulla.fyi", &icons::GIT_BRANCH, "View Fulla on Codeberg")?|safe }}
 
 <h2>Contact</h2>
 
-<a target="_blank" rel="noopener noreferrer" href="https://discord.gg/KTgshSbEUU">
-  <svg width="24" height="24" aria-hidden="true">
-    <use href="{{ crate::static_assets::static_url("images/icons/discord.svg") }}#icon"></use>
-  </svg>
-
-  <div>
-    Discord
-  </div>
-</a>
+{{ IconLink::new("https://discord.gg/KTgshSbEUU", &icons::DISCORD, "Join the Discord community")?|safe }}
 {% endblock %}

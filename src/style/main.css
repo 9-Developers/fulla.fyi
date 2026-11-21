@@ -187,6 +187,10 @@
  * ************************************************************************** */
 
 @layer components {
+  .nd-icon-link {
+    @apply inline-flex min-h-11 items-center gap-2;
+  }
+
   .skip-link {
     @apply sr-only;
   }

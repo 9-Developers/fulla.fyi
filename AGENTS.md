@@ -103,7 +103,8 @@ After dependency changes, follow the [notice update procedure](licenses/AUDIT.md
 CI uses cargo-deny 0.21.0 to enforce
 `deny.toml` and checks generated notice freshness. Keep `about.toml` and
 `deny.toml` license choices aligned. The four flavor icons use MIT-licensed Fluent
-Emoji High Contrast SVGs with `currentColor`. Provenance for the local Discord SVG remains under review in 9DEV-88.
+Emoji High Contrast SVGs with `currentColor`. The home page uses the shared
+`IconLink` component with the library's git-branch and Discord symbols.
 
 Rust license clarifications in `about.toml` preserve upstream copyright notices.
 Review source license changes before updating checksums. CI runs

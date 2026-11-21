@@ -14,7 +14,7 @@ sh .forgejo/scripts/check-license-notices.sh
 
 Review the diff before committing the generated file; do not hand-edit the
 report. Starting with `nine_dev_site_build` 0.1.1, the published crate includes
-the upstream BSD notice. For `nine_dev_site_lib` 0.5.0, `about.toml` verifies
+the upstream BSD notice. For `nine_dev_site_lib` 0.5.1, `about.toml` verifies
 both the packaged BSD `LICENSE` and `THIRD_PARTY_NOTICES.md`, which includes
 the MIT icon and palette notices and the 0BSD license for HTMX.
 
@@ -68,8 +68,8 @@ palette import does not record a revision. Sora is fetched remotely.
 The maintainer recalls sourcing most SVGs from SVG Viewer. That site is an
 aggregator with multiple licenses, not a blanket license grant.
 
-- `codeberg.svg`: exact path match to Octicons v12.0.0 git-branch-24.
-  MIT notice now included.
+- The Codeberg link now uses the shared Octicons v12.0.0 git-branch-24
+  symbol, with the MIT notice supplied by `nine_dev_site_lib`.
 - `latte.svg`, `frappe.svg`, `macchiato.svg`, `mocha.svg`: replaced with
   Microsoft Fluent Emoji High Contrast Sunflower, Potted plant, Hibiscus,
   and Herb at revision `1ffb34c752ecf5d402f04cfb4b392c77f57c54bc`.
@@ -80,9 +80,8 @@ aggregator with multiple licenses, not a blanket license grant.
   redistribution restrictions conflicted with the aggregator's PD label.
   Old revisions still contain that artwork.
 - `expand.svg` and `system.svg` were retired with the local theme switcher.
-- `discord.svg`: exact upstream source and
-  licenses remain unverified.
-  Obtain original item URLs or replace them with verified assets.
+- The Discord link now uses the shared Bootstrap Icons v1.13.1 symbol. The
+  former local `discord.svg` had unverified provenance and remains in old revisions.
 
 Sources:
 - https://github.com/microsoft/fluentui-emoji/tree/1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets
@@ -91,9 +90,6 @@ Sources:
 - https://icooon-mono.com/license/
 - https://github.com/primer/octicons/blob/v12.0.0/icons/git-branch-24.svg
 - https://github.com/primer/octicons/blob/v12.0.0/LICENSE
-
-The page and CI checks do not resolve these artwork provenance gaps.
-Do not mark the overall artwork audit complete until they are resolved.
 
 ## Scope
 

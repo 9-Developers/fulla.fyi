@@ -2,6 +2,7 @@
 
 use askama::Template;
 use axum::response::Html;
+use nine_dev_site_lib::{assets::icons, icon_link::IconLink};
 use tracing::error;
 
 use crate::PageError;
@@ -60,6 +61,8 @@ mod tests {
             &switcher::CSS,
             &assets::icons::DISPLAY,
             &assets::icons::ANGLE_DOWN,
+            &assets::icons::GIT_BRANCH,
+            &assets::icons::DISCORD,
         ] {
             assert!(page.0.contains(asset.url));
             let response = static_asset(Uri::from_static(asset.url)).await;
@@ -75,35 +78,41 @@ mod tests {
             );
         }
 
-        for source_path in [
-            "main.css",
-            "images/icons/codeberg.svg",
-            "images/icons/discord.svg",
+        for (destination, icon, label) in [
+            (
+                "https://codeberg.org/9-Developers/fulla.fyi",
+                &assets::icons::GIT_BRANCH,
+                "View Fulla on Codeberg",
+            ),
+            (
+                "https://discord.gg/KTgshSbEUU",
+                &assets::icons::DISCORD,
+                "Join the Discord community",
+            ),
         ] {
-            let url = static_assets::static_url(source_path);
-
-            assert!(
-                page.0.contains(url),
-                "rendered page should reference {source_path} as {url}"
-            );
-
-            let response = static_asset(Uri::from_static(url)).await;
-            assert_eq!(
-                response.status(),
-                200,
-                "asset {source_path} should be served"
-            );
-            assert_eq!(
-                response.headers()[header::CACHE_CONTROL],
-                "public, max-age=31536000, immutable"
-            );
-            let bytes = to_bytes(response.into_body(), 2 * 1024 * 1024).await?;
-            assert!(!bytes.is_empty(), "asset {source_path} should not be empty");
-            if source_path.starts_with("images/icons/") {
-                assert!(page.0.contains(&format!(r#"href="{url}#icon""#)));
-                assert!(std::str::from_utf8(&bytes)?.contains(r#"id="icon""#));
-            }
+            let link = page
+                .0
+                .split_once(&format!("href=\"{destination}\""))
+                .and_then(|(_, rest)| rest.split_once("</a>"))
+                .ok_or("missing external link")?
+                .0;
+            assert!(link.contains(&format!(r#"href="{}#icon""#, icon.url)));
+            assert!(link.contains(label));
         }
+
+        let css = static_assets::static_url("main.css");
+        assert!(page.0.contains(css));
+        let response = static_asset(Uri::from_static(css)).await;
+        assert_eq!(response.status(), 200);
+        assert_eq!(
+            response.headers()[header::CACHE_CONTROL],
+            "public, max-age=31536000, immutable"
+        );
+        assert!(
+            !to_bytes(response.into_body(), 2 * 1024 * 1024)
+                .await?
+                .is_empty()
+        );
         Ok(())
     }
 
