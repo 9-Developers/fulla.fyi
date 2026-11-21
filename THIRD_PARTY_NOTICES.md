@@ -17,9 +17,13 @@ Both this file and those Rust notices are embedded in the /licenses page.
   Source: https://github.com/catppuccin/catppuccin
   License: MIT. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Tailwind utility bindings for the palette — nine_dev_site_build 0.2.1 (BSD-3-Clause).
-- Sora — loaded externally from Google Fonts by src/style/main.css;
-  font files are not bundled in this repository.
-  Source: https://github.com/google/fonts/tree/main/ofl/sora
+- Mulish — loaded externally from Google Fonts by src/style/main.css;
+  normal and italic, weights 200–900. Font files are not bundled in this repository.
+  Source: https://github.com/google/fonts/tree/main/ofl/mulish
+  License: SIL Open Font License 1.1.
+- Source Code Pro — loaded externally from Google Fonts by src/style/main.css;
+  normal and italic, weights 200–900. Font files are not bundled in this repository.
+  Source: https://github.com/google/fonts/tree/main/ofl/sourcecodepro
   License: SIL Open Font License 1.1.
 - Theme switcher and icon link components: nine_dev_site_lib (BSD-3-Clause).
 - Icon artwork — bundled by nine_dev_site_lib 0.7.2. The Codeberg link uses the
@@ -51,14 +55,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-## Sora — SIL Open Font License
+## Mulish and Source Code Pro — SIL Open Font License
 
-Copyright 2019 The Sora Project Authors (https://github.com/sora-xor/sora-font)
+### Mulish
+
+Copyright 2016 The Mulish Project Authors (https://github.com/googlefonts/mulish)
+
+### Source Code Pro
+
+Copyright 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries.
+
+### License text for both fonts
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
-
 This license is copied below, and is also available with a FAQ at:
-https://scripts.sil.org/OFL
+http://scripts.sil.org/OFL
 
 SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
 

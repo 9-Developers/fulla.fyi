@@ -60,9 +60,11 @@ The guard is a regression check, not a comprehensive legal/completeness audit.
 
 The manually maintained browser inventory is in `THIRD_PARTY_NOTICES.md`.
 HTMX's v4.0.0 license and Tailwind's v4.3.5 license were checked against
-their tagged upstream sources. Catppuccin and Google Fonts' Sora notices
-were checked against their upstream license files. The original Catppuccin
-palette import does not record a revision. Sora is fetched remotely.
+their tagged upstream sources. The Catppuccin, Mulish, and Source Code Pro
+notices were checked against their upstream license files. The original
+Catppuccin palette import does not record a revision. Mulish and Source Code Pro
+are fetched remotely from Google Fonts without pinned revisions; no font
+binaries are bundled.
 
 ## Artwork
 
