@@ -1,6 +1,6 @@
 [package]
 name = "fulla_fyi"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["Ryan Porterfield <ixirsii@9dev.tech>"]
 description = "Share wishlists with your friends"
@@ -21,7 +21,12 @@ axum = "0.8.9"
 axum-htmx = "0.8.1"
 axum-login = "0.18.0"
 include_dir = "0.7.4"
-nine_dev_site_lib = { version = "0.7", features = ["axum", "htmx", "startup", "telemetry"] }
+nine_dev_site_lib = { version = "0.7", features = [
+  "axum",
+  "htmx",
+  "startup",
+  "telemetry",
+] }
 rand = "0.10.2"
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.151"
