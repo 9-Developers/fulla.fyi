@@ -7,6 +7,7 @@ Both this file and those Rust notices are embedded in the /licenses page.
 
 ## Browser asset inventory
 
+- Fulla logo and site icons — generated artwork supplied by the project.
 - HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.7.2
   Source: https://github.com/bigskysoftware/htmx/tree/v4.0.0
   License: 0BSD. The crate's notice is included on /licenses and in licenses/rust.txt.

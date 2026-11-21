@@ -17,7 +17,13 @@ macro_rules! named {
 
 const NAMED: Catalog = Catalog(&[named!("main.css", env!("ASSET_URL_main.css"))]);
 const IMAGES: Catalog = Catalog(include!(concat!(env!("OUT_DIR"), "/image_index.rs")));
-pub(crate) const STABLE: Catalog = Catalog(&[named!("site.webmanifest", "/site.webmanifest")]);
+pub(crate) const STABLE: Catalog = Catalog(&[
+    named!("site.webmanifest", "/site.webmanifest"),
+    named!("favicon.ico", "/favicon.ico"),
+    named!("icon-180.png", "/icon-180.png"),
+    named!("icon-192.png", "/icon-192.png"),
+    named!("icon-512.png", "/icon-512.png"),
+]);
 
 /// Return a declared asset's public URL for use in templates.
 #[must_use]
