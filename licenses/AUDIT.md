@@ -14,7 +14,7 @@ sh .forgejo/scripts/check-license-notices.sh
 
 Review the diff before committing the generated file; do not hand-edit the
 report. Starting with `nine_dev_site_build` 0.1.1, the published crate includes
-the upstream BSD notice. For `nine_dev_site_lib` 0.5.0, `about.toml` verifies
+the upstream BSD notice. For `nine_dev_site_lib` 0.6.0, `about.toml` verifies
 both the packaged BSD `LICENSE` and `THIRD_PARTY_NOTICES.md`, which includes
 the MIT icon and palette notices and the 0BSD license for HTMX.
 

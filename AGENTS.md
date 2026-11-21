@@ -59,8 +59,9 @@ PostgreSQL client and waits for `SELECT 1` over the job network before testing.
 
 ## Environment
 
-The current server loads a local `.env` when present. Exported variables take
-precedence. Preserve existing `.env` files.
+Fulla loads `./.env` through `nine_dev_site_lib::startup` before starting
+Tokio. Exported variables take precedence. Only server mode reads `PORT`;
+`migrate` needs no listener configuration. Preserve existing `.env` files.
 
 | Variable   | Default | Purpose                  |
 | ---------- | ------- | ------------------------ |
