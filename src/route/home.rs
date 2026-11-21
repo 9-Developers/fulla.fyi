@@ -61,7 +61,7 @@ mod tests {
             &switcher::CSS,
             &assets::icons::DISPLAY,
             &assets::icons::ANGLE_DOWN,
-            &assets::icons::GIT_BRANCH,
+            &assets::icons::GITHUB,
             &assets::icons::DISCORD,
         ] {
             assert!(page.0.contains(asset.url));
@@ -80,14 +80,19 @@ mod tests {
 
         for (destination, icon, label) in [
             (
-                "https://codeberg.org/9-Developers/fulla.fyi",
-                &assets::icons::GIT_BRANCH,
-                "View Fulla on Codeberg",
-            ),
-            (
                 "https://discord.gg/KTgshSbEUU",
                 &assets::icons::DISCORD,
-                "Join the Discord community",
+                "Get support on Discord",
+            ),
+            (
+                "https://github.com/9-Developers/fulla.fyi/issues",
+                &assets::icons::GITHUB,
+                "File a bug report on GitHub",
+            ),
+            (
+                "https://github.com/9-Developers/fulla.fyi",
+                &assets::icons::GITHUB,
+                "Source code",
             ),
         ] {
             let link = page
