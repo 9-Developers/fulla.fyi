@@ -24,7 +24,7 @@
 
 @layer theme {
   :root {
-    --accent: var(--ctp-yellow);
+    --accent: var(--ctp-lavender);
     --ui-control: var(--ctp-surface0);
     --ui-field: var(--ctp-surface0);
     --ui-hover: var(--ctp-surface1);
