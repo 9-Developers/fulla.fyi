@@ -1368,9 +1368,9 @@ dependencies = [
 
 [[package]]
 name = "nine_dev_site_lib"
-version = "0.7.2"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "747f23fe5e1749c31362a78886784337f5244034d15a46e44a7027c2a4acd7b3"
+checksum = "c51cb43773c0870b132c0886ee4ca488875793eb586a4cfdaa4203f5a8c14c9c"
 dependencies = [
  "askama",
  "axum",

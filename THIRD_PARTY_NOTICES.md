@@ -8,13 +8,13 @@ Both this file and those Rust notices are embedded in the /licenses page.
 ## Browser asset inventory
 
 - Fulla logo and site icons — generated artwork supplied by the project.
-- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.7.2
+- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.9.0
   Source: https://github.com/bigskysoftware/htmx/tree/v4.0.0
   License: 0BSD. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Tailwind CSS 4.3.5 — generated public/main.css
   Source: https://github.com/tailwindlabs/tailwindcss/tree/v4.3.5
   License: MIT.
-- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.7.2
+- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.9.0
   Source: https://github.com/catppuccin/catppuccin
   License: MIT. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Tailwind utility bindings for the palette — nine_dev_site_build 0.2.1 (BSD-3-Clause).
@@ -27,12 +27,12 @@ Both this file and those Rust notices are embedded in the /licenses page.
   Source: https://github.com/google/fonts/tree/main/ofl/sourcecodepro
   License: SIL Open Font License 1.1.
 - Theme switcher and icon link components: nine_dev_site_lib (BSD-3-Clause).
-- Icon artwork — bundled by nine_dev_site_lib 0.7.2. The Codeberg link uses the
+- Icon artwork — bundled by nine_dev_site_lib 0.9.0. The Codeberg link uses the
   Octicons v12.0.0 git-branch symbol, not the Codeberg logo. Discord, display,
   and chevron use Bootstrap Icons v1.13.1. The four flavor icons use Microsoft
   Fluent Emoji. The shared inventory and MIT notices are included on /licenses
   and in the Rust dependency notices.
-  Source: https://docs.rs/crate/nine_dev_site_lib/0.7.2/source/THIRD_PARTY_NOTICES.md
+  Source: https://docs.rs/crate/nine_dev_site_lib/0.9.0/source/THIRD_PARTY_NOTICES.md
 
 ## Tailwind CSS — MIT License
 
@@ -115,32 +115,32 @@ a copy of the Font Software, to use, study, copy, merge, embed, modify,
 redistribute, and sell modified and unmodified copies of the Font
 Software, subject to the following conditions:
 
-1) Neither the Font Software nor any of its individual components,
-in Original or Modified Versions, may be sold by itself.
+1. Neither the Font Software nor any of its individual components,
+   in Original or Modified Versions, may be sold by itself.
 
-2) Original or Modified Versions of the Font Software may be bundled,
-redistributed and/or sold with any software, provided that each copy
-contains the above copyright notice and this license. These can be
-included either as stand-alone text files, human-readable headers or
-in the appropriate machine-readable metadata fields within text or
-binary files as long as those fields can be easily viewed by the user.
+2. Original or Modified Versions of the Font Software may be bundled,
+   redistributed and/or sold with any software, provided that each copy
+   contains the above copyright notice and this license. These can be
+   included either as stand-alone text files, human-readable headers or
+   in the appropriate machine-readable metadata fields within text or
+   binary files as long as those fields can be easily viewed by the user.
 
-3) No Modified Version of the Font Software may use the Reserved Font
-Name(s) unless explicit written permission is granted by the corresponding
-Copyright Holder. This restriction only applies to the primary font name as
-presented to the users.
+3. No Modified Version of the Font Software may use the Reserved Font
+   Name(s) unless explicit written permission is granted by the corresponding
+   Copyright Holder. This restriction only applies to the primary font name as
+   presented to the users.
 
-4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
-Software shall not be used to promote, endorse or advertise any
-Modified Version, except to acknowledge the contribution(s) of the
-Copyright Holder(s) and the Author(s) or with their explicit written
-permission.
+4. The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+   Software shall not be used to promote, endorse or advertise any
+   Modified Version, except to acknowledge the contribution(s) of the
+   Copyright Holder(s) and the Author(s) or with their explicit written
+   permission.
 
-5) The Font Software, modified or unmodified, in part or in whole,
-must be distributed entirely under this license, and must not be
-distributed under any other license. The requirement for fonts to
-remain under this license does not apply to any document created
-using the Font Software.
+5. The Font Software, modified or unmodified, in part or in whole,
+   must be distributed entirely under this license, and must not be
+   distributed under any other license. The requirement for fonts to
+   remain under this license does not apply to any document created
+   using the Font Software.
 
 TERMINATION
 This license becomes null and void if any of the above conditions are
