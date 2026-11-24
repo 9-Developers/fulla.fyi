@@ -2,16 +2,16 @@
 
 use axum::{
     Router,
-    extract::{Path, State},
+    extract::State,
     http::{HeaderValue, StatusCode, header},
-    response::{IntoResponse, Response},
+    response::Response,
     routing::get,
 };
 
 use crate::database::AppState;
 use crate::static_assets;
 use axum_login::tower_sessions;
-use nine_dev_site_lib::serving::{self, content_type};
+use nine_dev_site_lib::serving;
 
 pub use error::*;
 pub use home::*;
@@ -63,7 +63,6 @@ pub async fn get_routes(
 
 fn asset_routes() -> Router {
     serving::asset_router(&static_assets::CATALOG, static_assets::bytes)
-        .route("/.well-known/{*path}", get(well_known_asset))
 }
 
 async fn no_store(request: axum::extract::Request, next: axum::middleware::Next) -> Response {
@@ -93,32 +92,15 @@ async fn health(State(state): State<AppState>) -> StatusCode {
     }
 }
 
-async fn well_known_asset(Path(path): Path<String>) -> Response {
-    if path
-        .split('/')
-        .any(|segment| segment.is_empty() || segment == "." || segment == "..")
-    {
-        return StatusCode::NOT_FOUND.into_response();
-    }
-
-    let source_path = format!(".well-known/{path}");
-    let Some(bytes) = static_assets::bytes(&source_path) else {
-        return StatusCode::NOT_FOUND.into_response();
-    };
-
-    serving::response(bytes, content_type(&source_path), "public, max-age=3600")
-}
-
 #[cfg(test)]
 mod tests {
     use axum::{
         body::{Body, to_bytes},
-        extract::Path,
         http::{HeaderValue, Request, header},
         response::{IntoResponse, Response},
     };
 
-    use super::{PageError, well_known_asset};
+    use super::PageError;
     use crate::static_assets;
     use tower::ServiceExt;
 
@@ -246,10 +228,29 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn well_known_asset_rejects_parent_segments() {
-        let response = well_known_asset(Path("../theme.js".to_string())).await;
-
-        assert_eq!(response.status(), 404);
-        assert!(!response.headers().contains_key(header::CACHE_CONTROL));
+    async fn stylesheet_loads_four_immutable_local_fonts() -> Result<(), Box<dyn std::error::Error>>
+    {
+        let css = include_str!("../../public/main.css");
+        assert!(!css.contains("fonts.googleapis.com"));
+        for family in ["mulish", "sourcecodepro"] {
+            for style in ["normal", "italic"] {
+                let source = format!("fonts/{family}-{style}.woff2");
+                let url = static_assets::static_url(&source);
+                assert!(url.starts_with("/static/fonts/") && css.contains(url));
+                let response = get_asset(url).await?;
+                assert_eq!(response.status(), 200);
+                assert_eq!(response.headers()[header::CONTENT_TYPE], "font/woff2");
+                assert_eq!(
+                    response.headers()[header::CACHE_CONTROL],
+                    super::serving::IMMUTABLE
+                );
+                let body = to_bytes(response.into_body(), 1024 * 1024).await?;
+                assert_eq!(
+                    body.as_ref(),
+                    static_assets::bytes(&source).ok_or("missing font")?
+                );
+            }
+        }
+        Ok(())
     }
 }

@@ -15,6 +15,9 @@ purchases are planned features.
 
 From a checkout of this repository, you'll need:
 
+- During integration of the unpublished asset crates, a sibling checkout of
+  `9dev-site-lib` with `nine_dev_site_build` 0.2.4 and `nine_dev_site_lib` 0.10.1.
+  Use `cargo --config dev/local-site-lib.toml` in place of `cargo` below.
 - [Rust via rustup](https://rustup.rs/). The checkout selects the version in
   [`rust-toolchain.toml`](rust-toolchain.toml).
 - [Tailwind CLI 4.3.5](https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.3.5).
@@ -38,6 +41,8 @@ SESSION_SECURE=false cargo run --locked
 ```
 
 ## Try an account
+
+Fonts are bundled in the executable. Loading a page does not contact Google Fonts.
 
 1. Open [registration](http://localhost:3000/register). Choose a username,
    provide an email address, and use a strong password or passphrase (12–128

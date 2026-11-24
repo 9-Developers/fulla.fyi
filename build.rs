@@ -14,6 +14,31 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let out = PathBuf::from(std::env::var_os("OUT_DIR").ok_or("missing OUT_DIR")?);
     tailwind::write_catppuccin_aliases(Path::new("src/style/catppuccin.aliases.css"))?;
+    let faces = [
+        ("Mulish", "normal", "fonts/mulish-normal.woff2"),
+        ("Mulish", "italic", "fonts/mulish-italic.woff2"),
+        (
+            "Source Code Pro",
+            "normal",
+            "fonts/sourcecodepro-normal.woff2",
+        ),
+        (
+            "Source Code Pro",
+            "italic",
+            "fonts/sourcecodepro-italic.woff2",
+        ),
+    ]
+    .map(|(family, style, source)| tailwind::FontFace {
+        family,
+        style,
+        source,
+        weight: "200 900",
+    });
+    tailwind::write_font_faces(
+        Path::new("public"),
+        Path::new("src/style/fonts.generated.css"),
+        &faces,
+    )?;
     tailwind::compile(
         Path::new("src/style/main.css"),
         Path::new("public/main.css"),
@@ -26,6 +51,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         &[
             File("main.css"),
             Directory("images"),
+            Directory("fonts"),
             Revalidate("site.webmanifest", "/site.webmanifest"),
             Revalidate("favicon.ico", "/favicon.ico"),
             Revalidate("icon-180.png", "/icon-180.png"),

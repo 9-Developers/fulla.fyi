@@ -8,32 +8,30 @@ Both this file and those Rust notices are embedded in the /licenses page.
 ## Browser asset inventory
 
 - Fulla logo and site icons — generated artwork supplied by the project.
-- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.10.0
+- HTMX 4.0.0 — bundled by the `htmx` feature of nine_dev_site_lib 0.10.1
   Source: https://github.com/bigskysoftware/htmx/tree/v4.0.0
   License: 0BSD. The crate's notice is included on /licenses and in licenses/rust.txt.
 - Tailwind CSS 4.3.5 — generated public/main.css
   Source: https://github.com/tailwindlabs/tailwindcss/tree/v4.3.5
   License: MIT.
-- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.10.0
+- Catppuccin palette — catppuccin.css from nine_dev_site_lib 0.10.1
   Source: https://github.com/catppuccin/catppuccin
   License: MIT. The crate's notice is included on /licenses and in licenses/rust.txt.
-- Tailwind utility bindings for the palette — nine_dev_site_build 0.2.3 (BSD-3-Clause).
-- Mulish — loaded externally from Google Fonts by src/style/main.css;
-  normal and italic, weights 200–900. Font files are not bundled in this repository.
+- Tailwind utility bindings for the palette — nine_dev_site_build 0.2.4 (BSD-3-Clause).
+- Mulish — bundled WOFF2, normal and italic, weights 200–900.
   Source: https://github.com/google/fonts/tree/main/ofl/mulish
   License: SIL Open Font License 1.1.
-- Source Code Pro — loaded externally from Google Fonts by src/style/main.css;
-  normal and italic, weights 200–900. Font files are not bundled in this repository.
+- Source Code Pro — bundled WOFF2, normal and italic, weights 200–900.
   Source: https://github.com/google/fonts/tree/main/ofl/sourcecodepro
   License: SIL Open Font License 1.1.
 - Theme switcher and icon link components: nine_dev_site_lib (BSD-3-Clause).
-- Icon artwork — bundled by nine_dev_site_lib 0.10.0. The GitHub, Discord,
+- Icon artwork — bundled by nine_dev_site_lib 0.10.1. The GitHub, Discord,
   display, and chevron symbols use Bootstrap Icons v1.13.1 (MIT). The four
   flavor icons use Microsoft Fluent Emoji (MIT). The bundled Patreon symbol
   adapts Font Awesome Free 6.7.2 artwork, copyright 2024 Fonticons, Inc.,
   under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The complete
   shared inventory and attributions are included on /licenses and in licenses/rust.txt.
-  Source: https://docs.rs/crate/nine_dev_site_lib/0.10.0/source/THIRD_PARTY_NOTICES.md
+  Source: `nine_dev_site_lib/THIRD_PARTY_NOTICES.md`.
 
 ## Tailwind CSS — MIT License
 

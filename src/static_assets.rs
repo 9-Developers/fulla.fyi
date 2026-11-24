@@ -1,4 +1,4 @@
-//! Site-owned public files; only images are enumerated automatically.
+//! Site-owned public files, including the generated image and font catalogs.
 
 use include_dir::{Dir, File, include_dir};
 use nine_dev_site_lib::catalog::SiteCatalog;

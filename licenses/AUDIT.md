@@ -65,8 +65,9 @@ HTMX's v4.0.0 license and Tailwind's v4.3.5 license were checked against
 their tagged upstream sources. The Catppuccin, Mulish, and Source Code Pro
 notices were checked against their upstream license files. The original
 Catppuccin palette import does not record a revision. Mulish and Source Code Pro
-are fetched remotely from Google Fonts without pinned revisions; no font
-binaries are bundled.
+are bundled under `public/fonts/` from `ixirsii.tech/public/fonts` at commit
+`cb841353db867b193ad483b3109dfc13e4807ba1`. The font copyrights and shared OFL
+text are reproduced in `THIRD_PARTY_NOTICES.md` and served at `/licenses`.
 
 ## Artwork
 

@@ -1,0 +1,4 @@
+# Opt-in local integration: cargo --config dev/local-site-lib.toml test --locked
+[patch.crates-io]
+nine_dev_site_build = { path = "../9dev-site-lib/crates/nine_dev_site_build" }
+nine_dev_site_lib = { path = "../9dev-site-lib/crates/nine_dev_site_lib" }

@@ -133,11 +133,12 @@ class names literal in Askama. The static handler serves the library assets, inc
 HTMX (`assets::htmx::JS` from the runtime crate's `htmx` feature).
 Tests require declarations to cover local files exactly once. Fingerprinted
 URLs must match their bytes and reject stale hashes.
-Keep immutable caching for fingerprinted assets and the separate `.well-known`
-handling.
+Keep immutable caching for fingerprinted assets. Font faces are generated from
+the bundled WOFF2 files before compiling CSS, so changing font bytes updates
+both the font URL and the stylesheet URL.
 
-Files under `public/.well-known/` are served at `/.well-known/` with a one-hour
-cache lifetime. To inspect the reusable wishlist card and item layout, run
+Register each new discovery document with `MaxAge` in `build.rs`, using its
+exact `/.well-known/` URL and a one-hour lifetime. To inspect the reusable wishlist card and item layout, run
 `cargo run --locked --example wishlist_preview > target/wishlist-preview.html`
 and open that file in a browser. The example renders populated and empty cards
 without connecting to PostgreSQL.
