@@ -27,7 +27,7 @@ checksum = "8d41909615a4ee8d39b2e66cab169d61d4488dc96574aad3c97c24f945e064a0"
 [[nine_dev_site_lib.clarify.files]]
 path = "THIRD_PARTY_NOTICES.md"
 license = "MIT"
-checksum = "48316e86fdd0fa76d4bc7f7f92aa913b13a23f3e5b67ce42550dceb2ecd15efe"
+checksum = "9fb5586d493e34204a11b87b436c2e2938f3b2ef155d8976e12559b34c46c039"
 [[nine_dev_site_lib.clarify.files]]
 path = "THIRD_PARTY_NOTICES.md"
 license = "0BSD"

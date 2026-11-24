@@ -54,8 +54,10 @@ locked build. Documentation-only changes do not require recompiling the app.
 Builds compile CSS and embed assets, so template and asset changes need a rebuild.
 Database tests require `DATABASE_URL` on a disposable PostgreSQL 18 server with
 database creation privileges. SQLx creates isolated databases; CI supplies Postgres.
-The FreeBSD `ci-rust` job uses the `ci-postgres:18` service. It installs the
-PostgreSQL client and waits for `SELECT 1` over the job network before testing.
+The FreeBSD `ci-rust` job uses the `ci-postgres:18` service. After the build it
+runs `target/debug/fulla_fyi migrate` against that database, then runs the
+pinned `9dev-site-lib` OTLP smoke check with `--fulla target/debug/fulla_fyi`.
+The receiver is local and needs no Grafana credentials.
 
 ## Environment
 
@@ -108,7 +110,7 @@ CI uses cargo-deny 0.21.0 to enforce
 `deny.toml` and checks generated notice freshness. Keep `about.toml` and
 `deny.toml` license choices aligned. The four flavor icons use MIT-licensed Fluent
 Emoji High Contrast SVGs with `currentColor`. The home page uses the shared
-`IconLink` component with the library's git-branch and Discord symbols.
+`IconLink` component with the library's GitHub and Discord symbols.
 
 Rust license clarifications in `about.toml` preserve upstream copyright notices.
 Review source license changes before updating checksums. CI runs

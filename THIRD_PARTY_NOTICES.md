@@ -27,11 +27,12 @@ Both this file and those Rust notices are embedded in the /licenses page.
   Source: https://github.com/google/fonts/tree/main/ofl/sourcecodepro
   License: SIL Open Font License 1.1.
 - Theme switcher and icon link components: nine_dev_site_lib (BSD-3-Clause).
-- Icon artwork — bundled by nine_dev_site_lib 0.9.0. The Codeberg link uses the
-  Octicons v12.0.0 git-branch symbol, not the Codeberg logo. Discord, display,
-  and chevron use Bootstrap Icons v1.13.1. The four flavor icons use Microsoft
-  Fluent Emoji. The shared inventory and MIT notices are included on /licenses
-  and in the Rust dependency notices.
+- Icon artwork — bundled by nine_dev_site_lib 0.9.0. The GitHub, Discord,
+  display, and chevron symbols use Bootstrap Icons v1.13.1 (MIT). The four
+  flavor icons use Microsoft Fluent Emoji (MIT). The bundled Patreon symbol
+  adapts Font Awesome Free 6.7.2 artwork, copyright 2024 Fonticons, Inc.,
+  under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The complete
+  shared inventory and attributions are included on /licenses and in licenses/rust.txt.
   Source: https://docs.rs/crate/nine_dev_site_lib/0.9.0/source/THIRD_PARTY_NOTICES.md
 
 ## Tailwind CSS — MIT License

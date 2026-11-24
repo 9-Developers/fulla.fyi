@@ -16,8 +16,10 @@ Review the diff before committing the generated file; do not hand-edit the
 report. Starting with `nine_dev_site_build` 0.1.1, the published crate includes
 the upstream BSD notice. For `nine_dev_site_lib` 0.9.0, `about.toml` verifies
 the packaged BSD `LICENSE`, the original Valorant Randomizer `LICENSE-telemetry`,
-and `THIRD_PARTY_NOTICES.md`, which includes the MIT icon and palette notices and
-the 0BSD license for HTMX.
+and the complete `THIRD_PARTY_NOTICES.md`. The latter includes the MIT icon and
+palette notices, the 0BSD license for HTMX, and the CC BY 4.0 attribution for
+the bundled Font Awesome Patreon symbol. That artwork license is recorded in
+the asset notice but not in the published crate's Cargo license expression.
 
 For frontend changes, record the exact source, version, license, copyright
 notice, and any required NOTICE text in `THIRD_PARTY_NOTICES.md`.
@@ -71,8 +73,9 @@ binaries are bundled.
 The maintainer recalls sourcing most SVGs from SVG Viewer. That site is an
 aggregator with multiple licenses, not a blanket license grant.
 
-- The Codeberg link now uses the shared Octicons v12.0.0 git-branch-24
-  symbol, with the MIT notice supplied by `nine_dev_site_lib`.
+- The home page's GitHub links use the Bootstrap Icons v1.13.1 GitHub symbol.
+  The former Codeberg link used the Octicons v12.0.0 git-branch-24 symbol.
+  The shared library includes both MIT notices.
 - `latte.svg`, `frappe.svg`, `macchiato.svg`, `mocha.svg`: replaced with
   Microsoft Fluent Emoji High Contrast Sunflower, Potted plant, Hibiscus,
   and Herb at revision `1ffb34c752ecf5d402f04cfb4b392c77f57c54bc`.
