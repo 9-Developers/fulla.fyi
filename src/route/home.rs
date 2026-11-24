@@ -32,13 +32,10 @@ pub async fn home() -> Result<Html<String>, PageError> {
 
 #[cfg(test)]
 mod tests {
-    use axum::{
-        body::to_bytes,
-        http::{Uri, header},
-    };
+    use axum::{body::to_bytes, http::header};
 
     use super::home;
-    use crate::route::static_asset;
+    use crate::route::tests::get_asset;
     use crate::static_assets;
     use nine_dev_site_lib::{assets, switcher};
 
@@ -65,7 +62,7 @@ mod tests {
             &assets::icons::DISCORD,
         ] {
             assert!(page.0.contains(asset.url));
-            let response = static_asset(Uri::from_static(asset.url)).await;
+            let response = get_asset(asset.url).await?;
             assert_eq!(response.status(), 200);
             assert_eq!(response.headers()[header::CONTENT_TYPE], asset.content_type);
             assert_eq!(
@@ -107,7 +104,7 @@ mod tests {
 
         let css = static_assets::static_url("main.css");
         assert!(page.0.contains(css));
-        let response = static_asset(Uri::from_static(css)).await;
+        let response = get_asset(css).await?;
         assert_eq!(response.status(), 200);
         assert_eq!(
             response.headers()[header::CACHE_CONTROL],
@@ -148,7 +145,7 @@ mod tests {
             ),
         ] {
             assert!(page.0.contains(&format!(r#"href="{url}#icon""#)));
-            let response = static_asset(Uri::from_static(url)).await;
+            let response = get_asset(url).await?;
             assert_eq!(response.status(), 200, "{url}");
             assert_eq!(response.headers()[header::CONTENT_TYPE], "image/svg+xml");
             assert_eq!(
@@ -164,7 +161,7 @@ mod tests {
             "/static/images/icons/latte.svg",
             "/static/images/icons/latte.0000000000000000.svg",
         ] {
-            let response = static_asset(Uri::from_static(url)).await;
+            let response = get_asset(url).await?;
             assert_eq!(response.status(), 404);
             assert!(!response.headers().contains_key(header::CACHE_CONTROL));
         }

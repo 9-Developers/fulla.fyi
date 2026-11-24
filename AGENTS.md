@@ -90,8 +90,8 @@ out of source control and public assets, which are embedded in the executable.
   for product interactions.
 - `src/style/`: editable Tailwind styles and mappings to the shared palette.
 - `public/`: embedded browser assets, including generated `main.css`.
-- `build.rs`: CSS compilation and asset hashing.
-- `src/static_assets.rs`: named assets, the generated image index, and stable URLs.
+- `build.rs`: CSS compilation and declarations of fingerprinted files, directories, and stable URLs.
+- `src/static_assets.rs`: the generated site catalog, embedded bytes, and URL lookup for templates.
 - `migrations/`: SQLx PostgreSQL up/down migrations.
 - `.forgejo/workflows/`: build, security, and release deployment.
 
@@ -120,8 +120,8 @@ generation success and freshness alone do not verify attribution completeness.
 Edit `src/style/` rather than generated `public/main.css`. The build script uses
 `nine_dev_site_build` to compile CSS, write it only if changed, and fingerprint
 the final files. Place site images under `public/images/`; they are indexed at
-build time without declarations. Declare other immutable files in `NAMED` and
-stable browser files in `STABLE` in `src/static_assets.rs`. Templates call
+build time without individual declarations. Register other immutable files with
+`File` and stable browser paths with `Revalidate` in `build.rs`. Templates call
 `static_url` with a path relative to `public/`. A stable entry such as
 `site.webmanifest` also registers its root URL with ETag revalidation.
 In the base template, load the shared `nine_dev_site_lib::switcher` script

@@ -69,7 +69,7 @@ async fn run(requests: telemetry::RequestMetrics) -> Result<(), Box<dyn std::err
         .layer(middleware::from_fn_with_state(
             requests.with_route_override(|pattern, _| {
                 pattern
-                    .and_then(|route| static_assets::STABLE.by_url(route))
+                    .and_then(|route| static_assets::CATALOG.alias_by_url(route))
                     .map(|_| "static")
             }),
             telemetry::observe,

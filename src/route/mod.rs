@@ -3,7 +3,7 @@
 use axum::{
     Router,
     extract::{Path, State},
-    http::{HeaderMap, HeaderValue, StatusCode, Uri, header},
+    http::{HeaderValue, StatusCode, header},
     response::{IntoResponse, Response},
     routing::get,
 };
@@ -11,7 +11,7 @@ use axum::{
 use crate::database::AppState;
 use crate::static_assets;
 use axum_login::tower_sessions;
-use nine_dev_site_lib::serving::{self, IMMUTABLE, content_type};
+use nine_dev_site_lib::serving::{self, content_type};
 
 pub use error::*;
 pub use home::*;
@@ -62,26 +62,8 @@ pub async fn get_routes(
 }
 
 fn asset_routes() -> Router {
-    let mut assets = Router::new()
+    serving::asset_router(&static_assets::CATALOG, static_assets::bytes)
         .route("/.well-known/{*path}", get(well_known_asset))
-        .route("/static/{*path}", get(static_asset));
-    for entry in static_assets::STABLE.0 {
-        assets = assets.route(
-            entry.url,
-            get(move |headers: HeaderMap| async move {
-                let Some(file) = static_assets::get_file(entry.source) else {
-                    return StatusCode::NOT_FOUND.into_response();
-                };
-                serving::revalidate(
-                    file.contents(),
-                    content_type(entry.source),
-                    entry.hash,
-                    &headers,
-                )
-            }),
-        );
-    }
-    assets
 }
 
 async fn no_store(request: axum::extract::Request, next: axum::middleware::Next) -> Response {
@@ -120,29 +102,11 @@ async fn well_known_asset(Path(path): Path<String>) -> Response {
     }
 
     let source_path = format!(".well-known/{path}");
-    let Some(file) = static_assets::get_file(&source_path) else {
+    let Some(bytes) = static_assets::bytes(&source_path) else {
         return StatusCode::NOT_FOUND.into_response();
     };
 
-    serving::response(
-        file.contents(),
-        content_type(&source_path),
-        "public, max-age=3600",
-    )
-}
-
-async fn static_asset(uri: Uri) -> Response {
-    if let Some(asset) = nine_dev_site_lib::assets::lookup(uri.path()) {
-        return serving::response(asset.bytes, asset.content_type, IMMUTABLE);
-    }
-    let Some(source_path) = static_assets::source_path_for_request(uri.path()) else {
-        return StatusCode::NOT_FOUND.into_response();
-    };
-    let Some(file) = static_assets::get_file(source_path) else {
-        return StatusCode::NOT_FOUND.into_response();
-    };
-
-    serving::response(file.contents(), content_type(source_path), IMMUTABLE)
+    serving::response(bytes, content_type(&source_path), "public, max-age=3600")
 }
 
 #[cfg(test)]
@@ -150,13 +114,19 @@ mod tests {
     use axum::{
         body::{Body, to_bytes},
         extract::Path,
-        http::{HeaderValue, Request, Uri, header},
-        response::IntoResponse,
+        http::{HeaderValue, Request, header},
+        response::{IntoResponse, Response},
     };
 
-    use super::{PageError, static_asset, well_known_asset};
+    use super::{PageError, well_known_asset};
     use crate::static_assets;
     use tower::ServiceExt;
+
+    pub(super) async fn get_asset(path: &str) -> Result<Response, Box<dyn std::error::Error>> {
+        Ok(super::asset_routes()
+            .oneshot(Request::get(path).body(Body::empty())?)
+            .await?)
+    }
 
     #[tokio::test]
     async fn manifest_revalidates_at_the_url_in_the_page() -> Result<(), Box<dyn std::error::Error>>
@@ -251,8 +221,9 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn fingerprinted_static_asset_is_cached_immutably() {
-        let response = static_asset(Uri::from_static(static_assets::static_url("main.css"))).await;
+    async fn fingerprinted_static_asset_is_cached_immutably()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let response = get_asset(static_assets::static_url("main.css")).await?;
 
         assert_eq!(response.status(), 200);
         assert_eq!(
@@ -262,14 +233,16 @@ mod tests {
             ))
         );
         assert!(response.headers().contains_key(header::CONTENT_TYPE));
+        Ok(())
     }
 
     #[tokio::test]
-    async fn unknown_static_asset_is_not_cached() {
-        let response = static_asset(Uri::from_static("/static/theme.invalid.js")).await;
+    async fn unknown_static_asset_is_not_cached() -> Result<(), Box<dyn std::error::Error>> {
+        let response = get_asset("/static/theme.invalid.js").await?;
 
         assert_eq!(response.status(), 404);
         assert!(!response.headers().contains_key(header::CACHE_CONTROL));
+        Ok(())
     }
 
     #[tokio::test]
