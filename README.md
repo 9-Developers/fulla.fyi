@@ -71,7 +71,10 @@ The server writes JSON logs to stdout. To also send application logs and HTTP
 request counts and durations to Grafana Cloud, set `OTEL_EXPORTER_OTLP_ENDPOINT`
 and `OTEL_EXPORTER_OTLP_HEADERS` to the base endpoint and authorization header
 provided by your Grafana stack. Use a token with `logs:write` and `metrics:write`.
-Leave the endpoint unset to run locally without export.
+On Railway, set these on the `fulla.fyi` service in each environment where you
+want telemetry. Railway configuration applies preserve both values and the
+optional `OTEL_SERVICE_NAME` override. Leave the endpoint unset to run locally
+without export.
 
 Import the [shared **9 Developers · Site HTTP** dashboard](https://git.9dev.tech/9-Developers/9dev-site-lib/src/branch/main/observability/grafana-dashboard.json)
 and select `fulla.fyi` (or

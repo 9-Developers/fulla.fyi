@@ -45,10 +45,14 @@ func Railway(ctx railway.Context) railway.Project {
 			"restartPolicyMaxRetries": 10,
 		},
 		"env": map[string]any{
-			"PORT":                   "3000",
-			"RUST_LOG":               "info",
-			"DATABASE_URL":           postgres.Env("DATABASE_URL"),
-			"DEPLOYMENT_ENVIRONMENT": ctx.Environment,
+			"PORT":                        "3000",
+			"RUST_LOG":                    "info",
+			"DATABASE_URL":                postgres.Env("DATABASE_URL"),
+			"DEPLOYMENT_ENVIRONMENT":      ctx.Environment,
+			"OTEL_EXPORTER_OTLP_ENDPOINT": railway.Preserve(),
+			"OTEL_EXPORTER_OTLP_HEADERS":  railway.Preserve(),
+			"OTEL_EXPORTER_OTLP_PROTOCOL": railway.Preserve(),
+			"OTEL_SERVICE_NAME":           railway.Preserve(),
 		},
 	})
 	resources := []any{postgres, app}
