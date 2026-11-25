@@ -15,9 +15,6 @@ purchases are planned features.
 
 From a checkout of this repository, you'll need:
 
-- Until `nine_dev_site_lib` 0.12.0 is published, a sibling checkout of
-  `9dev-site-lib` with that version and `nine_dev_site_build` 0.2.4.
-  Use `cargo --config dev/local-site-lib.toml` in place of `cargo` below.
 - [Rust via rustup](https://rustup.rs/). The checkout selects the version in
   [`rust-toolchain.toml`](rust-toolchain.toml).
 - [Tailwind CLI 4.3.5](https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.3.5).
