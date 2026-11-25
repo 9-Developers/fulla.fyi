@@ -58,7 +58,28 @@ pub async fn get_routes(
         .route("/health", get(health))
         .fallback(not_found)
         .with_state(state)
-        .merge(asset_routes()))
+        .merge(asset_routes())
+        .layer(axum::middleware::map_response(browser_headers)))
+}
+
+async fn browser_headers(mut response: Response) -> Response {
+    let headers = response.headers_mut();
+    headers.insert(
+        header::CONTENT_SECURITY_POLICY,
+        HeaderValue::from_static(
+            "default-src 'self'; object-src 'none'; base-uri 'none'; \
+             frame-ancestors 'none'; form-action 'self'",
+        ),
+    );
+    headers.insert(header::X_FRAME_OPTIONS, HeaderValue::from_static("DENY"));
+    headers.insert(
+        header::X_CONTENT_TYPE_OPTIONS,
+        HeaderValue::from_static("nosniff"),
+    );
+    headers
+        .entry(header::REFERRER_POLICY)
+        .or_insert(HeaderValue::from_static("strict-origin-when-cross-origin"));
+    response
 }
 
 fn asset_routes() -> Router {
@@ -74,9 +95,6 @@ async fn no_store(request: axum::extract::Request, next: axum::middleware::Next)
         header::REFERRER_POLICY,
         HeaderValue::from_static("same-origin"),
     );
-    response
-        .headers_mut()
-        .insert(header::X_FRAME_OPTIONS, HeaderValue::from_static("DENY"));
     response
 }
 

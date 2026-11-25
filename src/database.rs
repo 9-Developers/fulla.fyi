@@ -100,6 +100,28 @@ mod tests {
     }
 
     #[sqlx::test]
+    async fn rollback_requires_matching_migration_history(pool: PgPool) -> TestResult {
+        use sqlx::migrate::{Migrate, Migration, MigrationType};
+
+        check_schema(&pool).await?;
+        let next = Migration::new(
+            i64::MAX,
+            "add rollback probe".into(),
+            MigrationType::Simple,
+            sqlx::SqlStr::from_static("CREATE TABLE rollback_probe (id BIGINT PRIMARY KEY)"),
+            false,
+        );
+        pool.acquire()
+            .await?
+            .apply("_sqlx_migrations", &next)
+            .await?;
+        assert!(check_schema(&pool).await.is_err());
+        // Redeploying an older image also executes its pre-deploy command.
+        assert!(MIGRATOR.run(&pool).await.is_err());
+        Ok(())
+    }
+
+    #[sqlx::test]
     async fn ownership_membership_and_grant_constraints(pool: PgPool) -> TestResult {
         fixture(&pool).await?;
         sqlx::raw_sql(

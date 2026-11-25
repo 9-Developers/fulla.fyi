@@ -82,6 +82,35 @@ async fn anonymous(
     Ok((cookie, csrf(&html)?.to_owned()))
 }
 
+#[sqlx::test]
+async fn browser_policy_covers_pages_assets_errors_and_accounts(pool: PgPool) -> TestResult {
+    let app = app(&pool).await?;
+    for (path, status) in [
+        ("/", 200),
+        ("/site.webmanifest", 200),
+        ("/missing", 404),
+        ("/login", 200),
+    ] {
+        let response = request(&app, path, "", None, false).await?;
+        assert_eq!(response.status(), status);
+        let headers = response.headers();
+        assert!(
+            headers[header::CONTENT_SECURITY_POLICY]
+                .to_str()?
+                .contains("frame-ancestors 'none'")
+        );
+        assert_eq!(headers[header::X_CONTENT_TYPE_OPTIONS], "nosniff");
+        assert_eq!(headers[header::X_FRAME_OPTIONS], "DENY");
+        let policy = if path == "/login" {
+            "same-origin"
+        } else {
+            "strict-origin-when-cross-origin"
+        };
+        assert_eq!(headers[header::REFERRER_POLICY], policy);
+    }
+    Ok(())
+}
+
 fn registration(token: &str) -> [(&str, &str); 4] {
     [
         ("csrf", token),

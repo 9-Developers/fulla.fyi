@@ -20,7 +20,7 @@ https://linear.app/ixirsii/project/fullafyi-8960c5ab9048
 
 - Rust 2024; `rust-toolchain.toml` pins the compiler version.
 - Axum server, Askama templates, vendored HTMX, and embedded public assets.
-- Tailwind CSS and Catppuccin themes already exist. CI and Railpack pin Tailwind
+- Tailwind CSS and Catppuccin themes already exist. CI and release builds pin Tailwind
   4.3.5; `build.rs` requires a `tailwindcss` executable on `PATH`.
 - The server currently serves the home page, `/licenses`, error pages, static assets, and
   `/health`. The health endpoint checks PostgreSQL connectivity.
@@ -199,35 +199,41 @@ workflows or Socket scan. Keep repository secrets out of untrusted PR jobs.
 Forgejo reusable workflows accept `inputs` and `outputs` under `workflow_call`,
 not `secrets`. Pass secrets through the caller's `jobs.<job_id>.secrets` mapping.
 
-Railway is configured through `.railway/railway.go` and `railpack.json`.
+Railway is configured through `.railway/railway.go`.
 The `fulla.fyi` partial manages the application and Postgres independently in
 staging and production. Staging retains its existing 5 GB volume; production's
 database helper provisions a fresh volume. Register domains `beta.fulla.fyi` and
 `fulla.fyi` respectively in the dashboard at port 3000; the pinned CLI cannot
 register new domains via IaC. Production is not provisioned yet.
 Go module dependencies are pinned in `.railway/`.
-The shared deployment workflow runs on `node-24` and installs Go 1.27.4 and
-checksum-verified Railway CLI 5.74.1. The build workflow uses its `ci-go`
-runner's Go version rather than installing a pinned version. Preview with
+The shared deployment workflow requires a trusted Bookworm Linux/amd64
+`ci-railway` runner with Go, Railway CLI 5.74.1, `crane`, Bash, Node,
+the repository's Rust toolchain, native build tools and `libssl-dev`, and
+Tailwind 4.3.5. Set `RAILWAY_PROJECT_ID` and package credentials
+`REGISTRY_USER` / `REGISTRY_TOKEN` for container and generic packages.
+Give Railway separate pull credentials for private images and disable automatic
+image updates. Preview with
 `railway config plan --environment staging` and apply with
 `railway config apply --environment staging`; configuration evaluation is
-separate from source deployment.
+separate from image promotion.
 
 Pushes to `main` deploy staging after build and security checks.
 Releases use validated `vMAJOR.MINOR.PATCH` tags whose commits are on `main`
 and have a successful staging deployment recorded in Forgejo run history.
-Production jobs require repository variable `PRODUCTION_DEPLOY_ENABLED=true`.
-The shared `railway.yml` uses a saved IaC plan/apply, uploads source, and
-waits for the specific deployment's health result. Concurrency is per environment.
+The shared `railway.yml` checks the digest, uses a saved IaC plan/apply,
+sets the service instance's image, and waits for that deployment's health result.
+Staging records the healthy commit/digest in the `<repository>-staging`
+generic package keyed by run ID. Production requires that exact receipt;
+retain receipts and images and restrict package writes. Concurrency is per environment.
 Use separate `RAILWAY_STAGING_TOKEN` and `RAILWAY_PRODUCTION_TOKEN` secrets,
 each scoped to its environment. The service name is `fulla.fyi`.
 Build CI includes Go and Node deployment-gate tests. The release executable is
-`fulla_fyi`, and Railway probes `/health`. Railway runs `./fulla_fyi migrate`
+`/app/fulla_fyi`, and Railway probes `/health`. From `/app`, Railway runs `./fulla_fyi migrate`
 before deployment; startup validates the schema. See the [local setup](README.md#run-locally).
 
 ### Railway operator commands
 
-Use the workflow's pinned CLI and Go versions. For a manual staging deployment:
+To preview or apply staging infrastructure:
 
 ```sh
 railway login
@@ -235,7 +241,6 @@ railway link --project 24db0769-cf07-4290-bae1-dd1bceaea653 --environment stagin
 railway status
 railway config plan --environment staging
 railway config apply --environment staging
-railway up --ci --environment staging --service fulla.fyi
 ```
 
 If an environment still has a legacy Config File path, run
@@ -245,6 +250,5 @@ IaC apply.
 
 To enable production, create an empty `production` environment. Link, plan,
 and apply as above using `production`, then configure the domain, DNS, and
-production-scoped secrets. Enable `PRODUCTION_DEPLOY_ENABLED` only when ready.
-Tag a commit after its staging deployment succeeds; retain its Forgejo run
-history for the release gate. Set the variable to `false` to pause releases.
+production-scoped secrets. Push a release tag after the commit's staging
+deployment succeeds; retain its Forgejo run history for the release gate.

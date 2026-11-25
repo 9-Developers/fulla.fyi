@@ -7,8 +7,6 @@ on:
 
 jobs:
   validate:
-    # Enable only after production infrastructure, DNS, and token are ready.
-    if: vars.PRODUCTION_DEPLOY_ENABLED == 'true'
     runs-on: node-24
     timeout-minutes: 5
     steps:
@@ -34,18 +32,16 @@ jobs:
           FORGEJO_REPOSITORY: ${{ forgejo.repository }}
           FORGEJO_TOKEN: ${{ forgejo.token }}
 
-  build:
-    needs: validate
-    uses: ./.forgejo/workflows/build.yml
-
   security:
     needs: validate
     uses: ./.forgejo/workflows/security.yml
 
   production:
-    needs: [build, security]
+    needs: [validate, security]
     uses: ./.forgejo/workflows/railway.yml
     with:
       environment: production
     secrets:
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_PRODUCTION_TOKEN }}
+      REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+      REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}

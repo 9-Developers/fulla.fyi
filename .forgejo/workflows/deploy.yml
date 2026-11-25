@@ -19,3 +19,5 @@ jobs:
       environment: staging
     secrets:
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_STAGING_TOKEN }}
+      REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+      REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}

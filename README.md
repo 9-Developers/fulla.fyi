@@ -22,7 +22,7 @@ From a checkout of this repository, you'll need:
   [`rust-toolchain.toml`](rust-toolchain.toml).
 - [Tailwind CLI 4.3.5](https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.3.5).
   Put the executable for your platform on `PATH` as `tailwindcss`. Verify that
-  `tailwindcss --help` prints `v4.3.5` before building; CI and Railpack use the same version.
+  `tailwindcss --help` prints `v4.3.5` before building; CI and image releases use the same version.
 - A PostgreSQL 18 database. If you have Docker, you can start one locally:
 
   ```sh
@@ -69,6 +69,29 @@ After updating Fulla, rerun the migration command before starting the server.
 Startup checks migration history. To check whether the running app can reach
 PostgreSQL, request `http://localhost:3000/health`: it returns HTTP 200 when
 ready or 503 when the database is unavailable.
+
+## Railway releases and rollback
+
+Staging builds a Linux/amd64 image. After Railway reports that deployment
+healthy, Forgejo records its commit and image digest in a staging receipt.
+Production tags promote that digest without rebuilding. Keep the successful
+run, its receipt, and the registry image for every supported release.
+Commits staged only by the old source workflow need a new image staging run.
+
+Before relying on image rollback, use Docker and the two retained digest
+references from the deployment logs to rehearse the upgrade on disposable
+PostgreSQL:
+
+```sh
+bash scripts/rehearse-rollback.sh "$PREVIOUS_IMAGE" "$STAGED_IMAGE"
+```
+
+The rehearsal starts each image, checks `/health`, then retries the previous
+image's migration command and startup against the upgraded database. A newer
+migration prevents an image-only rollback, even for additive SQL. In that
+case roll forward with a fix built for the migrated schema. Restoring a
+database backup is a separate recovery procedure and can lose later writes.
+Keep migrations compatible with the running binary during deployment.
 
 ## Grafana Cloud
 

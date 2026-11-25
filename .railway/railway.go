@@ -27,15 +27,6 @@ func Railway(ctx railway.Context) railway.Project {
 		},
 	})
 	app := railway.ServiceNamed("fulla.fyi", railway.ServiceConfig{
-		"build": map[string]any{
-			"builder":      "RAILPACK",
-			"buildCommand": "cargo build --release --locked && cp target/release/fulla_fyi fulla_fyi",
-			"watchPatterns": []string{
-				"src/**", "templates/**", "migrations/**", "Cargo.toml",
-				"Cargo.lock", "build.rs", "railpack.json", "rust-toolchain.toml",
-				".railway/**",
-			},
-		},
 		"start":              "./fulla_fyi",
 		"healthcheck":        "/health",
 		"healthcheckTimeout": 300,
