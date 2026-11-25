@@ -21,11 +21,10 @@ axum = "0.8.9"
 axum-htmx = "0.8.1"
 axum-login = "0.18.0"
 include_dir = "0.7.4"
-nine_dev_site_lib = { version = "0.11.0", features = [
+nine_dev_site_lib = { version = "0.12.0", features = [
   "axum",
   "htmx",
-  "startup",
-  "telemetry",
+  "server",
 ] }
 rand = "0.10.2"
 serde = { version = "1.0.229", features = ["derive"] }
@@ -44,7 +43,6 @@ sqlx = { version = "0.9.0", features = [
 tokio = { version = "1.53.1", features = [
   "macros",
   "rt-multi-thread",
-  "signal",
   "sync",
   "time",
 ] }

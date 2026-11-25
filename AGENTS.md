@@ -62,12 +62,13 @@ The receiver is local and needs no Grafana credentials.
 ## Environment
 
 Fulla loads `./.env` through `nine_dev_site_lib::startup` before starting
-Tokio. Exported variables take precedence. Only server mode reads `PORT`;
+Tokio. Exported variables take precedence. Only server mode reads `HOST` and `PORT`;
 `migrate` needs no listener configuration. Preserve existing `.env` files.
 
 | Variable   | Default | Purpose                  |
 | ---------- | ------- | ------------------------ |
-| `PORT`     | `3000`  | Listen port on `0.0.0.0` |
+| `HOST`     | `0.0.0.0` | Listen address (IP literal) |
+| `PORT`     | `8080`  | Listen port; Railway sets `3000` |
 | `RUST_LOG` | `info`  | Tracing filter           |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | unset | Enables server-side OTLP logs and metrics |
 | `OTEL_EXPORTER_OTLP_HEADERS` | unset | Grafana authorization header, stored as a service secret |

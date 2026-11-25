@@ -15,7 +15,7 @@ purchases are planned features.
 
 From a checkout of this repository, you'll need:
 
-- Until `nine_dev_site_lib` 0.11.0 is published, a sibling checkout of
+- Until `nine_dev_site_lib` 0.12.0 is published, a sibling checkout of
   `9dev-site-lib` with that version and `nine_dev_site_build` 0.2.4.
   Use `cargo --config dev/local-site-lib.toml` in place of `cargo` below.
 - [Rust via rustup](https://rustup.rs/). The checkout selects the version in
@@ -44,11 +44,11 @@ SESSION_SECURE=false cargo run --locked
 
 Fonts are bundled in the executable. Loading a page does not contact Google Fonts.
 
-1. Open [registration](http://localhost:3000/register). Choose a username,
+1. Open [registration](http://localhost:8080/register). Choose a username,
    provide an email address, and use a strong password or passphrase (12–128
    UTF-8 bytes). Registration signs you in and opens your account page.
-2. [Sign out](http://localhost:3000/logout) and confirm. Opening
-   [your account](http://localhost:3000/account) now takes you to sign-in.
+2. [Sign out](http://localhost:8080/logout) and confirm. Opening
+   [your account](http://localhost:8080/account) now takes you to sign-in.
 3. Sign back in with either your username or your email address. Account forms
    work without JavaScript. Email verification and password recovery are not yet
    available.
@@ -62,12 +62,13 @@ start Fulla. Exported values take precedence; parent directories are not searche
 | ---------------- | -------- | ---------------------------------------------------------- |
 | `DATABASE_URL`   | Required | PostgreSQL connection URL for migrations and the server.   |
 | `SESSION_SECURE` | `true`   | Set to `false` for local HTTP only. Keep `true` for HTTPS. |
-| `PORT`           | `3000`   | HTTP listen port (1–65535). Not used by `migrate`.         |
+| `HOST`           | `0.0.0.0` | HTTP listen address (IPv4 or unbracketed IPv6). Server only. |
+| `PORT`           | `8080`   | HTTP listen port (1–65535). Railway sets `3000`. Server only. |
 | `RUST_LOG`       | `info`   | Logging filter.                                            |
 
 After updating Fulla, rerun the migration command before starting the server.
 Startup checks migration history. To check whether the running app can reach
-PostgreSQL, request `http://localhost:3000/health`: it returns HTTP 200 when
+PostgreSQL, request `http://localhost:8080/health`: it returns HTTP 200 when
 ready or 503 when the database is unavailable.
 
 ## Railway releases and rollback

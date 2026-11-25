@@ -24,7 +24,7 @@ done
 args=(--platform linux/amd64 --network "$net" -e DATABASE_URL=postgres://postgres:rehearsal@db/postgres)
 migrate() { docker run --rm "${args[@]}" "$1" migrate; }
 health() {
-	web=$(docker run -d "${args[@]}" -p 127.0.0.1::3000 "$1")
+	web=$(docker run -d "${args[@]}" -e PORT=3000 -p 127.0.0.1::3000 "$1")
 	local address
 	address=$(docker port "$web" 3000/tcp)
 	curl --silent --show-error --fail --retry 12 --retry-connrefused --retry-delay 1 "http://$address/health"
