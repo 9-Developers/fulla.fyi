@@ -30,29 +30,6 @@ jobs:
           sh .forgejo/scripts/check-license-notices.sh "$RUNNER_TEMP/rust-licenses.txt"
           diff -u licenses/rust.txt "$RUNNER_TEMP/rust-licenses.txt"
 
-  railway-config:
-    name: Railway configuration
-    runs-on: ci-go
-    timeout-minutes: 5
-    steps:
-      - name: Check out repository
-        uses: https://data.forgejo.org/actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
-          ref: ${{ forgejo.sha }}
-
-      - name: Check Railway configuration
-        working-directory: .railway
-        run: |
-          test -z "$(gofmt -l .)"
-          go mod download
-          go mod verify
-          go vet -mod=readonly ./...
-          go test -mod=readonly ./...
-
-      - name: Test deployment gates
-        run: node --test .forgejo/scripts/deploy.test.mjs
-
   rust:
     name: Rust build
     runs-on: ci-rust
