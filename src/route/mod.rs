@@ -11,7 +11,7 @@ use axum::{
 use crate::database::AppState;
 use crate::static_assets;
 use axum_login::tower_sessions;
-use nine_dev_site_lib::serving;
+use nine_dev_site_lib::{browser::security_headers, serving};
 
 pub use error::*;
 pub use home::*;
@@ -59,27 +59,7 @@ pub async fn get_routes(
         .fallback(not_found)
         .with_state(state)
         .merge(asset_routes())
-        .layer(axum::middleware::map_response(browser_headers)))
-}
-
-async fn browser_headers(mut response: Response) -> Response {
-    let headers = response.headers_mut();
-    headers.insert(
-        header::CONTENT_SECURITY_POLICY,
-        HeaderValue::from_static(
-            "default-src 'self'; object-src 'none'; base-uri 'none'; \
-             frame-ancestors 'none'; form-action 'self'",
-        ),
-    );
-    headers.insert(header::X_FRAME_OPTIONS, HeaderValue::from_static("DENY"));
-    headers.insert(
-        header::X_CONTENT_TYPE_OPTIONS,
-        HeaderValue::from_static("nosniff"),
-    );
-    headers
-        .entry(header::REFERRER_POLICY)
-        .or_insert(HeaderValue::from_static("strict-origin-when-cross-origin"));
-    response
+        .layer(axum::middleware::map_response(security_headers)))
 }
 
 fn asset_routes() -> Router {

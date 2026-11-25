@@ -102,11 +102,28 @@ async fn browser_policy_covers_pages_assets_errors_and_accounts(pool: PgPool) ->
         assert_eq!(headers[header::X_CONTENT_TYPE_OPTIONS], "nosniff");
         assert_eq!(headers[header::X_FRAME_OPTIONS], "DENY");
         let policy = if path == "/login" {
+            assert_eq!(headers[header::CACHE_CONTROL], "no-store");
             "same-origin"
         } else {
             "strict-origin-when-cross-origin"
         };
         assert_eq!(headers[header::REFERRER_POLICY], policy);
+        if path == "/site.webmanifest" {
+            let conditional = Request::get(path)
+                .header(header::IF_NONE_MATCH, &headers[header::ETAG])
+                .body(Body::empty())?;
+            let cached = app.clone().oneshot(conditional).await?;
+            assert_eq!(cached.status(), StatusCode::NOT_MODIFIED);
+            assert_eq!(
+                cached.headers()[header::CACHE_CONTROL],
+                "public, max-age=0, must-revalidate"
+            );
+            assert_eq!(cached.headers()[header::ETAG], headers[header::ETAG]);
+            assert_eq!(
+                cached.headers()[header::CONTENT_SECURITY_POLICY],
+                headers[header::CONTENT_SECURITY_POLICY]
+            );
+        }
     }
     Ok(())
 }

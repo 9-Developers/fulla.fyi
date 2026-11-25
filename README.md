@@ -15,8 +15,8 @@ purchases are planned features.
 
 From a checkout of this repository, you'll need:
 
-- During integration of the unpublished asset crates, a sibling checkout of
-  `9dev-site-lib` with `nine_dev_site_build` 0.2.4 and `nine_dev_site_lib` 0.10.1.
+- Until `nine_dev_site_lib` 0.11.0 is published, a sibling checkout of
+  `9dev-site-lib` with that version and `nine_dev_site_build` 0.2.4.
   Use `cargo --config dev/local-site-lib.toml` in place of `cargo` below.
 - [Rust via rustup](https://rustup.rs/). The checkout selects the version in
   [`rust-toolchain.toml`](rust-toolchain.toml).
