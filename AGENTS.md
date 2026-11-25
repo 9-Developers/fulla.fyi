@@ -96,8 +96,8 @@ out of source control and public assets, which are embedded in the executable.
 - `migrations/`: SQLx PostgreSQL up/down migrations.
 - `.forgejo/workflows/`: build, security, and release deployment.
 
-Follow the Rust formatting and lint configuration in the repository. Unsafe code,
-`unwrap`, and `expect` are denied by the existing lint configuration. Keep domain
+Follow the Rust formatting and lint configuration in the repository. The manifest
+forbids unsafe code and denies `unwrap` and `expect`. Keep domain
 logic and validation in Rust. Use Askama's default escaping for user content.
 Preserve accessible labels, keyboard interaction, responsive layouts, and themes.
 
