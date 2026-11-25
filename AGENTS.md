@@ -207,9 +207,10 @@ database helper provisions a fresh volume. Register domains `beta.fulla.fyi` and
 register new domains via IaC. Production is not provisioned yet.
 Go module dependencies are pinned in `.railway/`.
 The shared deployment workflow requires a trusted Bookworm Linux/amd64
-`ci-railway` runner with Go, Railway CLI 5.74.1, `crane`, Bash, Node,
+`ci-railway` runner with Railway CLI 5.74.1, `crane`, Bash, Node,
 the repository's Rust toolchain, native build tools and `libssl-dev`, and
-Tailwind 4.3.5. Set `RAILWAY_PROJECT_ID` and package credentials
+Tailwind 4.3.5. The workflow installs Go 1.27.4 to evaluate Railway configuration.
+Set `RAILWAY_PROJECT_ID` and package credentials
 `REGISTRY_USER` / `REGISTRY_TOKEN` for container and generic packages.
 Give Railway separate pull credentials for private images and disable automatic
 image updates. Preview with
