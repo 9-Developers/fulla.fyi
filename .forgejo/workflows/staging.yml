@@ -10,7 +10,7 @@ jobs:
     uses: ./.forgejo/workflows/build.yml
 
   security:
-    uses: ./.forgejo/workflows/security.yml
+    uses: ./.forgejo/workflows/checks.yml
 
   staging:
     needs: [build, security]

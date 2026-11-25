@@ -191,7 +191,7 @@ configuration and Node deployment-gate tests. Rust and Go are supplied by the
 runners; the Rust job installs Tailwind 4.3.5 before checking formatting, strict
 Clippy, tests, and a locked build.
 
-`security.yml` uses `ci-security` runners with preinstalled Gitleaks, Semgrep,
+`checks.yml` uses `ci-security` runners with preinstalled Gitleaks, Semgrep,
 and Trivy. It runs on pushes to `main` and through `workflow_call`; pull requests
 currently run build checks only. There are no separate trusted/untrusted security
 workflows or Socket scan. Keep repository secrets out of untrusted PR jobs.

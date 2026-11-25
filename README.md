@@ -2,7 +2,7 @@
 
 [![Discord](https://img.shields.io/discord/452233740408717313?color=b4befe&label=discord&labelColor=1e1e2e&logo=discord&style=flat)](https://discord.gg/KTgshSbEUU)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-89b4fa?labelColor=1e1e2e&logo=bsd&logoColor=white&style=flat)](https://opensource.org/license/bsd-3-clause)
-[![Deployment](https://git.9dev.tech/9-Developers/fulla.fyi/badges/workflows/deploy.yml/badge.svg?branch=main&event=push&label=Deployment&labelColor=1e1e2e&style=flat&logo=forgejo&logoColor=white)](https://git.9dev.tech/9-Developers/fulla.fyi/actions/workflows/deploy.yml)
+[![Deployment](https://git.9dev.tech/9-Developers/fulla.fyi/badges/workflows/staging.yml/badge.svg?branch=main&event=push&label=Deployment&labelColor=1e1e2e&style=flat&logo=forgejo&logoColor=white)](https://git.9dev.tech/9-Developers/fulla.fyi/actions/workflows/staging.yml)
 
 Fulla is a wishlist organizer in development for families and friends who want
 to share gift ideas from any retailer. You can create an account, sign in, and
@@ -124,7 +124,7 @@ notices available at `/licenses`.
 [link-bsd-3]: https://opensource.org/license/bsd-3-clause
 [badge-workflow-build]: https://git.9dev.tech/9-Developers/fulla.fyi/badges/workflows/build.yml/badge.svg?branch=main&event=push&label=Build&labelColor=1e1e2e&style=flat&logo=forgejo&logoColor=white
 [link-workflow-build]: https://git.9dev.tech/9-Developers/fulla.fyi/actions/workflows/build.yml
-[badge-workflow-security]: https://git.9dev.tech/9-Developers/fulla.fyi/badges/workflows/security.yml/badge.svg?branch=main&event=push&label=Security&labelColor=1e1e2e&style=flat&logo=trivy&logoColor=white
-[link-workflow-security]: https://git.9dev.tech/9-Developers/fulla.fyi/actions/workflows/security.yml
+[badge-workflow-security]: https://git.9dev.tech/9-Developers/fulla.fyi/badges/workflows/checks.yml/badge.svg?branch=main&event=push&label=Security&labelColor=1e1e2e&style=flat&logo=trivy&logoColor=white
+[link-workflow-security]: https://git.9dev.tech/9-Developers/fulla.fyi/actions/workflows/checks.yml
 [badge-releases]: https://git.9dev.tech/9-Developers/fulla.fyi/badges/release.svg?color=cba6f7&labelColor=1e1e2e&style=flat&logo=codeberg&logoColor=white
 [link-releases]: https://git.9dev.tech/9-Developers/fulla.fyi/releases

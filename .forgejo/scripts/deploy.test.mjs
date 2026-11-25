@@ -6,7 +6,7 @@ import { publishReceipt, readReceipt, receiptUrl } from "./receipt.mjs";
 const sha = "a".repeat(40);
 const successful = {
   id: 123,
-  workflow_id: "deploy.yml",
+  workflow_id: "staging.yml",
   commit_sha: sha,
   event: "push",
   prettyref: "main",
@@ -49,6 +49,7 @@ test("promotion follows pagination and accepts historical staging success", asyn
   const id = await verifyStaging({
     ...options,
     request: async (url) => {
+      assert.equal(url.searchParams.get("workflow_id"), "staging.yml");
       pages.push(url.searchParams.get("page"));
       return response(
         pages.length === 1

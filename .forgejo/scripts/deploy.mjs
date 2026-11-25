@@ -14,7 +14,7 @@ export async function verifyStaging({
   for (let page = 1; ; page++) {
     const url = new URL(`${api}/repos/${repository}/actions/runs`);
     url.search = new URLSearchParams({
-      workflow_id: "deploy.yml",
+      workflow_id: "staging.yml",
       head_sha: sha,
       event: "push",
       ref: "refs/heads/main",
@@ -33,7 +33,7 @@ export async function verifyStaging({
       throw new Error("Invalid staging history response");
     const staged = runs.find(
       (run) =>
-        run.workflow_id === "deploy.yml" &&
+        run.workflow_id === "staging.yml" &&
         run.commit_sha === sha &&
         run.event === "push" &&
         run.prettyref === "main" &&

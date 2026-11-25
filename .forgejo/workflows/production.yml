@@ -34,7 +34,7 @@ jobs:
 
   security:
     needs: validate
-    uses: ./.forgejo/workflows/security.yml
+    uses: ./.forgejo/workflows/checks.yml
 
   production:
     needs: [validate, security]
